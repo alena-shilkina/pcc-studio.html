@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pink Creative Crab — Content Studio</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦀</text></svg>">
+<style>
+  :root {
+    --pink: #E8436A;
+    --pink-light: #FFE8EE;
+    --pink-mid: #F9B8C8;
+    --cream: #FFF8F9;
+    --dark: #2A1A20;
+    --gray: #8A7880;
+    --gray-light: #F2EEF0;
+    --border: #EAD8DF;
+    --green: #2ECC71;
+    --orange: #F39C12;
+    --blue: #3498DB;
+    --font: 'Georgia', serif;
+    --mono: 'Courier New', monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font); background: var(--cream); color: var(--dark); min-height: 100vh; }
+
+  /* HEADER */
+  header {
+    background: var(--dark);
+    padding: 14px 28px;
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 100;
+    border-bottom: 3px solid var(--pink);
+  }
+  .logo { display: flex; align-items: center; gap: 10px; }
+  .logo-icon { font-size: 26px; }
+  .logo-text { color: #fff; font-size: 15px; font-weight: normal; letter-spacing: 0.5px; }
+  .logo-text span { color: var(--pink); font-style: italic; }
+  .header-stats { display: flex; gap: 16px; align-items: center; }
+  .stat-pill {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 12px;
+    color: #ccc;
+    font-family: var(--mono);
+  }
+  .stat-pill span { color: var(--pink-mid); font-weight: bold; }
+  .btn-settings {
+    background: none; border: 1px solid rgba(255,255,255,0.25);
+    color: #ccc; padding: 6px 14px; border-radius: 6px;
+    cursor: pointer; font-size: 13px; transition: all 0.2s;
+  }
+  .btn-settings:hover { border-color: var(--pink); color: var(--pink); }
+
+  /* TABS */
+  .tabs {
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+    display: flex; padding: 0 28px;
+  }
+  .tab {
+    padding: 14px 20px; cursor: pointer; font-size: 14px; color: var(--gray);
+    border-bottom: 3px solid transparent; margin-bottom: -1px;
+    transition: all 0.2s; user-select: none;
+  }
+  .tab:hover { color: var(--pink); }
+  .tab.active { color: var(--pink); border-bottom-color: var(--pink); font-style: italic; }
+
+  /* LAYOUT */
+  .workspace {
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    gap: 0;
+    min-height: calc(100vh - 107px);
+  }
+  .sidebar {
+    background: #fff;
+    border-right: 1px solid var(--border);
+    padding: 24px;
+    overflow-y: auto;
+  }
+  .main-panel { padding: 28px; overflow-y: auto; }
+
+  /* FORM ELEMENTS */
+  .field-group { margin-bottom: 20px; }
+  label { display: block; font-size: 12px; color: var(--gray); margin-bottom: 6px; letter-spacing: 0.5px; text-transform: uppercase; }
+  input[type=text], input[type=password], input[type=number], textarea, select {
+    width: 100%; padding: 10px 12px; border: 1px solid var(--border);
+    border-radius: 8px; font-size: 14px; font-family: var(--font);
+    color: var(--dark); background: var(--cream); outline: none;
+    transition: border-color 0.2s;
+  }
+  input:focus, textarea:focus, select:focus { border-color: var(--pink); background: #fff; }
+  textarea { resize: vertical; min-height: 80px; }
+
+  /* SECTION HEADERS */
+  .section-head {
+    font-size: 11px; text-transform: uppercase; letter-spacing: 1px;
+    color: var(--pink); margin-bottom: 14px; padding-bottom: 8px;
+    border-bottom: 1px solid var(--pink-light);
+  }
+
+  /* ART STYLE GRID */
+  .style-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 20px; }
+  .style-card {
+    border: 1.5px solid var(--border); border-radius: 10px;
+    padding: 10px 8px; cursor: pointer; text-align: center;
+    transition: all 0.2s; background: var(--cream);
+  }
+  .style-card:hover { border-color: var(--pink-mid); background: var(--pink-light); }
+  .style-card.active { border-color: var(--pink); background: var(--pink-light); }
+  .style-card .style-icon { font-size: 20px; display: block; margin-bottom: 4px; }
+  .style-card .style-name { font-size: 11px; color: var(--dark); }
+
+  /* COUNT BUTTONS */
+  .count-group { display: flex; gap: 8px; }
+  .count-btn {
+    flex: 1; padding: 10px; border: 1.5px solid var(--border);
+    border-radius: 8px; background: var(--cream); cursor: pointer;
+    font-size: 14px; font-family: var(--font); color: var(--gray);
+    transition: all 0.2s;
+  }
+  .count-btn:hover { border-color: var(--pink-mid); color: var(--dark); }
+  .count-btn.active { border-color: var(--pink); background: var(--pink-light); color: var(--pink); }
+
+  /* MAIN BUTTONS */
+  .btn-primary {
+    width: 100%; padding: 14px; background: var(--pink); color: #fff;
+    border: none; border-radius: 10px; font-size: 15px; font-family: var(--font);
+    cursor: pointer; transition: all 0.2s; font-style: italic;
+  }
+  .btn-primary:hover { background: #d63560; transform: translateY(-1px); }
+  .btn-primary:disabled { background: var(--gray); cursor: not-allowed; transform: none; }
+  .btn-secondary {
+    padding: 10px 18px; background: #fff; color: var(--dark);
+    border: 1.5px solid var(--border); border-radius: 8px;
+    font-size: 14px; font-family: var(--font); cursor: pointer; transition: all 0.2s;
+  }
+  .btn-secondary:hover { border-color: var(--pink); color: var(--pink); }
+
+  /* PROGRESS */
+  .progress-wrap { margin: 16px 0; }
+  .progress-bar-bg { background: var(--gray-light); border-radius: 10px; height: 8px; overflow: hidden; }
+  .progress-bar { height: 100%; background: linear-gradient(90deg, var(--pink), #FF8FA0); border-radius: 10px; transition: width 0.4s; }
+  .progress-label { font-size: 12px; color: var(--gray); margin-top: 6px; font-style: italic; }
+
+  /* LOG */
+  .log-box {
+    background: var(--dark); border-radius: 10px; padding: 14px;
+    font-family: var(--mono); font-size: 12px; color: #aaa;
+    max-height: 200px; overflow-y: auto; margin-top: 16px;
+  }
+  .log-box .log-ok { color: var(--green); }
+  .log-box .log-err { color: #ff6b6b; }
+  .log-box .log-info { color: var(--pink-mid); }
+
+  /* SLIDER PREVIEW */
+  .slider-preview-wrap {
+    background: #fff; border-radius: 14px; border: 1px solid var(--border);
+    overflow: hidden; margin-bottom: 24px;
+  }
+  .slider-preview-header {
+    padding: 16px 20px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .slider-preview-header h3 { font-size: 15px; color: var(--dark); }
+  .slide-counter { font-size: 13px; color: var(--gray); font-family: var(--mono); }
+  .slider-area { padding: 20px; display: flex; align-items: flex-start; gap: 20px; }
+  .slider-nav-btn {
+    background: var(--pink-light); border: 1.5px solid var(--pink-mid);
+    color: var(--pink); border-radius: 50%; width: 40px; height: 40px;
+    font-size: 18px; cursor: pointer; transition: all 0.2s;
+    flex-shrink: 0; margin-top: 80px; display: flex; align-items: center; justify-content: center;
+  }
+  .slider-nav-btn:hover { background: var(--pink); color: #fff; }
+  .slide-content { flex: 1; text-align: center; }
+  .slide-img-wrap {
+    width: 100%; max-width: 280px; margin: 0 auto 14px;
+    aspect-ratio: 2/3; background: var(--gray-light); border-radius: 10px;
+    overflow: hidden; position: relative;
+  }
+  .slide-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+  .slide-img-placeholder {
+    width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+    color: var(--gray); font-size: 13px; flex-direction: column; gap: 8px;
+  }
+  .slide-number { font-size: 12px; color: var(--pink); font-family: var(--mono); margin-bottom: 6px; }
+  .slide-title { font-size: 16px; color: var(--dark); margin-bottom: 8px; }
+  .slide-desc { font-size: 13px; color: var(--gray); line-height: 1.6; }
+
+  /* IDEA LIST */
+  .idea-list { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
+  .idea-item {
+    background: var(--cream); border: 1px solid var(--border); border-radius: 10px;
+    padding: 12px 14px; display: flex; gap: 12px; align-items: flex-start;
+  }
+  .idea-num {
+    background: var(--pink); color: #fff; border-radius: 50%;
+    width: 26px; height: 26px; display: flex; align-items: center; justify-content: center;
+    font-size: 12px; flex-shrink: 0; font-family: var(--mono);
+  }
+  .idea-text h4 { font-size: 14px; margin-bottom: 4px; }
+  .idea-text p { font-size: 12px; color: var(--gray); line-height: 1.5; }
+  .idea-img-status {
+    margin-left: auto; flex-shrink: 0;
+    font-size: 11px; padding: 3px 8px; border-radius: 10px;
+  }
+  .img-pending { background: var(--gray-light); color: var(--gray); }
+  .img-generating { background: #FFF3CD; color: #856404; }
+  .img-done { background: #D4EDDA; color: #155724; }
+  .img-error { background: #F8D7DA; color: #721c24; }
+
+  /* PUBLISH PANEL */
+  .publish-panel {
+    background: #fff; border-radius: 14px; border: 1px solid var(--border);
+    padding: 20px; margin-top: 20px;
+  }
+  .publish-row { display: flex; gap: 12px; align-items: flex-end; }
+  .publish-row .field-group { flex: 1; margin: 0; }
+
+  /* MODAL (Settings) */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(42,26,32,0.6);
+    z-index: 1000; display: none; align-items: center; justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: #fff; border-radius: 16px; padding: 28px;
+    width: 500px; max-width: 95vw; max-height: 90vh; overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+  .modal h2 { font-size: 18px; margin-bottom: 20px; color: var(--dark); }
+  .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
+
+  /* TOAST */
+  .toast {
+    position: fixed; bottom: 24px; right: 24px;
+    background: var(--dark); color: #fff; padding: 12px 20px;
+    border-radius: 10px; font-size: 14px; z-index: 2000;
+    transform: translateY(80px); opacity: 0; transition: all 0.3s;
+    border-left: 4px solid var(--pink);
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+  .toast.success { border-left-color: var(--green); }
+  .toast.error { border-left-color: #ff6b6b; }
+
+  /* COST BADGE */
+  .cost-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--pink-light); border: 1px solid var(--pink-mid);
+    border-radius: 20px; padding: 4px 12px; font-size: 12px; color: var(--pink);
+    font-family: var(--mono);
+  }
+
+  /* EMPTY STATE */
+  .empty-state {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 60px 20px; text-align: center; color: var(--gray);
+  }
+  .empty-state .empty-icon { font-size: 48px; margin-bottom: 16px; }
+  .empty-state p { font-size: 15px; line-height: 1.7; }
+
+  /* MODEL SELECT with info */
+  .model-option-wrap { display: flex; gap: 8px; align-items: center; }
+  .model-badge { font-size: 10px; padding: 2px 6px; border-radius: 4px; background: var(--pink-light); color: var(--pink); }
+
+  /* RATIO SELECTOR */
+  .ratio-grid { display: flex; flex-wrap: wrap; gap: 6px; }
+  .ratio-btn {
+    padding: 5px 10px; border: 1px solid var(--border); border-radius: 6px;
+    background: var(--cream); font-size: 11px; cursor: pointer; color: var(--gray);
+    transition: all 0.2s; font-family: var(--mono);
+  }
+  .ratio-btn:hover { border-color: var(--pink-mid); }
+  .ratio-btn.active { border-color: var(--pink); background: var(--pink-light); color: var(--pink); }
+
+  .divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+  .flex-row { display: flex; gap: 10px; }
+  .flex-row .field-group { flex: 1; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">
+    <span class="logo-icon">🦀</span>
+    <span class="logo-text">Pink Creative Crab — <span>Content Studio</span></span>
+  </div>
+  <div class="header-stats">
+    <div class="stat-pill">Images: $<span id="costImages">0.000</span></div>
+    <div class="stat-pill">Total: $<span id="costTotal">0.000</span></div>
+    <button class="btn-settings" onclick="openSettings()">⚙ Settings</button>
+  </div>
+</header>
+
+<!-- TABS -->
+<div class="tabs">
+  <div class="tab active" onclick="switchTab('generate')">✦ Generate Article</div>
+  <div class="tab" onclick="switchTab('preview')">◈ Slider Preview</div>
+  <div class="tab" onclick="switchTab('publish')">↑ Publish</div>
+</div>
+
+<!-- WORKSPACE -->
+<div class="workspace">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+
+    <!-- ART STYLE -->
+    <div class="section-head">Art Style</div>
+    <div class="style-grid" id="styleGrid">
+      <div class="style-card active" data-style="watercolor" onclick="selectStyle(this)">
+        <span class="style-icon">🎨</span>
+        <span class="style-name">Watercolor</span>
+      </div>
+      <div class="style-card" data-style="acrylic" onclick="selectStyle(this)">
+        <span class="style-icon">🖌️</span>
+        <span class="style-name">Acrylic</span>
+      </div>
+      <div class="style-card" data-style="gouache" onclick="selectStyle(this)">
+        <span class="style-icon">🎭</span>
+        <span class="style-name">Gouache</span>
+      </div>
+      <div class="style-card" data-style="oilpainting" onclick="selectStyle(this)">
+        <span class="style-icon">🛢️</span>
+        <span class="style-name">Oil Painting</span>
+      </div>
+      <div class="style-card" data-style="pencil" onclick="selectStyle(this)">
+        <span class="style-icon">✏️</span>
+        <span class="style-name">Pencil Drawing</span>
+      </div>
+      <div class="style-card" data-style="sketching" onclick="selectStyle(this)">
+        <span class="style-icon">📐</span>
+        <span class="style-name">Sketching</span>
+      </div>
+      <div class="style-card" data-style="doodles" onclick="selectStyle(this)">
+        <span class="style-icon">🌀</span>
+        <span class="style-name">Doodles</span>
+      </div>
+      <div class="style-card" data-style="oilpastel" onclick="selectStyle(this)">
+        <span class="style-icon">🖍️</span>
+        <span class="style-name">Oil Pastel</span>
+      </div>
+      <div class="style-card" data-style="coloring" onclick="selectStyle(this)">
+        <span class="style-icon">🖼️</span>
+        <span class="style-name">Coloring Pages</span>
+      </div>
+      <div class="style-card" data-style="junkjournal" onclick="selectStyle(this)">
+        <span class="style-icon">📖</span>
+        <span class="style-name">Junk Journal</span>
+      </div>
+      <div class="style-card" data-style="scrapbook" onclick="selectStyle(this)">
+        <span class="style-icon">✂️</span>
+        <span class="style-name">Scrapbook Paper</span>
+      </div>
+      <div class="style-card" data-style="markers" onclick="selectStyle(this)">
+        <span class="style-icon">🖊️</span>
+        <span class="style-name">Markers</span>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- IMAGE PROMPT OVERRIDE -->
+    <div class="field-group">
+      <label>Image Prompt Base (auto-set by style)</label>
+      <textarea id="imagePromptBase" rows="3" placeholder="Auto-generated from style selection..."></textarea>
+    </div>
+
+    <!-- MODEL -->
+    <div class="field-group">
+      <label>Image Model</label>
+      <select id="imageModel" onchange="updateRatioOptions()">
+        <option value="runware:400@1">Flux Pro (runware:400@1)</option>
+        <option value="bytedance:seedream@4.5">Seedream 4.5 (bytedance)</option>
+        <option value="runware:z-image@turbo">Z-Image Turbo</option>
+        <option value="prunaai:1@1">P-Image 1.0</option>
+      </select>
+    </div>
+
+    <!-- ASPECT RATIO -->
+    <div class="field-group">
+      <label>Aspect Ratio</label>
+      <div class="ratio-grid" id="ratioGrid"></div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- CATEGORY -->
+    <div class="field-group">
+      <label>WordPress Category</label>
+      <select id="wpCategory">
+        <optgroup label="Painting">
+          <option value="39">Watercolor</option>
+          <option value="40">Acrylic</option>
+          <option value="41">Oil Painting</option>
+          <option value="42">Gouache</option>
+        </optgroup>
+        <optgroup label="Drawing">
+          <option value="43">Drawing</option>
+          <option value="44">Sketching</option>
+          <option value="45">Doodles</option>
+          <option value="46">Pencil Drawing</option>
+          <option value="47">Oil Pastel</option>
+        </optgroup>
+        <optgroup label="Other">
+          <option value="58">Coloring Pages</option>
+          <option value="49">Scrapbook Paper</option>
+          <option value="50">Junk Journal</option>
+        </optgroup>
+      </select>
+    </div>
+
+    <!-- COUNT -->
+    <div class="field-group">
+      <label>Number of Ideas</label>
+      <div class="count-group">
+        <button class="count-btn active" onclick="selectCount(this, 20)">20</button>
+        <button class="count-btn" onclick="selectCount(this, 25)">25</button>
+        <button class="count-btn" onclick="selectCount(this, 30)">30</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- MAIN PANEL -->
+  <div class="main-panel" id="mainPanel">
+
+    <!-- TAB: GENERATE -->
+    <div id="tab-generate">
+      <div class="field-group">
+        <label>Article Topic</label>
+        <input type="text" id="articleTopic" placeholder="e.g. 25 watercolor flower ideas for beginners" />
+      </div>
+
+      <div id="generateActions">
+        <button class="btn-primary" id="btnGenerate" onclick="startGeneration()">✦ Generate Article + Images</button>
+        <div style="display:flex;gap:10px;margin-top:10px;">
+          <button class="btn-secondary" style="flex:1" onclick="generateTextOnly()">Generate Text Only</button>
+          <button class="btn-secondary" style="flex:1" onclick="generateImagesOnly()" id="btnImagesOnly" disabled>Generate Images Only</button>
+        </div>
+      </div>
+
+      <!-- PROGRESS -->
+      <div id="progressSection" style="display:none">
+        <div class="progress-wrap">
+          <div class="progress-bar-bg"><div class="progress-bar" id="progressBar" style="width:0%"></div></div>
+          <div class="progress-label" id="progressLabel">Starting...</div>
+        </div>
+      </div>
+
+      <!-- LOG -->
+      <div class="log-box" id="logBox" style="display:none"></div>
+
+      <!-- IDEAS LIST -->
+      <div id="ideaListWrap" style="display:none">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+          <div>
+            <strong id="articleTitleDisplay" style="font-size:17px;"></strong>
+          </div>
+          <div class="cost-badge">🖼 $<span id="costBadge">0.000</span></div>
+        </div>
+        <p id="articleIntroDisplay" style="font-size:14px;color:var(--gray);line-height:1.7;margin-bottom:16px;"></p>
+        <div class="idea-list" id="ideaList"></div>
+      </div>
+
+    </div>
+
+    <!-- TAB: PREVIEW -->
+    <div id="tab-preview" style="display:none">
+      <div id="previewEmpty" class="empty-state">
+        <div class="empty-icon">◈</div>
+        <p>Generate an article first to preview the slider here.</p>
+      </div>
+      <div id="previewContent" style="display:none">
+        <div class="slider-preview-wrap">
+          <div class="slider-preview-header">
+            <h3 id="previewTitle">—</h3>
+            <div class="slide-counter"><span id="currentSlide">1</span> / <span id="totalSlides">0</span></div>
+          </div>
+          <div class="slider-area">
+            <button class="slider-nav-btn" onclick="prevSlide()">‹</button>
+            <div class="slide-content" id="slideContent">
+              <div class="slide-img-wrap" id="slideImgWrap">
+                <div class="slide-img-placeholder">
+                  <span style="font-size:32px">🎨</span>
+                  <span>No image yet</span>
+                </div>
+              </div>
+              <div class="slide-number" id="slideNum">#1</div>
+              <div class="slide-title" id="slideTitleEl">—</div>
+              <div class="slide-desc" id="slideDescEl">—</div>
+            </div>
+            <button class="slider-nav-btn" onclick="nextSlide()">›</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: PUBLISH -->
+    <div id="tab-publish" style="display:none">
+      <div id="publishEmpty" class="empty-state">
+        <div class="empty-icon">↑</div>
+        <p>Generate an article and images first, then publish here.</p>
+      </div>
+      <div id="publishContent" style="display:none">
+        <div class="publish-panel">
+          <div class="section-head">Publish to pinkcreativecrab.com</div>
+          <div class="field-group">
+            <label>Post Title</label>
+            <input type="text" id="publishTitle" />
+          </div>
+          <div class="field-group">
+            <label>Post Status</label>
+            <select id="publishStatus">
+              <option value="draft">Draft (save, don't publish)</option>
+              <option value="publish">Publish immediately</option>
+            </select>
+          </div>
+          <div id="publishProgress" style="display:none">
+            <div class="progress-wrap">
+              <div class="progress-bar-bg"><div class="progress-bar" id="publishBar" style="width:0%"></div></div>
+              <div class="progress-label" id="publishLabel">Uploading images...</div>
+            </div>
+          </div>
+          <div class="log-box" id="publishLog" style="display:none;margin-bottom:16px"></div>
+          <button class="btn-primary" id="btnPublish" onclick="publishToWordPress()">↑ Upload Images & Publish</button>
+          <div id="publishResult" style="margin-top:14px;display:none">
+            <a id="publishLink" href="#" target="_blank" style="color:var(--pink);font-style:italic;font-size:14px">View post in WordPress →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- SETTINGS MODAL -->
+<div class="modal-overlay" id="settingsModal">
+  <div class="modal">
+    <h2>⚙ Settings</h2>
+    <div class="field-group">
+      <label>Anthropic API Key</label>
+      <input type="password" id="settingAnthropicKey" placeholder="sk-ant-..." />
+    </div>
+    <div class="field-group">
+      <label>Runware API Key</label>
+      <input type="password" id="settingRunwareKey" placeholder="your-runware-key" />
+    </div>
+    <hr class="divider">
+    <div class="field-group">
+      <label>WordPress URL</label>
+      <input type="text" id="settingWpUrl" value="https://pinkcreativecrab.com" />
+    </div>
+    <div class="field-group">
+      <label>WordPress Login</label>
+      <input type="text" id="settingWpLogin" value="alena.shilkina@gmail.com" />
+    </div>
+    <div class="field-group">
+      <label>WordPress Application Password</label>
+      <input type="password" id="settingWpPass" placeholder="xxxx xxxx xxxx xxxx xxxx xxxx" />
+    </div>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeSettings()">Cancel</button>
+      <button class="btn-primary" style="width:auto;padding:10px 24px" onclick="saveSettings()">Save Settings</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ============================================================
+// CONFIG & STATE
+// ============================================================
+const WP_URL = 'https://pinkcreativecrab.com';
+const WP_LOGIN = 'alena.shilkina@gmail.com';
+const WP_PASS = 'hn6V WLXl z3IV 6J3K Zw9K rED6';
+
+let state = {
+  ideas: [],
+  articleTitle: '',
+  articleIntro: '',
+  selectedStyle: 'watercolor',
+  ideaCount: 20,
+  currentSlide: 0,
+  totalCostImages: 0,
+  totalCostText: 0,
+  generating: false
+};
+
+// ============================================================
+// STYLE DEFINITIONS
+// ============================================================
+const STYLES = {
+  watercolor: {
+    prompt: 'soft watercolor painting on white paper, wet-on-wet technique, translucent color washes, visible brushstrokes, delicate botanical illustration style, pastel tones, white space, artistic',
+    category: 39
+  },
+  acrylic: {
+    prompt: 'acrylic painting on canvas, bold vivid colors, thick impasto texture, visible brushwork, contemporary art style, rich saturated palette, expressive strokes',
+    category: 40
+  },
+  gouache: {
+    prompt: 'gouache illustration, flat matte opaque colors, graphic shapes, poster art style, clean edges, modern illustration, white paper background',
+    category: 42
+  },
+  oilpainting: {
+    prompt: 'classical oil painting on canvas, rich glazes, chiaroscuro lighting, fine art style, deep colors, realistic rendering, museum quality',
+    category: 41
+  },
+  pencil: {
+    prompt: 'graphite pencil drawing, detailed realistic shading, cross-hatching technique, white paper background, fine art sketch, monochrome, clean lines',
+    category: 46
+  },
+  sketching: {
+    prompt: 'loose gestural pencil sketch, sketchbook style, quick observational drawing, confident lines, minimal shading, white background, artistic and fresh',
+    category: 44
+  },
+  doodles: {
+    prompt: 'black and white doodle art, fine ink pen illustration, whimsical patterns, zentangle inspired, detailed linework, white paper background',
+    category: 45
+  },
+  oilpastel: {
+    prompt: 'oil pastel drawing, vibrant blended colors, textured expressive strokes, rich saturated tones, visible pastel marks on paper, colorful and bold',
+    category: 47
+  },
+  markers: {
+    prompt: 'colorful modern marker illustration, clean bold linework, bright contemporary colors, professional marker rendering, graphic design style, vibrant flat colors',
+    category: 44
+  },
+  coloring: {
+    prompt: 'black and white coloring page illustration, clean bold outlines, no shading, white background, ready to color, detailed line art, printable style',
+    category: 58
+  },
+  junkjournal: {
+    prompt: 'vintage junk journal page design, aged paper texture, botanical illustrations, vintage ephemera style, antique aesthetic, soft muted tones, decorative border elements',
+    category: 50
+  },
+  scrapbook: {
+    prompt: 'decorative scrapbook paper pattern, seamless repeating design, vintage or modern aesthetic, craft paper texture, ornamental background pattern, soft colors',
+    category: 49
+  }
+};
+
+// ============================================================
+// MODEL RATIOS
+// ============================================================
+const MODEL_RATIOS = {
+  'runware:400@1': [
+    { label: '2:3 Portrait', w: 864, h: 1152 },
+    { label: '3:4 Portrait', w: 768, h: 1024 },
+    { label: '1:1 Square', w: 1024, h: 1024 },
+    { label: '4:3 Landscape', w: 1024, h: 768 },
+    { label: '16:9 Wide', w: 1280, h: 720 },
+    { label: '9:16 Tall', w: 720, h: 1280 },
+    { label: '2:3 Classic', w: 864, h: 1152 }
+  ],
+  'bytedance:seedream@4.5': [
+    { label: '3:4 Portrait', w: 1728, h: 2304 },
+    { label: '9:16 Portrait', w: 1440, h: 2560 },
+    { label: '4:3 Landscape', w: 2304, h: 1728 },
+    { label: '1:1 Square', w: 2048, h: 2048 }
+  ],
+  'runware:z-image@turbo': [
+    { label: '4:3 Landscape', w: 1152, h: 896 },
+    { label: '1:1 Square', w: 1024, h: 1024 },
+    { label: '2:3 Portrait', w: 832, h: 1280 },
+    { label: '9:16 Portrait', w: 768, h: 1344 },
+    { label: '16:9 Landscape', w: 1280, h: 720 }
+  ],
+  'prunaai:1@1': [
+    { label: '1:1 Square', w: 1024, h: 1024 },
+    { label: '4:3 Landscape', w: 1152, h: 896 },
+    { label: '16:9 Wide', w: 1280, h: 720 },
+    { label: '3:4 Portrait', w: 896, h: 1152 },
+    { label: '9:16 Tall', w: 720, h: 1280 },
+    { label: '2:3 Portrait', w: 832, h: 1280 }
+  ]
+};
+
+let selectedRatioIndex = 0;
+
+function updateRatioOptions() {
+  const model = document.getElementById('imageModel').value;
+  const ratios = MODEL_RATIOS[model] || [];
+  const grid = document.getElementById('ratioGrid');
+  grid.innerHTML = '';
+  selectedRatioIndex = 0;
+  ratios.forEach((r, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'ratio-btn' + (i === 0 ? ' active' : '');
+    btn.textContent = r.label;
+    btn.onclick = () => {
+      grid.querySelectorAll('.ratio-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      selectedRatioIndex = i;
+    };
+    grid.appendChild(btn);
+  });
+}
+
+function getSelectedRatio() {
+  const model = document.getElementById('imageModel').value;
+  const ratios = MODEL_RATIOS[model] || [];
+  return ratios[selectedRatioIndex] || { w: 1024, h: 1024 };
+}
+
+// ============================================================
+// INIT
+// ============================================================
+window.onload = () => {
+  loadSettings();
+  updateRatioOptions();
+  selectStyle(document.querySelector('.style-card.active'));
+};
+
+// ============================================================
+// SETTINGS
+// ============================================================
+function loadSettings() {
+  const s = JSON.parse(localStorage.getItem('pcc_settings') || '{}');
+  if (s.anthropicKey) document.getElementById('settingAnthropicKey').value = s.anthropicKey;
+  if (s.runwareKey) document.getElementById('settingRunwareKey').value = s.runwareKey;
+  if (s.wpUrl) document.getElementById('settingWpUrl').value = s.wpUrl;
+  if (s.wpLogin) document.getElementById('settingWpLogin').value = s.wpLogin;
+  if (s.wpPass) document.getElementById('settingWpPass').value = s.wpPass;
+}
+
+function saveSettings() {
+  const s = {
+    anthropicKey: document.getElementById('settingAnthropicKey').value,
+    runwareKey: document.getElementById('settingRunwareKey').value,
+    wpUrl: document.getElementById('settingWpUrl').value,
+    wpLogin: document.getElementById('settingWpLogin').value,
+    wpPass: document.getElementById('settingWpPass').value
+  };
+  localStorage.setItem('pcc_settings', JSON.stringify(s));
+  closeSettings();
+  toast('Settings saved', 'success');
+}
+
+function getSettings() {
+  return JSON.parse(localStorage.getItem('pcc_settings') || '{}');
+}
+
+function getWpAuth() {
+  const s = getSettings();
+  const login = s.wpLogin || WP_LOGIN;
+  const pass = s.wpPass || WP_PASS;
+  return btoa(login + ':' + pass);
+}
+
+function openSettings() { document.getElementById('settingsModal').classList.add('open'); }
+function closeSettings() { document.getElementById('settingsModal').classList.remove('open'); }
+
+// ============================================================
+// UI HELPERS
+// ============================================================
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach((t, i) => {
+    t.classList.toggle('active', ['generate','preview','publish'][i] === name);
+  });
+  document.getElementById('tab-generate').style.display = name === 'generate' ? '' : 'none';
+  document.getElementById('tab-preview').style.display = name === 'preview' ? '' : 'none';
+  document.getElementById('tab-publish').style.display = name === 'publish' ? '' : 'none';
+
+  if (name === 'preview') updatePreviewTab();
+  if (name === 'publish') updatePublishTab();
+}
+
+function selectStyle(card) {
+  document.querySelectorAll('.style-card').forEach(c => c.classList.remove('active'));
+  card.classList.add('active');
+  state.selectedStyle = card.dataset.style;
+  const def = STYLES[state.selectedStyle];
+  document.getElementById('imagePromptBase').value = def ? def.prompt : '';
+  if (def && def.category) document.getElementById('wpCategory').value = def.category;
+}
+
+function selectCount(btn, n) {
+  document.querySelectorAll('.count-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  state.ideaCount = n;
+}
+
+function log(msg, type = '') {
+  const box = document.getElementById('logBox');
+  box.style.display = '';
+  const line = document.createElement('div');
+  line.className = type ? 'log-' + type : '';
+  line.textContent = '› ' + msg;
+  box.appendChild(line);
+  box.scrollTop = box.scrollHeight;
+}
+
+function setProgress(pct, label) {
+  document.getElementById('progressSection').style.display = '';
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('progressLabel').textContent = label;
+}
+
+function toast(msg, type = '') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show ' + type;
+  setTimeout(() => t.className = 'toast', 3000);
+}
+
+function addCost(amount) {
+  state.totalCostImages += amount;
+  state.totalCostText += 0; // text cost from Anthropic (approximate)
+  document.getElementById('costImages').textContent = state.totalCostImages.toFixed(4);
+  document.getElementById('costTotal').textContent = (state.totalCostImages + state.totalCostText).toFixed(4);
+  document.getElementById('costBadge').textContent = state.totalCostImages.toFixed(4);
+}
+
+// ============================================================
+// TEXT GENERATION (Claude)
+// ============================================================
+async function generateText() {
+  const topic = document.getElementById('articleTopic').value.trim();
+  if (!topic) { toast('Enter an article topic', 'error'); return null; }
+
+  const s = getSettings();
+  const apiKey = s.anthropicKey;
+  if (!apiKey) { toast('Set your Anthropic API key in Settings', 'error'); return null; }
+
+  const style = state.selectedStyle;
+  const count = state.ideaCount;
+
+  log('Generating article content with Claude...', 'info');
+  setProgress(5, 'Generating text content...');
+
+  const systemPrompt = `You are a creative art blog writer for pinkcreativecrab.com. 
+Write engaging, inspiring content about art techniques and creative ideas.
+Always respond with valid JSON only, no markdown, no extra text.`;
+
+  const userPrompt = `Write a blog article about: "${topic}"
+Art style focus: ${style}
+Number of ideas: ${count}
+
+Return JSON with this exact structure:
+{
+  "title": "SEO-optimized article title (50-60 chars)",
+  "intro": "2-3 engaging paragraphs introducing the topic (200-300 words total)",
+  "ideas": [
+    {
+      "title": "Short catchy name for this idea (5-8 words)",
+      "description": "Inspiring description of this idea, what makes it special, tips (60-80 words)"
+    }
+  ]
+}
+
+Generate exactly ${count} ideas. Make each idea unique, inspiring and specific.`;
+
+  const response = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': apiKey,
+      'anthropic-version': '2023-06-01',
+      'anthropic-dangerous-direct-browser-access': 'true'
+    },
+    body: JSON.stringify({
+      model: 'claude-sonnet-4-6',
+      max_tokens: 4000,
+      system: systemPrompt,
+      messages: [{ role: 'user', content: userPrompt }]
+    })
+  });
+
+  if (!response.ok) {
+    const err = await response.text();
+    throw new Error('Claude API error: ' + err);
+  }
+
+  const data = await response.json();
+  const text = data.content[0].text;
+
+  // Estimate text cost (Claude Sonnet ~$3/M input, $15/M output)
+  const inputTokens = data.usage?.input_tokens || 500;
+  const outputTokens = data.usage?.output_tokens || 2000;
+  const textCost = (inputTokens * 0.000003) + (outputTokens * 0.000015);
+  state.totalCostText += textCost;
+  document.getElementById('costTotal').textContent = (state.totalCostImages + state.totalCostText).toFixed(4);
+
+  try {
+    const clean = text.replace(/```json|```/g, '').trim();
+    return JSON.parse(clean);
+  } catch (e) {
+    throw new Error('Failed to parse Claude response as JSON');
+  }
+}
+
+// ============================================================
+// IMAGE GENERATION (Runware)
+// ============================================================
+async function generateImage(ideaTitle, index) {
+  const s = getSettings();
+  const runwareKey = s.runwareKey;
+  if (!runwareKey) throw new Error('No Runware API key');
+
+  const basePrompt = document.getElementById('imagePromptBase').value;
+  const fullPrompt = `${ideaTitle}, ${basePrompt}`;
+  const model = document.getElementById('imageModel').value;
+  const ratio = getSelectedRatio();
+
+  const payload = [{
+    taskType: 'imageInference',
+    taskUUID: crypto.randomUUID(),
+    positivePrompt: fullPrompt,
+    model: model,
+    width: ratio.w,
+    height: ratio.h,
+    numberResults: 1,
+    outputFormat: 'PNG',
+    outputType: ['URL']
+  }];
+
+  const response = await fetch('https://api.runware.ai/v1', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + runwareKey
+    },
+    body: JSON.stringify(payload)
+  });
+
+  if (!response.ok) {
+    const err = await response.text();
+    throw new Error('Runware error: ' + err);
+  }
+
+  const data = await response.json();
+
+  if (data.errors && data.errors.length > 0) {
+    throw new Error('Runware: ' + data.errors[0].message);
+  }
+
+  const result = data.data?.[0];
+  if (!result?.imageURL) throw new Error('No image URL in response');
+
+  // Estimate cost (Flux Pro ~$0.055/image)
+  const costMap = {
+    'runware:400@1': 0.055,
+    'bytedance:seedream@4.5': 0.020,
+    'runware:z-image@turbo': 0.008,
+    'prunaai:1@1': 0.010
+  };
+  addCost(costMap[model] || 0.02);
+
+  return result.imageURL;
+}
+
+// ============================================================
+// RENDER IDEAS
+// ============================================================
+function renderIdeas() {
+  document.getElementById('articleTitleDisplay').textContent = state.articleTitle;
+  document.getElementById('articleIntroDisplay').textContent = state.articleIntro;
+
+  const list = document.getElementById('ideaList');
+  list.innerHTML = '';
+
+  state.ideas.forEach((idea, i) => {
+    const item = document.createElement('div');
+    item.className = 'idea-item';
+    item.id = 'idea-' + i;
+    item.innerHTML = `
+      <div class="idea-num">${i + 1}</div>
+      <div class="idea-text">
+        <h4>${idea.title}</h4>
+        <p>${idea.description}</p>
+      </div>
+      <span class="idea-img-status img-pending" id="imgStatus-${i}">⏳ Pending</span>
+    `;
+    list.appendChild(item);
+  });
+
+  document.getElementById('ideaListWrap').style.display = '';
+  document.getElementById('btnImagesOnly').disabled = false;
+}
+
+function updateIdeaImageStatus(i, status, label) {
+  const el = document.getElementById('imgStatus-' + i);
+  if (!el) return;
+  el.className = 'idea-img-status img-' + status;
+  el.textContent = label;
+}
+
+// ============================================================
+// MAIN GENERATION FLOWS
+// ============================================================
+async function startGeneration() {
+  if (state.generating) return;
+  state.generating = true;
+  document.getElementById('btnGenerate').disabled = true;
+  document.getElementById('logBox').style.display = 'none';
+  document.getElementById('logBox').innerHTML = '';
+
+  try {
+    // 1. Generate text
+    const result = await generateText();
+    state.articleTitle = result.title;
+    state.articleIntro = result.intro;
+    state.ideas = result.ideas.map(i => ({ ...i, imageUrl: null }));
+
+    log('Text generated: ' + result.ideas.length + ' ideas', 'ok');
+    setProgress(20, 'Text done. Generating images...');
+    renderIdeas();
+
+    // 2. Generate images sequentially (to avoid rate limits)
+    for (let i = 0; i < state.ideas.length; i++) {
+      updateIdeaImageStatus(i, 'generating', '⚙ Generating...');
+      const pct = 20 + Math.round((i / state.ideas.length) * 75);
+      setProgress(pct, `Image ${i + 1} of ${state.ideas.length}...`);
+
+      try {
+        const url = await generateImage(state.ideas[i].title, i);
+        state.ideas[i].imageUrl = url;
+        updateIdeaImageStatus(i, 'done', '✓ Ready');
+        log(`Image ${i + 1}: ${state.ideas[i].title}`, 'ok');
+      } catch (e) {
+        updateIdeaImageStatus(i, 'error', '✗ Error');
+        log(`Image ${i + 1} failed: ${e.message}`, 'err');
+      }
+
+      // Small delay between requests
+      if (i < state.ideas.length - 1) await sleep(300);
+    }
+
+    setProgress(100, 'Done!');
+    log('Generation complete!', 'ok');
+    toast('Article generated successfully!', 'success');
+
+  } catch (e) {
+    log('Error: ' + e.message, 'err');
+    toast('Error: ' + e.message, 'error');
+  } finally {
+    state.generating = false;
+    document.getElementById('btnGenerate').disabled = false;
+  }
+}
+
+async function generateTextOnly() {
+  if (state.generating) return;
+  state.generating = true;
+  document.getElementById('logBox').style.display = 'none';
+  document.getElementById('logBox').innerHTML = '';
+
+  try {
+    const result = await generateText();
+    state.articleTitle = result.title;
+    state.articleIntro = result.intro;
+    state.ideas = result.ideas.map(i => ({ ...i, imageUrl: null }));
+    log('Text generated: ' + result.ideas.length + ' ideas', 'ok');
+    setProgress(100, 'Text generation done!');
+    renderIdeas();
+    toast('Text generated!', 'success');
+  } catch (e) {
+    log('Error: ' + e.message, 'err');
+    toast('Error: ' + e.message, 'error');
+  } finally {
+    state.generating = false;
+  }
+}
+
+async function generateImagesOnly() {
+  if (state.generating || state.ideas.length === 0) return;
+  state.generating = true;
+  document.getElementById('btnImagesOnly').disabled = true;
+
+  for (let i = 0; i < state.ideas.length; i++) {
+    if (state.ideas[i].imageUrl) continue; // skip already generated
+    updateIdeaImageStatus(i, 'generating', '⚙ Generating...');
+    const pct = Math.round((i / state.ideas.length) * 100);
+    setProgress(pct, `Image ${i + 1} of ${state.ideas.length}...`);
+
+    try {
+      const url = await generateImage(state.ideas[i].title, i);
+      state.ideas[i].imageUrl = url;
+      updateIdeaImageStatus(i, 'done', '✓ Ready');
+    } catch (e) {
+      updateIdeaImageStatus(i, 'error', '✗ Error');
+      log(`Image ${i + 1} failed: ${e.message}`, 'err');
+    }
+    if (i < state.ideas.length - 1) await sleep(300);
+  }
+
+  setProgress(100, 'All images done!');
+  toast('Images generated!', 'success');
+  state.generating = false;
+  document.getElementById('btnImagesOnly').disabled = false;
+}
+
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+// ============================================================
+// PREVIEW TAB
+// ============================================================
+function updatePreviewTab() {
+  if (state.ideas.length === 0) {
+    document.getElementById('previewEmpty').style.display = '';
+    document.getElementById('previewContent').style.display = 'none';
+    return;
+  }
+  document.getElementById('previewEmpty').style.display = 'none';
+  document.getElementById('previewContent').style.display = '';
+  document.getElementById('previewTitle').textContent = state.articleTitle;
+  document.getElementById('totalSlides').textContent = state.ideas.length;
+  state.currentSlide = 0;
+  renderSlide(0);
+}
+
+function renderSlide(i) {
+  const idea = state.ideas[i];
+  if (!idea) return;
+  document.getElementById('currentSlide').textContent = i + 1;
+  document.getElementById('slideNum').textContent = '#' + (i + 1);
+  document.getElementById('slideTitleEl').textContent = idea.title;
+  document.getElementById('slideDescEl').textContent = idea.description;
+
+  const wrap = document.getElementById('slideImgWrap');
+  if (idea.imageUrl) {
+    wrap.innerHTML = `<img src="${idea.imageUrl}" alt="${idea.title}" loading="lazy">`;
+  } else {
+    wrap.innerHTML = `<div class="slide-img-placeholder"><span style="font-size:32px">🎨</span><span>No image</span></div>`;
+  }
+}
+
+function prevSlide() {
+  if (state.currentSlide > 0) {
+    state.currentSlide--;
+    renderSlide(state.currentSlide);
+  }
+}
+
+function nextSlide() {
+  if (state.currentSlide < state.ideas.length - 1) {
+    state.currentSlide++;
+    renderSlide(state.currentSlide);
+  }
+}
+
+// ============================================================
+// PUBLISH TAB
+// ============================================================
+function updatePublishTab() {
+  if (state.ideas.length === 0) {
+    document.getElementById('publishEmpty').style.display = '';
+    document.getElementById('publishContent').style.display = 'none';
+    return;
+  }
+  document.getElementById('publishEmpty').style.display = 'none';
+  document.getElementById('publishContent').style.display = '';
+  document.getElementById('publishTitle').value = state.articleTitle;
+}
+
+function plog(msg, type = '') {
+  const box = document.getElementById('publishLog');
+  box.style.display = '';
+  const line = document.createElement('div');
+  line.className = type ? 'log-' + type : '';
+  line.textContent = '› ' + msg;
+  box.appendChild(line);
+  box.scrollTop = box.scrollHeight;
+}
+
+async function publishToWordPress() {
+  const auth = getWpAuth();
+  const wpUrl = (getSettings().wpUrl || WP_URL).replace(/\/$/, '');
+  const categoryId = parseInt(document.getElementById('wpCategory').value);
+  const postTitle = document.getElementById('publishTitle').value;
+  const postStatus = document.getElementById('publishStatus').value;
+
+  document.getElementById('publishLog').innerHTML = '';
+  document.getElementById('publishProgress').style.display = '';
+  document.getElementById('btnPublish').disabled = true;
+
+  const uploadedImages = [];
+
+  // Step 1: Upload images to WP Media Library
+  for (let i = 0; i < state.ideas.length; i++) {
+    const idea = state.ideas[i];
+    const pct = Math.round((i / state.ideas.length) * 60);
+    document.getElementById('publishBar').style.width = pct + '%';
+    document.getElementById('publishLabel').textContent = `Uploading image ${i + 1}/${state.ideas.length}...`;
+
+    if (!idea.imageUrl) {
+      uploadedImages.push(null);
+      plog(`Idea ${i + 1}: no image, skipping`, 'info');
+      continue;
+    }
+
+    try {
+      // Fetch image as blob
+      const imgResp = await fetch(idea.imageUrl);
+      const blob = await imgResp.blob();
+      const filename = `pcc-${state.selectedStyle}-${i + 1}-${Date.now()}.png`;
+
+      const formData = new FormData();
+      formData.append('file', blob, filename);
+
+      const uploadResp = await fetch(`${wpUrl}/wp-json/wp/v2/media`, {
+        method: 'POST',
+        headers: { 'Authorization': 'Basic ' + auth },
+        body: formData
+      });
+
+      if (!uploadResp.ok) {
+        const err = await uploadResp.text();
+        throw new Error(err);
+      }
+
+      const mediaData = await uploadResp.json();
+      uploadedImages.push({ id: mediaData.id, url: mediaData.source_url });
+      plog(`Image ${i + 1} uploaded ✓`, 'ok');
+    } catch (e) {
+      uploadedImages.push(null);
+      plog(`Image ${i + 1} failed: ${e.message}`, 'err');
+    }
+  }
+
+  // Step 2: Build slider HTML
+  document.getElementById('publishBar').style.width = '70%';
+  document.getElementById('publishLabel').textContent = 'Building slider HTML...';
+
+  const sliderHTML = buildSliderHTML(uploadedImages);
+
+  // Step 3: Create WP post
+  document.getElementById('publishBar').style.width = '85%';
+  document.getElementById('publishLabel').textContent = 'Creating WordPress post...';
+
+  const introHTML = state.articleIntro.split('\n').filter(p => p.trim()).map(p => `<p>${p}</p>`).join('\n');
+  const fullContent = introHTML + '\n\n' + sliderHTML;
+
+  const postPayload = {
+    title: postTitle,
+    content: fullContent,
+    status: postStatus,
+    categories: [categoryId],
+    featured_media: uploadedImages[0]?.id || 0
+  };
+
+  const postResp = await fetch(`${wpUrl}/wp-json/wp/v2/posts`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Basic ' + auth
+    },
+    body: JSON.stringify(postPayload)
+  });
+
+  if (!postResp.ok) {
+    const err = await postResp.text();
+    plog('Post creation failed: ' + err, 'err');
+    toast('Publish failed', 'error');
+    document.getElementById('btnPublish').disabled = false;
+    return;
+  }
+
+  const postData = await postResp.json();
+  document.getElementById('publishBar').style.width = '100%';
+  document.getElementById('publishLabel').textContent = 'Published!';
+
+  plog('Post created: ' + postData.link, 'ok');
+  document.getElementById('publishResult').style.display = '';
+  document.getElementById('publishLink').href = postData.link;
+  document.getElementById('publishLink').textContent = 'View post: ' + postData.link + ' →';
+  document.getElementById('btnPublish').disabled = false;
+  toast('Published to WordPress!', 'success');
+}
+
+// ============================================================
+// BUILD SLIDER HTML (Mediavine-optimized)
+// ============================================================
+function buildSliderHTML(uploadedImages) {
+  const ideas = state.ideas;
+  const total = ideas.length;
+
+  let slidesHTML = '';
+  ideas.forEach((idea, i) => {
+    const img = uploadedImages[i];
+    const imgTag = img
+      ? `<img src="${img.url}" alt="${escapeHtml(idea.title)}" loading="lazy" style="width:100%;max-width:600px;height:auto;border-radius:12px;display:block;margin:0 auto;">`
+      : `<div style="width:100%;max-width:600px;height:400px;background:#f0e8ea;border-radius:12px;margin:0 auto;display:flex;align-items:center;justify-content:center;color:#999;">No image</div>`;
+
+    slidesHTML += `
+<!-- Slide ${i + 1} — Mediavine ad slot after this div -->
+<div class="pcc-slide" id="pcc-slide-${i}" style="${i === 0 ? '' : 'display:none'}">
+  <p style="text-align:center;font-size:13px;color:#E8436A;font-family:Georgia,serif;margin-bottom:8px;">${i + 1} / ${total}</p>
+  ${imgTag}
+  <h3 style="text-align:center;font-size:20px;margin:16px 0 8px;font-family:Georgia,serif;">${escapeHtml(idea.title)}</h3>
+  <p style="text-align:center;font-size:15px;color:#666;line-height:1.7;max-width:600px;margin:0 auto 20px;">${escapeHtml(idea.description)}</p>
+</div>`;
+  });
+
+  return `
+<!-- Pink Creative Crab — Art Ideas Slider -->
+<div id="pcc-slider-wrap" style="position:relative;font-family:Georgia,serif;">
+
+  <!-- Navigation -->
+  <div style="display:flex;align-items:center;justify-content:space-between;max-width:660px;margin:0 auto 16px;padding:0 8px;">
+    <button id="pcc-prev" onclick="pccPrev()" style="background:#FFE8EE;border:1.5px solid #F9B8C8;color:#E8436A;border-radius:50%;width:44px;height:44px;font-size:22px;cursor:pointer;line-height:1;">‹</button>
+    <span id="pcc-counter" style="font-size:14px;color:#8A7880;font-style:italic;">1 / ${total}</span>
+    <button id="pcc-next" onclick="pccNext()" style="background:#FFE8EE;border:1.5px solid #F9B8C8;color:#E8436A;border-radius:50%;width:44px;height:44px;font-size:22px;cursor:pointer;line-height:1;">›</button>
+  </div>
+
+  <!-- Slides (ALL in DOM for Mediavine) -->
+  ${slidesHTML}
+
+</div>
+
+<script>
+(function() {
+  var cur = 0, total = ${total};
+  window.pccPrev = function() { if(cur > 0) pccGo(cur - 1); };
+  window.pccNext = function() { if(cur < total - 1) pccGo(cur + 1); };
+  function pccGo(i) {
+    document.getElementById('pcc-slide-' + cur).style.display = 'none';
+    cur = i;
+    document.getElementById('pcc-slide-' + cur).style.display = '';
+    document.getElementById('pcc-counter').textContent = (cur + 1) + ' / ' + total;
+    window.scrollTo({top: document.getElementById('pcc-slider-wrap').offsetTop - 80, behavior: 'smooth'});
+  }
+})();
+<\/script>`;
+}
+
+function escapeHtml(str) {
+  return (str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// Init ratio options
+updateRatioOptions();
+</script>
+</body>
+</html>
