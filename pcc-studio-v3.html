@@ -1,0 +1,1323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pink Creative Crab — Content Studio v3</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦀</text></svg>">
+<style>
+:root{--pink:#E8436A;--pl:#FFE8EE;--pm:#F9B8C8;--cream:#FFF8F9;--dark:#2A1A20;--gray:#8A7880;--gl:#F2EEF0;--border:#EAD8DF;--green:#27AE60;--font:'Georgia',serif;--mono:'Courier New',monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);background:var(--cream);color:var(--dark);min-height:100vh}
+header{background:var(--dark);padding:11px 22px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;border-bottom:3px solid var(--pink)}
+.logo{display:flex;align-items:center;gap:9px;color:#fff;font-size:14px}.logo-i{font-size:22px}.logo s_{color:var(--pink);font-style:italic}
+.hst{display:flex;gap:10px;align-items:center}
+.spl{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:18px;padding:3px 11px;font-size:11px;color:#ccc;font-family:var(--mono)}.spl b{color:var(--pm)}
+.bh{background:none;border:1px solid rgba(255,255,255,.25);color:#ccc;padding:5px 12px;border-radius:6px;cursor:pointer;font-size:12px;transition:.2s}.bh:hover{border-color:var(--pink);color:var(--pink)}
+.tabs{background:#fff;border-bottom:1px solid var(--border);display:flex;padding:0 22px}
+.tab{padding:12px 16px;cursor:pointer;font-size:13px;color:var(--gray);border-bottom:3px solid transparent;margin-bottom:-1px;transition:.2s;white-space:nowrap}.tab:hover{color:var(--pink)}.tab.active{color:var(--pink);border-bottom-color:var(--pink);font-style:italic}
+.ws{display:grid;grid-template-columns:300px 1fr;min-height:calc(100vh - 100px)}
+.sb{background:#fff;border-right:1px solid var(--border);padding:18px;overflow-y:auto}
+.mp{padding:22px;overflow-y:auto;max-height:calc(100vh - 100px)}
+.sec{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--pink);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--pl)}
+label{display:block;font-size:10px;color:var(--gray);margin-bottom:4px;text-transform:uppercase;letter-spacing:.4px}
+input,textarea,select{width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:6px;font-size:12px;font-family:var(--font);color:var(--dark);background:var(--cream);outline:none;transition:.2s}
+input:focus,textarea:focus,select:focus{border-color:var(--pink);background:#fff}
+textarea{resize:vertical}
+.fg{margin-bottom:13px}
+.sgrid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:13px}
+.sc{border:1.5px solid var(--border);border-radius:8px;padding:8px 6px;cursor:pointer;text-align:center;transition:.2s;background:var(--cream)}.sc:hover{border-color:var(--pm);background:var(--pl)}.sc.active{border-color:var(--pink);background:var(--pl)}
+.sc .si{font-size:16px;display:block;margin-bottom:2px}.sc .sn{font-size:10px}
+.fbtn-grp{display:flex;gap:6px;margin-bottom:13px}
+.fbtn{flex:1;padding:8px;border:1.5px solid var(--border);border-radius:6px;background:var(--cream);cursor:pointer;font-size:12px;font-family:var(--font);color:var(--gray);transition:.2s}.fbtn:hover{border-color:var(--pm)}.fbtn.active{border-color:var(--pink);background:var(--pl);color:var(--pink)}
+.rgrid{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:13px}
+.rbtn{padding:3px 8px;border:1px solid var(--border);border-radius:4px;background:var(--cream);font-size:10px;cursor:pointer;color:var(--gray);font-family:var(--mono);transition:.2s}.rbtn:hover{border-color:var(--pm)}.rbtn.active{border-color:var(--pink);background:var(--pl);color:var(--pink)}
+.bp{width:100%;padding:12px;background:var(--pink);color:#fff;border:none;border-radius:8px;font-size:13px;font-family:var(--font);cursor:pointer;transition:.2s;font-style:italic}.bp:hover{background:#d63560;transform:translateY(-1px)}.bp:disabled{background:var(--gray);cursor:not-allowed;transform:none}
+.bs{padding:8px 14px;background:#fff;color:var(--dark);border:1.5px solid var(--border);border-radius:6px;font-size:12px;font-family:var(--font);cursor:pointer;transition:.2s}.bs:hover{border-color:var(--pink);color:var(--pink)}.bs:disabled{opacity:.5;cursor:not-allowed}
+.bsm{padding:5px 10px;background:var(--pl);color:var(--pink);border:1px solid var(--pm);border-radius:5px;font-size:11px;cursor:pointer;transition:.2s;font-family:var(--font)}.bsm:hover{background:var(--pink);color:#fff}
+hr{border:none;border-top:1px solid var(--border);margin:13px 0}
+.pb{margin:10px 0}.pb-bg{background:var(--gl);border-radius:8px;height:6px;overflow:hidden}.pb-bar{height:100%;background:linear-gradient(90deg,var(--pink),#FF8FA0);border-radius:8px;transition:width .4s}.pb-lbl{font-size:10px;color:var(--gray);margin-top:4px;font-style:italic}
+.logbox{background:var(--dark);border-radius:8px;padding:10px;font-family:var(--mono);font-size:10px;color:#aaa;max-height:150px;overflow-y:auto;margin-top:10px}.logbox .ok{color:#2ECC71}.logbox .err{color:#ff6b6b}.logbox .inf{color:var(--pm)}
+.card{background:#fff;border-radius:10px;border:1px solid var(--border);padding:18px;margin-bottom:14px}
+/* BATCH */
+.batch-item{background:var(--cream);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:8px;position:relative}
+.batch-item .bi-head{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.batch-num{background:var(--pink);color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0;font-family:var(--mono)}
+.batch-status{font-size:10px;padding:2px 8px;border-radius:8px;margin-left:auto}
+.bs-wait{background:var(--gl);color:var(--gray)}.bs-run{background:#FFF3CD;color:#856404}.bs-done{background:#D4EDDA;color:#155724}.bs-err{background:#F8D7DA;color:#721c24}
+.batch-prog{margin-top:6px}
+/* IDEA LIST */
+.ii{background:var(--cream);border:1px solid var(--border);border-radius:8px;padding:10px 12px;display:flex;gap:9px;align-items:flex-start;margin-bottom:7px}
+.inum{background:var(--pink);color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0;font-family:var(--mono)}
+.ibody{flex:1}.ibody h4{font-size:12px;margin-bottom:2px}.ibody p{font-size:11px;color:var(--gray);line-height:1.5}
+.iact{display:flex;flex-direction:column;gap:3px;align-items:flex-end;flex-shrink:0}
+.itag{font-size:9px;padding:2px 6px;border-radius:7px}.ip{background:var(--gl);color:var(--gray)}.ig{background:#FFF3CD;color:#856404}.id{background:#D4EDDA;color:#155724}.ie{background:#F8D7DA;color:#721c24}
+.regen-btn{font-size:9px;padding:2px 7px;background:var(--pl);color:var(--pink);border:1px solid var(--pm);border-radius:4px;cursor:pointer;white-space:nowrap}.regen-btn:hover{background:var(--pink);color:#fff}
+/* SEO */
+.seo-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:9px}
+.seo-item{background:var(--gl);border-radius:7px;padding:9px}.seo-item label{color:var(--gray);font-size:9px}.seo-item .val{font-size:11px;color:var(--dark);margin-top:3px;line-height:1.5;font-family:var(--mono)}.seo-item.full{grid-column:1/-1}
+/* FAQ */
+.fi{background:var(--gl);border-radius:7px;padding:9px;margin-bottom:7px;display:flex;gap:7px;align-items:flex-start}
+.fck{width:14px;height:14px;accent-color:var(--pink);margin-top:2px;flex-shrink:0}
+/* Slider */
+.slw{background:#fff;border-radius:10px;border:1px solid var(--border);overflow:hidden}
+.slh{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.sla{padding:16px;display:flex;align-items:flex-start;gap:14px}
+.snv{background:var(--pl);border:1.5px solid var(--pm);color:var(--pink);border-radius:50%;width:36px;height:36px;font-size:16px;cursor:pointer;transition:.2s;flex-shrink:0;margin-top:60px;display:flex;align-items:center;justify-content:center}.snv:hover{background:var(--pink);color:#fff}
+.slc{flex:1;text-align:center}
+.simw{width:100%;max-width:240px;margin:0 auto 10px;aspect-ratio:2/3;background:var(--gl);border-radius:8px;overflow:hidden}
+.simw img{width:100%;height:100%;object-fit:cover}
+.sph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--gray);font-size:11px;flex-direction:column;gap:5px}
+/* Modal */
+.mov{position:fixed;inset:0;background:rgba(42,26,32,.6);z-index:1000;display:none;align-items:center;justify-content:center}.mov.open{display:flex}
+.modal{background:#fff;border-radius:12px;padding:24px;width:480px;max-width:95vw;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.modal h2{font-size:16px;margin-bottom:16px}.mfoot{display:flex;gap:8px;justify-content:flex-end;margin-top:16px}
+.toast{position:fixed;bottom:20px;right:20px;background:var(--dark);color:#fff;padding:10px 16px;border-radius:8px;font-size:12px;z-index:2000;transform:translateY(80px);opacity:0;transition:.3s;border-left:4px solid var(--pink)}.toast.show{transform:translateY(0);opacity:1}.toast.ok{border-left-color:var(--green)}.toast.err{border-left-color:#ff6b6b}
+.cpill{display:inline-flex;align-items:center;gap:4px;background:var(--pl);border:1px solid var(--pm);border-radius:14px;padding:2px 9px;font-size:10px;color:var(--pink);font-family:var(--mono)}
+.empty-s{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:50px 20px;text-align:center;color:var(--gray)}.empty-s .ei{font-size:40px;margin-bottom:12px}.empty-s p{font-size:13px;line-height:1.7}
+.fr{display:flex;gap:8px}.fr .fg{flex:1}
+.ins-item{display:flex;gap:8px;align-items:flex-start;padding:9px;background:var(--pl);border-radius:7px;margin-bottom:6px}
+.ins-item .ii-ic{font-size:14px;flex-shrink:0}.ins-item .ii-tx{font-size:11px;line-height:1.5}
+.steps{display:flex;gap:5px;align-items:center;margin-bottom:18px;flex-wrap:wrap}
+.step{padding:4px 10px;border-radius:16px;font-size:11px;background:var(--gl);color:var(--gray)}.step.done{background:#D4EDDA;color:#155724}.step.active{background:var(--pink);color:#fff}.stepsep{color:var(--border);font-size:9px}
+.bnext{width:100%;padding:12px;background:linear-gradient(135deg,var(--pink),#FF6B8A);color:#fff;border:none;border-radius:9px;font-size:14px;font-family:var(--font);cursor:pointer;transition:.2s;font-style:italic;margin-top:14px}.bnext:hover{transform:translateY(-2px);box-shadow:0 5px 18px rgba(232,67,106,.3)}
+/* Batch progress bar colors */
+.bp-running .pb-bar{background:linear-gradient(90deg,#F39C12,#F5C842)}
+.bp-done .pb-bar{background:linear-gradient(90deg,var(--green),#52D68A)}
+.bp-error .pb-bar{background:linear-gradient(90deg,#e74c3c,#ff6b6b)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo"><span class="logo-i">🦀</span> Pink Creative Crab — <span style="color:var(--pink);font-style:italic">Content Studio</span></div>
+  <div class="hst">
+    <div class="spl">🖼 $<b id="cImg">0.0000</b></div>
+    <div class="spl">💬 $<b id="cTxt">0.0000</b></div>
+    <div class="spl">Σ $<b id="cTotal">0.0000</b></div>
+    <button class="bh" onclick="openM('mSettings')">⚙ Settings</button>
+  </div>
+</header>
+
+<div class="tabs">
+  <div class="tab active" onclick="goTab('generate')">✦ Generate</div>
+  <div class="tab" onclick="goTab('batch')">⊞ Batch</div>
+  <div class="tab" onclick="goTab('preview')">◈ Preview</div>
+  <div class="tab" onclick="goTab('seo')">⊕ SEO & FAQ</div>
+  <div class="tab" onclick="goTab('publish')">↑ Publish</div>
+</div>
+
+<div class="ws">
+<!-- ═══ SIDEBAR ═══ -->
+<div class="sb">
+  <div class="sec">Art Style</div>
+  <div class="sgrid" id="styleGrid">
+    <div class="sc active" data-style="watercolor" onclick="selStyle(this)"><span class="si">🎨</span><span class="sn">Watercolor</span></div>
+    <div class="sc" data-style="acrylic" onclick="selStyle(this)"><span class="si">🖌️</span><span class="sn">Acrylic</span></div>
+    <div class="sc" data-style="gouache" onclick="selStyle(this)"><span class="si">🎭</span><span class="sn">Gouache</span></div>
+    <div class="sc" data-style="oilpainting" onclick="selStyle(this)"><span class="si">🛢️</span><span class="sn">Oil Painting</span></div>
+    <div class="sc" data-style="pencil" onclick="selStyle(this)"><span class="si">✏️</span><span class="sn">Pencil Drawing</span></div>
+    <div class="sc" data-style="sketching" onclick="selStyle(this)"><span class="si">📐</span><span class="sn">Sketching</span></div>
+    <div class="sc" data-style="doodles" onclick="selStyle(this)"><span class="si">🌀</span><span class="sn">Doodles</span></div>
+    <div class="sc" data-style="oilpastel" onclick="selStyle(this)"><span class="si">🖍️</span><span class="sn">Oil Pastel</span></div>
+    <div class="sc" data-style="markers" onclick="selStyle(this)"><span class="si">🖊️</span><span class="sn">Markers</span></div>
+    <div class="sc" data-style="coloring" onclick="selStyle(this)"><span class="si">🖼️</span><span class="sn">Coloring Pages</span></div>
+    <div class="sc" data-style="junkjournal" onclick="selStyle(this)"><span class="si">📖</span><span class="sn">Junk Journal</span></div>
+    <div class="sc" data-style="scrapbook" onclick="selStyle(this)"><span class="si">✂️</span><span class="sn">Scrapbook Paper</span></div>
+  </div>
+  <hr>
+  <div class="sec">Skill Level</div>
+  <div class="fbtn-grp">
+    <button class="fbtn active" onclick="selLvl(this,'beginner')">🌱 Beginner</button>
+    <button class="fbtn" onclick="selLvl(this,'intermediate')">🎨 Mid</button>
+    <button class="fbtn" onclick="selLvl(this,'advanced')">⭐ Advanced</button>
+  </div>
+  <hr>
+  <div class="sec">Image Prompt <button class="bsm" style="float:right;margin-top:-2px" onclick="savePrompt()">Save</button></div>
+  <div class="fg"><textarea id="imgPrompt" rows="3" placeholder="Auto-set by style..."></textarea></div>
+  <div class="fg"><label>Image Model</label>
+    <select id="imgModel" onchange="updateRatios()">
+      <option value="runware:400@1">Flux Pro</option>
+      <option value="bytedance:seedream@4.5">Seedream 4.5</option>
+      <option value="runware:z-image@turbo">Z-Image Turbo</option>
+      <option value="prunaai:1@1">P-Image 1.0</option>
+    </select>
+  </div>
+  <div class="fg"><label>Aspect Ratio</label><div class="rgrid" id="ratioGrid"></div></div>
+  <hr>
+  <div class="fg"><label>WordPress Category</label>
+    <select id="wpCat">
+      <optgroup label="Painting"><option value="39">Watercolor</option><option value="40">Acrylic</option><option value="41">Oil Painting</option><option value="42">Gouache</option></optgroup>
+      <optgroup label="Drawing"><option value="43">Drawing</option><option value="44">Sketching</option><option value="45">Doodles</option><option value="46">Pencil Drawing</option><option value="47">Oil Pastel</option></optgroup>
+      <optgroup label="Other"><option value="58">Coloring Pages</option><option value="49">Scrapbook Paper</option><option value="50">Junk Journal</option></optgroup>
+    </select>
+  </div>
+  <div class="fg"><label>Number of Ideas</label>
+    <div class="fbtn-grp">
+      <button class="fbtn active" onclick="selCount(this,20)">20</button>
+      <button class="fbtn" onclick="selCount(this,25)">25</button>
+      <button class="fbtn" onclick="selCount(this,30)">30</button>
+    </div>
+  </div>
+  <div class="fg"><label>Amazon Tag</label><input type="text" id="amazonTag" value="pinkcreativecrab-20"></div>
+  <div class="fg"><label>Internal Links CSV</label>
+    <input type="file" id="csvFile" accept=".csv" onchange="loadCSV(this)" style="font-size:10px;padding:5px">
+    <div id="csvSt" style="font-size:10px;color:var(--gray);margin-top:3px"></div>
+  </div>
+  <div class="fg"><label>Tone of Voice <button class="bsm" style="float:right;margin-top:-2px" onclick="saveTone()">Save</button></label>
+    <textarea id="toneVoice" rows="3" placeholder="Warm encouraging art teacher..."></textarea>
+  </div>
+  <hr>
+  <div class="sec">Tags for WordPress</div>
+  <div class="fg">
+    <label>Selected Tags</label>
+    <div id="tagCloud" style="display:flex;flex-wrap:wrap;gap:5px;min-height:20px;margin-bottom:7px"></div>
+    <input type="text" id="tagInput" placeholder="Type to filter tags..." onkeydown="handleTagInput(event)" oninput="filterTagSugg(this.value)" style="margin-bottom:6px">
+    <div style="font-size:10px;color:var(--gray);margin-bottom:5px">Existing WP tags — click to add:</div>
+    <div id="tagSuggestions" style="display:flex;flex-wrap:wrap;gap:4px;max-height:80px;overflow-y:auto">
+      <span style="font-size:10px;color:var(--gray);font-style:italic">Loading tags... <button class="bsm" onclick="loadWPTags()" style="margin-left:4px">Load</button></span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MAIN PANEL ═══ -->
+<div class="mp" id="mp">
+
+<!-- TAB: GENERATE -->
+<div id="tab-generate">
+  <div class="steps" id="stepsRow">
+    <div class="step active" id="st1">1 · Topic</div><div class="stepsep">›</div>
+    <div class="step" id="st2">2 · Generate</div><div class="stepsep">›</div>
+    <div class="step" id="st3">3 · Images</div><div class="stepsep">›</div>
+    <div class="step" id="st4">4 · SEO</div><div class="stepsep">›</div>
+    <div class="step" id="st5">5 · Publish</div>
+  </div>
+  <div class="fg"><label>Article Topic / Main Keyword</label>
+    <input type="text" id="artTopic" placeholder="e.g. 25 watercolor flower ideas for beginners">
+  </div>
+  <div style="display:flex;gap:7px;margin-bottom:12px">
+    <button class="bsm" onclick="runPAA()" id="btnPAA">🔍 Research PAA</button>
+    <span id="paaSt" style="font-size:10px;color:var(--gray);align-self:center"></span>
+  </div>
+  <div id="paaPanel" style="display:none" class="card">
+    <div class="sec">People Also Ask — check to include in FAQ</div>
+    <div id="paaList"></div>
+    <button class="bsm" onclick="document.getElementById('paaPanel').style.display='none'">Done</button>
+  </div>
+  <div style="display:flex;gap:7px;margin-bottom:14px">
+    <button class="bp" id="btnGen" onclick="startGen()" style="flex:2">✦ Generate Article + Images</button>
+    <button class="bs" onclick="genTxtOnly()" style="flex:1">Text Only</button>
+    <button class="bs" onclick="genImgOnly()" id="btnIO" disabled style="flex:1">Images Only</button>
+  </div>
+  <div id="progSec" style="display:none"><div class="pb"><div class="pb-bg"><div class="pb-bar" id="progBar" style="width:0%"></div></div><div class="pb-lbl" id="progLbl">Starting...</div></div></div>
+  <div class="logbox" id="logBox" style="display:none"></div>
+  <div id="resWrap" style="display:none">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:9px">
+      <h2 id="artTitle" style="font-size:15px;flex:1;margin-right:10px"></h2>
+      <div class="cpill">🖼 $<span id="cBadge">0.0000</span></div>
+    </div>
+    <div class="card" id="insCard" style="display:none">
+      <div class="sec">✨ Key Insights</div><div id="insList"></div>
+    </div>
+    <p id="artIntro" style="font-size:12px;color:var(--gray);line-height:1.7;margin-bottom:12px"></p>
+    <div id="ideaList"></div>
+    <button class="bnext" onclick="goTab('seo');setStep(4)">→ Next: SEO & FAQ</button>
+  </div>
+</div>
+
+<!-- TAB: BATCH -->
+<div id="tab-batch" style="display:none">
+  <div class="card">
+    <div class="sec">Batch Settings</div>
+    <div class="fr">
+      <div class="fg"><label>Publish Status</label>
+        <select id="batchStatus"><option value="draft">Draft (recommended)</option><option value="publish">Publish Now</option></select>
+      </div>
+      <div class="fg"><label>Delay Between Articles (sec)</label>
+        <input type="number" id="batchDelay" value="5" min="0" max="60">
+      </div>
+    </div>
+    <div class="fg"><label>Art Style for Batch</label>
+      <select id="batchStyle">
+        <option value="watercolor">🎨 Watercolor</option>
+        <option value="acrylic">🖌️ Acrylic</option>
+        <option value="gouache">🎭 Gouache</option>
+        <option value="oilpainting">🛢️ Oil Painting</option>
+        <option value="pencil">✏️ Pencil Drawing</option>
+        <option value="sketching">📐 Sketching</option>
+        <option value="doodles">🌀 Doodles</option>
+        <option value="oilpastel">🖍️ Oil Pastel</option>
+        <option value="markers">🖊️ Markers</option>
+        <option value="coloring">🖼️ Coloring Pages</option>
+        <option value="junkjournal">📖 Junk Journal</option>
+        <option value="scrapbook">✂️ Scrapbook Paper</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="sec">Article Topics</div>
+    <div id="batchItems"></div>
+    <div style="display:flex;gap:7px;margin-top:10px">
+      <button class="bsm" onclick="addBatchRow()">+ Add Topic</button>
+      <button class="bsm" onclick="clearBatch()">Clear All</button>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:8px;margin-bottom:14px">
+    <button class="bp" id="btnBatch" onclick="startBatch()" style="flex:2">⊞ Run Batch</button>
+    <button class="bs" onclick="stopBatch()" id="btnStopBatch" disabled>■ Stop</button>
+  </div>
+
+  <div id="batchLog" style="display:none">
+    <div class="sec">Batch Progress</div>
+    <div id="batchResults"></div>
+    <div class="logbox" id="batchLogBox" style="display:none;margin-top:10px"></div>
+  </div>
+</div>
+
+<!-- TAB: PREVIEW -->
+<div id="tab-preview" style="display:none">
+  <div id="prevEmp" class="empty-s"><div class="ei">◈</div><p>Generate an article first to preview the slider.</p></div>
+  <div id="prevCnt" style="display:none">
+    <div class="slw">
+      <div class="slh"><h3 id="prevTitle" style="font-size:13px;flex:1;margin-right:10px"></h3><div style="font-size:11px;color:var(--gray);font-family:var(--mono)"><span id="curSl">1</span> / <span id="totSl">0</span></div></div>
+      <div class="sla">
+        <button class="snv" onclick="prevSlide()">‹</button>
+        <div class="slc">
+          <div class="simw" id="slImgW"><div class="sph"><span style="font-size:26px">🎨</span><span>No image</span></div></div>
+          <div style="font-size:10px;color:var(--pink);font-family:var(--mono);margin-bottom:4px" id="slNum">#1</div>
+          <div style="font-size:14px;margin-bottom:6px" id="slTitle">—</div>
+          <div style="font-size:11px;color:var(--gray);line-height:1.6;max-width:360px;margin:0 auto" id="slDesc">—</div>
+        </div>
+        <button class="snv" onclick="nextSlide()">›</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB: SEO -->
+<div id="tab-seo" style="display:none">
+  <div id="seoEmp" class="empty-s"><div class="ei">⊕</div><p>Generate an article first.</p></div>
+  <div id="seoCnt" style="display:none">
+    <div class="card">
+      <div class="sec">SEO Data</div>
+      <div class="seo-grid">
+        <div class="seo-item full"><label>Meta Description</label><div class="val" id="seoMeta" contenteditable="true"></div></div>
+        <div class="seo-item"><label>Focus Keyword</label><div class="val" id="seoKW" contenteditable="true"></div></div>
+        <div class="seo-item"><label>URL Slug</label><div class="val" id="seoSlug" contenteditable="true"></div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="sec">FAQ Questions</div>
+      <div id="faqList"></div>
+      <button class="bsm" onclick="runPAA()" style="margin-top:7px">+ More PAA Questions</button>
+    </div>
+    <button class="bnext" onclick="goTab('publish');setStep(5)">→ Next: Publish</button>
+  </div>
+</div>
+
+<!-- TAB: PUBLISH -->
+<div id="tab-publish" style="display:none">
+  <div id="pubEmp" class="empty-s"><div class="ei">↑</div><p>Generate an article first, then publish here.</p></div>
+  <div id="pubCnt" style="display:none">
+    <div class="card">
+      <div class="sec">Publish to pinkcreativecrab.com</div>
+      <div class="fg"><label>Post Title</label><input type="text" id="pubTitle"></div>
+      <div class="fr">
+        <div class="fg"><label>Status</label><select id="pubStatus"><option value="draft">Draft</option><option value="publish">Publish Now</option></select></div>
+        <div class="fg"><label>Category</label><select id="pubCatSel"></select></div>
+      </div>
+      <div id="pubProg" style="display:none"><div class="pb"><div class="pb-bg"><div class="pb-bar" id="pubBar" style="width:0%"></div></div><div class="pb-lbl" id="pubLbl">Uploading...</div></div></div>
+      <div class="logbox" id="pubLog" style="display:none;margin-bottom:10px"></div>
+      <button class="bp" id="btnPub" onclick="publishWP()">↑ Upload & Publish</button>
+      <div id="pubRes" style="display:none;margin-top:10px"><a id="pubLink" href="#" target="_blank" style="color:var(--pink);font-style:italic;font-size:12px">View post →</a></div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /mp -->
+</div><!-- /ws -->
+
+<!-- SETTINGS MODAL -->
+<div class="mov" id="mSettings">
+  <div class="modal">
+    <h2>⚙ Settings</h2>
+    <div class="fg"><label>Anthropic API Key</label><input type="password" id="sAnt" placeholder="sk-ant-..."></div>
+    <div class="fg"><label>Runware API Key</label><input type="password" id="sRun" placeholder="runware key"></div>
+    <hr>
+    <div class="fg"><label>WordPress URL</label><input type="text" id="sUrl" value="https://pinkcreativecrab.com"></div>
+    <div class="fg"><label>WordPress Login</label><input type="text" id="sLog" value="alena.shilkina@gmail.com"></div>
+    <div class="fg"><label>WordPress App Password</label><input type="password" id="sPas"></div>
+    <div class="mfoot">
+      <button class="bs" onclick="closeM('mSettings')">Cancel</button>
+      <button class="bp" style="width:auto;padding:8px 20px" onclick="saveSett()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- REGEN MODAL -->
+<div class="mov" id="mRegen">
+  <div class="modal" style="width:400px">
+    <h2>🔄 Regenerate Image</h2>
+    <div class="fg"><label>Idea</label><div id="regenName" style="font-size:12px;padding:7px;background:var(--gl);border-radius:5px"></div></div>
+    <div class="fg"><label>Model</label>
+      <select id="regenModel">
+        <option value="runware:400@1">Flux Pro</option>
+        <option value="bytedance:seedream@4.5">Seedream 4.5</option>
+        <option value="runware:z-image@turbo">Z-Image Turbo</option>
+        <option value="prunaai:1@1">P-Image 1.0</option>
+      </select>
+    </div>
+    <div class="fg"><label>Prompt</label><textarea id="regenPr" rows="3"></textarea></div>
+    <div class="mfoot">
+      <button class="bs" onclick="closeM('mRegen')">Cancel</button>
+      <button class="bp" style="width:auto;padding:8px 20px" id="btnRG" onclick="doRegen()">Regenerate</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ════════════════════════════════════════════════════
+// CONSTANTS
+// ════════════════════════════════════════════════════
+const WP_URL   = 'https://pinkcreativecrab.com';
+const WP_LOGIN = 'alena.shilkina@gmail.com';
+const WP_PASS  = 'hn6V WLXl z3IV 6J3K Zw9K rED6';
+const PROXY    = 'https://pinkcreativecrab.com/pcc-upload-proxy.php';
+
+const CATS = {39:'Watercolor',40:'Acrylic',41:'Oil Painting',42:'Gouache',43:'Drawing',44:'Sketching',45:'Doodles',46:'Pencil Drawing',47:'Oil Pastel',58:'Coloring Pages',49:'Scrapbook Paper',50:'Junk Journal'};
+
+const STYLES = {
+  watercolor: {prompt:'watercolor painting on white paper',cat:39},
+  acrylic:    {prompt:'acrylic painting on canvas',cat:40},
+  gouache:    {prompt:'gouache illustration on white paper',cat:42},
+  oilpainting:{prompt:'oil painting on canvas',cat:41},
+  pencil:     {prompt:'graphite pencil drawing on white paper',cat:46},
+  sketching:  {prompt:'pencil sketch on white paper',cat:44},
+  doodles:    {prompt:'black and white ink doodle on white paper',cat:45},
+  oilpastel:  {prompt:'oil pastel drawing on paper',cat:47},
+  markers:    {prompt:'marker illustration on white paper',cat:44},
+  coloring:   {prompt:'black and white coloring page, clean bold outlines, no shading, white background, printable line art',cat:58},
+  junkjournal:{prompt:'vintage junk journal page, aged paper texture, antique aesthetic',cat:50},
+  scrapbook:  {prompt:'decorative scrapbook paper pattern, seamless repeating design',cat:49}
+};
+
+// Level suffixes — describe VISUAL SIMPLICITY not execution quality
+const LVL = {
+  beginner:     'Focus on simple single subjects, basic techniques, step-by-step approach. Encouraging language. Avoid complex terms.',
+  intermediate: 'Include color mixing tips, layering techniques, composition basics. Assume basic skills.',
+  advanced:     'Professional techniques, complex compositions, color theory, advanced methods. Technical precision matters.'
+};
+
+const LEVEL_IMG = {
+  beginner:     'clean simple composition, single clear subject, limited color palette, solid brushstrokes, uncluttered white background, bright cheerful colors',
+  intermediate: 'balanced composition, some color blending, moderate detail, clean background, confident brushwork',
+  advanced:     'complex composition, rich color depth, expert brushwork, dramatic lighting, professional quality, highly detailed'
+};
+
+const MODEL_RATIOS = {
+  'runware:400@1':        [{l:'2:3 Portrait',w:864,h:1152},{l:'3:4 Portrait',w:768,h:1024},{l:'1:1 Square',w:1024,h:1024},{l:'4:3 Landscape',w:1024,h:768},{l:'9:16 Tall',w:720,h:1280},{l:'16:9 Wide',w:1280,h:720}],
+  'bytedance:seedream@4.5':[{l:'3:4 Portrait',w:1728,h:2304},{l:'9:16 Portrait',w:1440,h:2560},{l:'4:3 Landscape',w:2304,h:1728},{l:'1:1 Square',w:2048,h:2048}],
+  'runware:z-image@turbo':[{l:'4:3 Landscape',w:1152,h:896},{l:'1:1 Square',w:1024,h:1024},{l:'2:3 Portrait',w:832,h:1280},{l:'9:16 Portrait',w:768,h:1344},{l:'16:9',w:1280,h:720}],
+  'prunaai:1@1':          [{l:'1:1 Square',w:1024,h:1024},{l:'4:3',w:1152,h:896},{l:'16:9',w:1280,h:720},{l:'3:4 Portrait',w:896,h:1152},{l:'9:16 Tall',w:720,h:1280},{l:'2:3 Portrait',w:832,h:1280}]
+};
+const MODEL_COST = {'runware:400@1':0.055,'bytedance:seedream@4.5':0.020,'runware:z-image@turbo':0.008,'prunaai:1@1':0.010};
+
+// ════════════════════════════════════════════════════
+// STATE
+// ════════════════════════════════════════════════════
+let S = {
+  ideas:[], title:'', intro:'', insights:[],
+  paaQ:[], faqSel:[],
+  seoMeta:'', seoKW:'', seoSlug:'',
+  style:'watercolor', level:'beginner', count:20,
+  curSlide:0, regenIdx:-1,
+  costImg:0, costTxt:0,
+  csvLinks:[], tags:[],
+  generating:false,
+  batchRunning:false, batchStop:false,
+  ratioIdx:0
+};
+
+// ════════════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════════════
+window.onload = () => {
+  loadSett(); updateRatios();
+  selStyle(document.querySelector('.sc.active'));
+  fillPubCat(); initBatch();
+  const t = localStorage.getItem('pcc_tone');
+  if (t) document.getElementById('toneVoice').value = t;
+  // Auto-load WP tags if credentials available
+  if (getSett().ant || getSett().pas) setTimeout(loadWPTags, 1000);
+};
+
+function fillPubCat() {
+  const s = document.getElementById('pubCatSel');
+  s.innerHTML = '';
+  Object.entries(CATS).forEach(([id,name]) => {
+    const o = document.createElement('option'); o.value = id; o.textContent = name; s.appendChild(o);
+  });
+}
+
+// ════════════════════════════════════════════════════
+// SETTINGS
+// ════════════════════════════════════════════════════
+function loadSett() {
+  const s = JSON.parse(localStorage.getItem('pcc_s') || '{}');
+  if (s.ant) document.getElementById('sAnt').value = s.ant;
+  if (s.run) document.getElementById('sRun').value = s.run;
+  if (s.url) document.getElementById('sUrl').value = s.url;
+  if (s.log) document.getElementById('sLog').value = s.log;
+  if (s.pas) document.getElementById('sPas').value = s.pas;
+}
+function saveSett() {
+  localStorage.setItem('pcc_s', JSON.stringify({
+    ant: v('sAnt'), run: v('sRun'), url: v('sUrl'), log: v('sLog'), pas: v('sPas')
+  }));
+  closeM('mSettings'); toast('Settings saved', 'ok');
+}
+const getSett = () => JSON.parse(localStorage.getItem('pcc_s') || '{}');
+const getAuth = () => {
+  const s = getSett();
+  return btoa((s.log || WP_LOGIN) + ':' + (s.pas || WP_PASS));
+};
+const getWpUrl = () => (getSett().url || WP_URL).replace(/\/$/, '');
+const getAntKey = () => getSett().ant || '';
+const getRunKey = () => getSett().run || '';
+
+function saveTone()   { localStorage.setItem('pcc_tone', v('toneVoice')); toast('Tone saved','ok'); }
+function savePrompt() {
+  const style = S.style;
+  STYLES[style].prompt = v('imgPrompt');
+  localStorage.setItem('pcc_prompt_' + style, STYLES[style].prompt);
+  toast('Prompt saved for ' + style, 'ok');
+}
+
+// ════════════════════════════════════════════════════
+// UI HELPERS
+// ════════════════════════════════════════════════════
+const v = id => document.getElementById(id)?.value || '';
+const el = id => document.getElementById(id);
+
+function goTab(name) {
+  ['generate','batch','preview','seo','publish'].forEach((t,i) => {
+    document.querySelectorAll('.tab')[i].classList.toggle('active', t === name);
+    el('tab-' + t).style.display = t === name ? '' : 'none';
+  });
+  if (name === 'preview') renderPreview();
+  if (name === 'seo')     renderSEO();
+  if (name === 'publish') renderPublish();
+}
+
+function setStep(n) {
+  for (let i = 1; i <= 5; i++) {
+    const e = el('st' + i); if (!e) continue;
+    e.classList.remove('active','done');
+    if (i < n) e.classList.add('done');
+    else if (i === n) e.classList.add('active');
+  }
+}
+
+function selStyle(card) {
+  document.querySelectorAll('.sc').forEach(c => c.classList.remove('active'));
+  card.classList.add('active');
+  S.style = card.dataset.style;
+  const def = STYLES[S.style];
+  const saved = localStorage.getItem('pcc_prompt_' + S.style);
+  el('imgPrompt').value = saved || def.prompt;
+  el('wpCat').value = def.cat;
+}
+
+function selLvl(btn, level) {
+  document.querySelectorAll('.fbtn').forEach(b => { if (b.closest('.fbtn-grp') === btn.closest('.fbtn-grp')) b.classList.remove('active'); });
+  btn.classList.add('active'); S.level = level;
+  const base = localStorage.getItem('pcc_prompt_' + S.style) || STYLES[S.style]?.prompt || '';
+  const stripped = base.replace(/,\s*(clean simple|balanced composition|complex composition)[^,]*/gi, '').trim();
+  el('imgPrompt').value = stripped + ', ' + LEVEL_IMG[level];
+}
+
+function selCount(btn, n) {
+  btn.closest('.fbtn-grp').querySelectorAll('.fbtn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active'); S.count = n;
+}
+
+function updateRatios() {
+  const model = v('imgModel');
+  const ratios = MODEL_RATIOS[model] || [];
+  const grid = el('ratioGrid'); grid.innerHTML = ''; S.ratioIdx = 0;
+  ratios.forEach((r, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'rbtn' + (i === 0 ? ' active' : '');
+    btn.textContent = r.l;
+    btn.onclick = () => { grid.querySelectorAll('.rbtn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); S.ratioIdx = i; };
+    grid.appendChild(btn);
+  });
+}
+
+const getRatio = () => { const m = v('imgModel'); return MODEL_RATIOS[m][S.ratioIdx] || {w:1024,h:1024}; };
+
+function openM(id) { el(id).classList.add('open'); }
+function closeM(id) { el(id).classList.remove('open'); }
+
+function toast(msg, type = '') {
+  const t = el('toast'); t.textContent = msg; t.className = 'toast show ' + type;
+  setTimeout(() => t.className = 'toast', 3000);
+}
+
+function log(msg, type='', box='logBox') {
+  const b = el(box); b.style.display = '';
+  const l = document.createElement('div'); l.className = type; l.textContent = '› ' + msg;
+  b.appendChild(l); b.scrollTop = b.scrollHeight;
+}
+
+function setProg(pct, lbl) {
+  el('progSec').style.display = '';
+  el('progBar').style.width = pct + '%';
+  el('progLbl').textContent = lbl;
+}
+
+function addCost(imgC, txtC = 0) {
+  S.costImg += imgC; S.costTxt += txtC;
+  el('cImg').textContent = S.costImg.toFixed(4);
+  el('cTxt').textContent = S.costTxt.toFixed(4);
+  el('cTotal').textContent = (S.costImg + S.costTxt).toFixed(4);
+  el('cBadge').textContent = S.costImg.toFixed(4);
+}
+
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+// ════════════════════════════════════════════════════
+// CSV
+// ════════════════════════════════════════════════════
+function loadCSV(input) {
+  const file = input.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const lines = e.target.result.split('\n').filter(l => l.trim());
+    S.csvLinks = lines.slice(1).map(l => {
+      const cols = l.split(',');
+      return { anchor: (cols[0]||'').trim().replace(/"/g,''), url: (cols[1]||'').trim().replace(/"/g,'') };
+    }).filter(l => l.anchor && l.url);
+    el('csvSt').textContent = `✓ ${S.csvLinks.length} links loaded`;
+  };
+  reader.readAsText(file);
+}
+
+// ════════════════════════════════════════════════════
+// CLAUDE
+// ════════════════════════════════════════════════════
+async function callClaude(system, user, useSearch = false) {
+  const key = getAntKey(); if (!key) throw new Error('No Anthropic API key in Settings');
+  const body = { model:'claude-sonnet-4-6', max_tokens:4000, system, messages:[{role:'user',content:user}] };
+  if (useSearch) body.tools = [{type:'web_search_20250305',name:'web_search'}];
+
+  const r = await fetch('https://api.anthropic.com/v1/messages', {
+    method:'POST',
+    headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+    body: JSON.stringify(body)
+  });
+  if (!r.ok) throw new Error('Claude: ' + (await r.text()));
+  const data = await r.json();
+  addCost(0, (data.usage?.input_tokens||500)*0.000003 + (data.usage?.output_tokens||1000)*0.000015);
+
+  // Handle multi-turn web search: if stop_reason is tool_use, send results back
+  if (useSearch && data.stop_reason === 'tool_use') {
+    const toolUses = data.content.filter(b => b.type === 'tool_use');
+    const toolResults = data.content.filter(b => b.type === 'tool_result' || b.type === 'web_search_tool_result');
+    // Build follow-up with tool results already in content
+    const followBody = {
+      model: 'claude-sonnet-4-6', max_tokens: 4000, system,
+      tools: [{type:'web_search_20250305',name:'web_search'}],
+      messages: [
+        {role:'user', content: user},
+        {role:'assistant', content: data.content},
+        {role:'user', content: toolUses.map(t => ({
+          type:'tool_result', tool_use_id: t.id,
+          content: 'Search completed, please summarize findings as JSON.'
+        }))}
+      ]
+    };
+    const r2 = await fetch('https://api.anthropic.com/v1/messages', {
+      method:'POST',
+      headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body: JSON.stringify(followBody)
+    });
+    if (!r2.ok) throw new Error('Claude follow-up: ' + (await r2.text()));
+    const data2 = await r2.json();
+    addCost(0, (data2.usage?.input_tokens||500)*0.000003 + (data2.usage?.output_tokens||500)*0.000015);
+    return data2.content.filter(b => b.type === 'text').map(b => b.text).join('');
+  }
+
+  return data.content.filter(b => b.type === 'text').map(b => b.text).join('');
+}
+
+const parseJ = raw => {
+  try { return JSON.parse(raw.replace(/```json|```/g,'').trim()); }
+  catch(e) { throw new Error('JSON parse failed'); }
+};
+
+// ════════════════════════════════════════════════════
+// TAGS
+// ════════════════════════════════════════════════════
+function handleTagInput(e) {
+  if (e.key === 'Enter' || e.key === ',') {
+    e.preventDefault();
+    addTagStr(e.target.value);
+    e.target.value = '';
+  }
+}
+function handleTagBlur() {
+  const inp = el('tagInput');
+  if (inp.value.trim()) { addTagStr(inp.value); inp.value = ''; }
+}
+function addTagStr(raw) {
+  raw.split(',').map(t=>t.trim().toLowerCase()).filter(t=>t).forEach(tag => {
+    if (!S.tags.includes(tag)) { S.tags.push(tag); renderTags(); }
+  });
+}
+function removeTag(tag) { S.tags = S.tags.filter(t => t !== tag); renderTags(); }
+function renderTags() {
+  const cloud = el('tagCloud'); cloud.innerHTML = '';
+  S.tags.forEach(tag => {
+    const s = document.createElement('span');
+    s.style.cssText = 'display:inline-flex;align-items:center;gap:4px;background:var(--pl);color:var(--pink);border:1px solid var(--pm);border-radius:12px;padding:2px 8px;font-size:11px;';
+    s.innerHTML = tag + ' <span onclick="removeTag(\''"+tag+"\'')" style="cursor:pointer;font-size:14px;line-height:1;">×</span>';
+    cloud.appendChild(s);
+  });
+}
+// Load existing WP tags for autocomplete
+let wpTagsCache = [];
+async function loadWPTags() {
+  if (wpTagsCache.length) return wpTagsCache;
+  try {
+    const r = await fetch(getWpUrl()+'/wp-json/wp/v2/tags?per_page=100&orderby=count&order=desc',{headers:{'Authorization':'Basic '+getAuth()}});
+    if (r.ok) { wpTagsCache = await r.json(); renderTagSuggestions(); }
+  } catch(e) {}
+  return wpTagsCache;
+}
+function filterTagSugg(query) {
+  if (!wpTagsCache.length) return;
+  const sugg = el('tagSuggestions'); if (!sugg) return;
+  sugg.innerHTML = '';
+  const filtered = query ? wpTagsCache.filter(t => t.name.toLowerCase().includes(query.toLowerCase())) : wpTagsCache;
+  filtered.slice(0,40).forEach(t => {
+    const btn = document.createElement('button');
+    btn.style.cssText = 'padding:2px 8px;border:1px solid var(--border);border-radius:10px;background:var(--gl);color:var(--gray);font-size:10px;cursor:pointer;font-family:var(--font);';
+    btn.textContent = t.name + ' (' + t.count + ')';
+    btn.onclick = () => { if(!S.tags.includes(t.name)){S.tags.push(t.name);renderTags();} };
+    sugg.appendChild(btn);
+  });
+}
+
+function renderTagSuggestions() {
+  const sugg = el('tagSuggestions'); if (!sugg) return;
+  sugg.innerHTML = '';
+  wpTagsCache.forEach(t => {
+    const btn = document.createElement('button');
+    btn.style.cssText = 'padding:2px 8px;border:1px solid var(--border);border-radius:10px;background:var(--gl);color:var(--gray);font-size:10px;cursor:pointer;font-family:var(--font);';
+    btn.textContent = t.name + ' (' + t.count + ')';
+    btn.onclick = () => { if(!S.tags.includes(t.name)){S.tags.push(t.name);renderTags();} };
+    sugg.appendChild(btn);
+  });
+}
+async function resolveWPTags(tagNames) {
+  if (!tagNames.length) return [];
+  const tags = await loadWPTags();
+  const ids = [];
+  tagNames.forEach(name => {
+    const match = tags.find(t => t.name.toLowerCase() === name.toLowerCase());
+    if (match) ids.push(match.id);
+    // if not found — skip (don't create new)
+  });
+  return ids;
+}
+
+// ════════════════════════════════════════════════════
+// PAA — without web_search (Claude generates from knowledge)
+// ════════════════════════════════════════════════════
+async function runPAA() {
+  const topic = v('artTopic').trim(); if (!topic) { toast('Enter a topic first','err'); return; }
+  el('paaSt').textContent = 'Generating...'; el('btnPAA').disabled = true;
+  try {
+    const key = getAntKey(); if (!key) throw new Error('No Anthropic API key in Settings');
+    const r = await fetch('https://api.anthropic.com/v1/messages', {
+      method:'POST',
+      headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body: JSON.stringify({
+        model:'claude-sonnet-4-6', max_tokens:1000,
+        system:'You generate People Also Ask questions for art blogs. Return ONLY raw JSON, no markdown, no explanation.',
+        messages:[{role:'user', content:`List 12 real beginner questions people search about: "${topic}". Return ONLY: {"questions":["Q1?","Q2?",...,"Q12?"]}`}]
+      })
+    });
+    if (!r.ok) throw new Error('API error ' + r.status);
+    const data = await r.json();
+    const txt = (data.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('');
+    const clean = txt.replace(/```json|```/g,'').trim();
+    const parsed = JSON.parse(clean);
+    const newQ = parsed.questions || [];
+    S.paaQ = [...new Set([...(S.paaQ||[]), ...newQ])];
+    renderPAAPanel(); el('paaPanel').style.display = '';
+    el('paaSt').textContent = newQ.length + ' questions';
+  } catch(e) { el('paaSt').textContent = 'Error: ' + e.message; toast('PAA: ' + e.message, 'err'); }
+  el('btnPAA').disabled = false;
+}
+
+function renderPAAPanel() {
+  const list = el('paaList'); list.innerHTML = '';
+  S.paaQ.forEach(q => {
+    const d = document.createElement('div'); d.className = 'fi';
+    const checked = S.faqSel.includes(q);
+    d.innerHTML = `<input type="checkbox" class="fck" ${checked?'checked':''} onchange="toggleFAQ(this,${JSON.stringify(q)})"><span style="font-size:11px;line-height:1.5">${q}</span>`;
+    list.appendChild(d);
+  });
+}
+
+function toggleFAQ(cb, q) {
+  if (cb.checked) { if (!S.faqSel.includes(q)) S.faqSel.push(q); }
+  else { S.faqSel = S.faqSel.filter(x => x !== q); }
+}
+
+// ════════════════════════════════════════════════════
+// TEXT GENERATION
+// ════════════════════════════════════════════════════
+async function generateText(topic, style, level, count) {
+  topic = topic || v('artTopic').trim(); if (!topic) throw new Error('No topic');
+  style = style || S.style; level = level || S.level; count = count || S.count;
+  const tone = v('toneVoice') || 'Warm, encouraging art teacher. Inclusive language.';
+  const amazonTag = v('amazonTag') || 'pinkcreativecrab-20';
+  const faqHint = S.faqSel.length ? `\nInclude FAQ:\n${S.faqSel.map((q,i)=>`${i+1}. ${q}`).join('\n')}` : '';
+  const csvHint = S.csvLinks.length ? `\nInsert 2-3 internal links:\n${S.csvLinks.slice(0,8).map(l=>`- "${l.anchor}": ${l.url}`).join('\n')}` : '';
+  const styleBase = localStorage.getItem('pcc_prompt_' + style) || STYLES[style]?.prompt || '';
+  const levelImgHint = LEVEL_IMG[level] || LEVEL_IMG.beginner;
+
+  const sys = `You are a creative art blog writer for pinkcreativecrab.com.
+Tone: ${tone}
+Skill level: ${level}. ${LVL[level]}
+Amazon affiliate tag: ${amazonTag}
+Return ONLY valid JSON, no markdown, no preamble.`;
+
+  const usr = `Write a blog article about: "${topic}"
+Art style: ${style}, Count: ${count}
+${faqHint}${csvHint}
+
+JSON structure:
+{
+  "title": "SEO title 55-60 chars",
+  "meta_description": "150-160 chars",
+  "focus_keyword": "main keyword phrase",
+  "slug": "url-slug",
+  "insights": ["insight1","insight2","insight3"],
+  "intro": "2-3 paragraphs. Include Amazon disclosure. Internal links if CSV provided. 200-250 words.",
+  "ideas": [
+    {
+      "title": "5-8 word idea title",
+      "description": "60-80 words. Include: what to paint/draw, specific technique tips (brush type, paint consistency, color mixing for ${style}), what makes this ${level}-friendly. Add Amazon product link with tag ${amazonTag} if relevant.",
+      "image_prompt": "Specific visual description for AI image generation. Format: [subject with specific details], ${styleBase}, ${levelImgHint}. Focus on describing WHAT is in the image visually. 15-25 words total. Example: 'single red rose with rounded petals, ${styleBase}, ${levelImgHint}'"
+    }
+  ],
+  "faq": [{"q":"question","a":"50-70 word answer"}]
+}
+Generate exactly ${count} ideas. Descriptions must be technically informative. image_prompt must be specific and visual.`;
+
+  const raw = await callClaude(sys, usr, false);
+  return parseJ(raw);
+}
+
+// ════════════════════════════════════════════════════
+// IMAGE GENERATION
+// ════════════════════════════════════════════════════
+async function generateImage(ideaTitle, modelOverride, promptOverride, styleOverride) {
+  const key = getRunKey(); if (!key) throw new Error('No Runware key in Settings');
+  const model = modelOverride || v('imgModel');
+  const ratio = getRatio();
+  const styleKey = styleOverride || S.style;
+  // Use image_prompt from idea if available (generated by Claude per idea)
+  // Otherwise fallback to title + base style prompt
+  const prompt = promptOverride || ideaTitle;
+
+  const r = await fetch('https://api.runware.ai/v1', {
+    method:'POST',
+    headers:{'Content-Type':'application/json','Authorization':'Bearer ' + key},
+    body: JSON.stringify([{taskType:'imageInference',taskUUID:crypto.randomUUID(),positivePrompt:prompt,model,width:ratio.w,height:ratio.h,numberResults:1,outputFormat:'PNG',outputType:['URL']}])
+  });
+  if (!r.ok) throw new Error('Runware: ' + (await r.text()));
+  const data = await r.json();
+  if (data.errors?.length) throw new Error('Runware: ' + data.errors[0].message);
+  const url = data.data?.[0]?.imageURL; if (!url) throw new Error('No image URL');
+  addCost(MODEL_COST[model] || 0.02);
+  return url;
+}
+
+// ════════════════════════════════════════════════════
+// UPLOAD VIA PROXY (fast server-side sideload)
+// ════════════════════════════════════════════════════
+async function uploadImageViaProxy(imageUrl, filename, altText) {
+  const fd = new FormData();
+  fd.append('source_url', imageUrl);
+  fd.append('filename', filename);
+  fd.append('alt_text', altText || '');
+  const r = await fetch(PROXY, { method:'POST', body:fd });
+  if (!r.ok) {
+    // fallback: direct blob upload
+    return await uploadImageDirect(imageUrl, filename, altText);
+  }
+  const data = await r.json();
+  if (!data.id) throw new Error('Upload failed: ' + JSON.stringify(data));
+  return { id: data.id, url: data.source_url };
+}
+
+async function uploadImageDirect(imageUrl, filename, altText) {
+  const blob = await (await fetch(imageUrl)).blob();
+  const fd = new FormData(); fd.append('file', blob, filename);
+  const r = await fetch(`${getWpUrl()}/wp-json/wp/v2/media`, {
+    method:'POST', headers:{'Authorization':'Basic ' + getAuth()}, body:fd
+  });
+  if (!r.ok) throw new Error(await r.text());
+  const data = await r.json();
+  return { id: data.id, url: data.source_url };
+}
+
+// ════════════════════════════════════════════════════
+// RENDER IDEAS
+// ════════════════════════════════════════════════════
+function renderIdeas(ideas, title, intro, insights) {
+  el('artTitle').textContent = title;
+  el('artIntro').textContent = intro;
+  if (insights?.length) {
+    el('insCard').style.display = '';
+    const il = el('insList'); il.innerHTML = '';
+    insights.forEach(ins => {
+      const d = document.createElement('div'); d.className = 'ins-item';
+      d.innerHTML = `<span class="ii-ic">✦</span><span class="ii-tx">${ins}</span>`;
+      il.appendChild(d);
+    });
+  }
+  const list = el('ideaList'); list.innerHTML = '';
+  ideas.forEach((idea, i) => {
+    const d = document.createElement('div'); d.className = 'ii'; d.id = 'ii-' + i;
+    d.innerHTML = `<div class="inum">${i+1}</div>
+      <div class="ibody"><h4>${idea.title}</h4><p>${idea.description}</p></div>
+      <div class="iact"><span class="itag ip" id="itag-${i}">⏳</span><button class="regen-btn" onclick="openRegen(${i})">🔄 Regen</button></div>`;
+    list.appendChild(d);
+  });
+  el('resWrap').style.display = ''; el('btnIO').disabled = false;
+}
+
+function setITag(i, cls, txt) {
+  const e = el('itag-' + i); if (e) { e.className = 'itag ' + cls; e.textContent = txt; }
+}
+
+// ════════════════════════════════════════════════════
+// REGEN
+// ════════════════════════════════════════════════════
+function openRegen(i) {
+  S.regenIdx = i;
+  el('regenName').textContent = S.ideas[i].title;
+  el('regenModel').value = v('imgModel');
+  el('regenPr').value = S.ideas[i].image_prompt || (S.ideas[i].title + ', ' + (localStorage.getItem('pcc_prompt_' + S.style) || STYLES[S.style]?.prompt || ''));
+  openM('mRegen');
+}
+
+async function doRegen() {
+  const i = S.regenIdx; const model = v('regenModel'); const prompt = v('regenPr');
+  el('btnRG').disabled = true; setITag(i,'ig','⚙ Regen...');
+  try {
+    const key = getRunKey(); const ratio = getRatio();
+    const r = await fetch('https://api.runware.ai/v1', {
+      method:'POST', headers:{'Content-Type':'application/json','Authorization':'Bearer ' + key},
+      body: JSON.stringify([{taskType:'imageInference',taskUUID:crypto.randomUUID(),positivePrompt:prompt,model,width:ratio.w,height:ratio.h,numberResults:1,outputFormat:'PNG',outputType:['URL']}])
+    });
+    if (!r.ok) throw new Error(await r.text());
+    const data = await r.json();
+    if (data.errors?.length) throw new Error(data.errors[0].message);
+    const url = data.data?.[0]?.imageURL; if (!url) throw new Error('No URL');
+    S.ideas[i].imageUrl = url; addCost(MODEL_COST[model]||0.02);
+    setITag(i,'id','✓'); toast('Regenerated!','ok'); closeM('mRegen');
+  } catch(e) { setITag(i,'ie','✗'); toast('Regen failed: ' + e.message,'err'); }
+  el('btnRG').disabled = false;
+}
+
+// ════════════════════════════════════════════════════
+// MAIN GENERATE FLOWS
+// ════════════════════════════════════════════════════
+async function startGen() {
+  if (S.generating) return; S.generating = true;
+  el('btnGen').disabled = true;
+  el('logBox').innerHTML = ''; el('logBox').style.display = 'none';
+  setProg(2, '✍ Writing article text with Claude...');
+  setStep(2);
+  try {
+    const res = await generateText();
+    S.title = res.title; S.intro = res.intro; S.insights = res.insights || [];
+    S.ideas = (res.ideas||[]).map(i => ({...i, imageUrl:null}));
+    S.seoMeta = res.meta_description||''; S.seoKW = res.focus_keyword||''; S.seoSlug = res.slug||'';
+    if (res.faq) { res.faq.forEach(f => { if (!S.paaQ.includes(f.q)) S.paaQ.push(f.q); if (!S.faqSel.includes(f.q)) S.faqSel.push(f.q); }); }
+    log('Text done: ' + S.ideas.length + ' ideas','ok'); setStep(3);
+    renderIdeas(S.ideas, S.title, S.intro, S.insights);
+    setProg(20,'Generating images...');
+    for (let i = 0; i < S.ideas.length; i++) {
+      setITag(i,'ig','⚙'); setProg(20+Math.round((i/S.ideas.length)*78),`🎨 Image ${i+1} of ${S.ideas.length}...`);
+      try { S.ideas[i].imageUrl = await generateImage(S.ideas[i].image_prompt || S.ideas[i].title); setITag(i,'id','✓'); log(`Image ${i+1} ✓`,'ok'); }
+      catch(e) { setITag(i,'ie','✗'); log(`Image ${i+1}: ${e.message}`,'err'); }
+      if (i < S.ideas.length-1) await sleep(300);
+    }
+    setProg(100,'✓ Done! Go to SEO & FAQ or Publish →'); toast('Article ready!','ok');
+  } catch(e) { setProg(0,''); log('Error: '+e.message,'err'); toast('Error: '+e.message,'err'); }
+  S.generating = false; el('btnGen').disabled = false;
+}
+
+async function genTxtOnly() {
+  if (S.generating) return; S.generating = true;
+  el('logBox').innerHTML=''; el('logBox').style.display='none';
+  setProg(2, '✍ Writing article text with Claude...');
+  setStep(2);
+  try {
+    const res = await generateText(); S.title=res.title; S.intro=res.intro; S.insights=res.insights||[];
+    S.ideas=(res.ideas||[]).map(i=>({...i,imageUrl:null}));
+    S.seoMeta=res.meta_description||''; S.seoKW=res.focus_keyword||''; S.seoSlug=res.slug||'';
+    if (res.faq) { res.faq.forEach(f=>{if(!S.paaQ.includes(f.q))S.paaQ.push(f.q);if(!S.faqSel.includes(f.q))S.faqSel.push(f.q);}); }
+    renderIdeas(S.ideas,S.title,S.intro,S.insights); setStep(3); toast('Text done!','ok');
+  } catch(e) { log('Error: '+e.message,'err'); toast(e.message,'err'); }
+  S.generating = false;
+}
+
+async function genImgOnly() {
+  if (S.generating || !S.ideas.length) return; S.generating = true; el('btnIO').disabled = true;
+  for (let i=0; i<S.ideas.length; i++) {
+    if (S.ideas[i].imageUrl) continue;
+    setITag(i,'ig','⚙'); setProg(Math.round((i/S.ideas.length)*100),`Image ${i+1}/${S.ideas.length}`);
+    try { S.ideas[i].imageUrl = await generateImage(S.ideas[i].image_prompt || S.ideas[i].title); setITag(i,'id','✓'); }
+    catch(e) { setITag(i,'ie','✗'); log(`Image ${i+1}: ${e.message}`,'err'); }
+    if (i<S.ideas.length-1) await sleep(300);
+  }
+  setProg(100,'Done!'); toast('Images done!','ok'); S.generating=false; el('btnIO').disabled=false;
+}
+
+// ════════════════════════════════════════════════════
+// BATCH MODE
+// ════════════════════════════════════════════════════
+let batchTopics = [];
+
+function initBatch() {
+  batchTopics = ['','',''];
+  renderBatchItems();
+}
+
+function renderBatchItems() {
+  const wrap = el('batchItems'); wrap.innerHTML = '';
+  batchTopics.forEach((topic, i) => {
+    const d = document.createElement('div'); d.className = 'batch-item'; d.id = 'bi-' + i;
+    d.innerHTML = `
+      <div class="bi-head">
+        <div class="batch-num">${i+1}</div>
+        <input type="text" id="bt-${i}" value="${topic}" placeholder="Article topic..." style="flex:1;margin:0" oninput="batchTopics[${i}]=this.value">
+        <span class="batch-status bs-wait" id="bst-${i}">○ Waiting</span>
+        <button onclick="removeBatchRow(${i})" style="background:none;border:none;color:var(--gray);cursor:pointer;padding:0 4px;font-size:14px">×</button>
+      </div>
+      <div class="batch-prog" id="bprog-${i}" style="display:none">
+        <div class="pb-bg"><div class="pb-bar" id="bbar-${i}" style="width:0%"></div></div>
+        <div class="pb-lbl" id="blbl-${i}"></div>
+      </div>`;
+    wrap.appendChild(d);
+  });
+}
+
+function addBatchRow() {
+  batchTopics.push(''); renderBatchItems();
+  // restore existing values
+  batchTopics.forEach((t,i) => { const inp = el('bt-'+i); if(inp) inp.value = t; });
+}
+
+function removeBatchRow(i) {
+  batchTopics.splice(i, 1); renderBatchItems();
+  batchTopics.forEach((t,j) => { const inp = el('bt-'+j); if(inp) inp.value = t; });
+}
+
+function clearBatch() { batchTopics = ['','','']; renderBatchItems(); }
+
+function stopBatch() { S.batchStop = true; toast('Stopping after current article...'); }
+
+async function startBatch() {
+  const topics = batchTopics.map((t,i) => ({topic: (el('bt-'+i)?.value||t).trim(), idx:i})).filter(t => t.topic);
+  if (!topics.length) { toast('Add at least one topic','err'); return; }
+  if (S.batchRunning) return;
+
+  S.batchRunning = true; S.batchStop = false;
+  el('btnBatch').disabled = true; el('btnStopBatch').disabled = false;
+  el('batchLog').style.display = ''; el('batchLogBox').style.display = 'none';
+
+  const style = v('batchStyle');
+  const status = v('batchStatus');
+  const delay = parseInt(v('batchDelay')) || 5;
+  const catId = STYLES[style]?.cat || 39;
+  const count = S.count;
+  const level = S.level;
+
+  for (const {topic, idx} of topics) {
+    if (S.batchStop) { setBatchStatus(idx,'bs-err','■ Stopped'); break; }
+
+    setBatchStatus(idx, 'bs-run', '⚙ Running...');
+    setBatchProg(idx, 0, 'Generating text...');
+
+    try {
+      // Text
+      log(`[${idx+1}] Generating text: "${topic}"`, 'inf', 'batchLogBox');
+      const res = await generateText(topic, style, level, count);
+      const ideas = (res.ideas||[]).map(i => ({...i, imageUrl:null}));
+      setBatchProg(idx, 20, `Text done. Generating ${ideas.length} images...`);
+      log(`[${idx+1}] Text done: ${ideas.length} ideas`, 'ok', 'batchLogBox');
+
+      // Images
+      for (let i = 0; i < ideas.length; i++) {
+        if (S.batchStop) break;
+        setBatchProg(idx, 20+Math.round((i/ideas.length)*50), `Image ${i+1}/${ideas.length}...`);
+        try { ideas[i].imageUrl = await generateImage(ideas[i].image_prompt || ideas[i].title, null, null, style); }
+        catch(e) { log(`[${idx+1}] Img ${i+1} failed: ${e.message}`, 'err', 'batchLogBox'); }
+        if (i < ideas.length-1) await sleep(300);
+      }
+
+      setBatchProg(idx, 70, 'Uploading images to WordPress...');
+
+      // Upload images
+      const uploaded = [];
+      for (let i = 0; i < ideas.length; i++) {
+        if (!ideas[i].imageUrl) { uploaded.push(null); continue; }
+        try {
+          const filename = `pcc-${style}-${idx+1}-${i+1}-${Date.now()}.png`;
+          const media = await uploadImageViaProxy(ideas[i].imageUrl, filename, ideas[i].title);
+          uploaded.push(media);
+        } catch(e) { uploaded.push(null); log(`[${idx+1}] Upload ${i+1} failed: ${e.message}`, 'err', 'batchLogBox'); }
+      }
+
+      setBatchProg(idx, 90, 'Publishing post...');
+
+      // Build & publish post
+      const insightsHTML = (res.insights||[]).length ? `<div style="background:#FFF8F9;border-left:4px solid #E8436A;padding:14px 18px;border-radius:8px;margin-bottom:18px"><h3 style="color:#E8436A;margin-bottom:8px">✨ Key Insights</h3><ul>${(res.insights||[]).map(i=>`<li style="margin-bottom:5px">${esc(i)}</li>`).join('')}</ul></div>` : '';
+      const introHTML = (res.intro||'').split('\n').filter(p=>p.trim()).map(p=>`<p>${p}</p>`).join('\n');
+      const faqHTML = (res.faq||[]).length ? `\n<h2>Frequently Asked Questions</h2>\n`+(res.faq||[]).map(f=>`<h3>${esc(f.q)}</h3><p>${esc(f.a)}</p>`).join('\n') : '';
+      const sliderHTML = buildSlider(ideas, uploaded);
+      const content = insightsHTML + '\n' + introHTML + '\n\n' + sliderHTML + faqHTML;
+
+      // Resolve tags
+      const tagIds = await resolveWPTags(S.tags);
+
+      const postPayload = {
+        title: res.title, content, status,
+        categories: [catId],
+        tags: tagIds,
+        featured_media: uploaded[0]?.id || 0,
+        meta: { _yoast_wpseo_metadesc: res.meta_description||'', _yoast_wpseo_focuskw: res.focus_keyword||'' },
+        slug: res.slug||''
+      };
+
+      const pr = await fetch(`${getWpUrl()}/wp-json/wp/v2/posts`, {
+        method:'POST', headers:{'Content-Type':'application/json','Authorization':'Basic '+getAuth()},
+        body: JSON.stringify(postPayload)
+      });
+      if (!pr.ok) throw new Error(await pr.text());
+      const pd = await pr.json();
+
+      setBatchProg(idx, 100, '✓ Published as ' + status);
+      setBatchStatus(idx, 'bs-done', '✓ Done');
+      log(`[${idx+1}] Published: ${pd.link}`, 'ok', 'batchLogBox');
+
+    } catch(e) {
+      setBatchStatus(idx, 'bs-err', '✗ Error');
+      setBatchProg(idx, 100, '✗ ' + e.message);
+      log(`[${idx+1}] Error: ${e.message}`, 'err', 'batchLogBox');
+    }
+
+    if (delay > 0 && idx < topics.length-1 && !S.batchStop) {
+      log(`[${idx+1}] Waiting ${delay}s before next article...`, 'inf', 'batchLogBox');
+      await sleep(delay * 1000);
+    }
+  }
+
+  S.batchRunning = false; S.batchStop = false;
+  el('btnBatch').disabled = false; el('btnStopBatch').disabled = true;
+  toast('Batch complete!', 'ok');
+}
+
+function setBatchStatus(idx, cls, txt) {
+  const e = el('bst-' + idx); if (!e) return;
+  e.className = 'batch-status ' + cls; e.textContent = txt;
+}
+
+function setBatchProg(idx, pct, lbl) {
+  const p = el('bprog-'+idx); if (!p) return;
+  p.style.display = '';
+  const bar = el('bbar-'+idx); if (bar) bar.style.width = pct + '%';
+  const lel = el('blbl-'+idx); if (lel) lel.textContent = lbl;
+}
+
+// ════════════════════════════════════════════════════
+// PREVIEW
+// ════════════════════════════════════════════════════
+function renderPreview() {
+  if (!S.ideas.length) { el('prevEmp').style.display=''; el('prevCnt').style.display='none'; return; }
+  el('prevEmp').style.display='none'; el('prevCnt').style.display='';
+  el('prevTitle').textContent = S.title; el('totSl').textContent = S.ideas.length;
+  S.curSlide = 0; showSlide(0);
+}
+function showSlide(i) {
+  const idea = S.ideas[i]; if (!idea) return;
+  el('curSl').textContent = i+1; el('slNum').textContent = '#'+(i+1);
+  el('slTitle').textContent = idea.title; el('slDesc').textContent = idea.description;
+  const w = el('slImgW');
+  w.innerHTML = idea.imageUrl ? `<img src="${idea.imageUrl}" alt="${esc(idea.title)}" loading="lazy">` : `<div class="sph"><span style="font-size:26px">🎨</span><span>No image</span></div>`;
+}
+function prevSlide() { if (S.curSlide>0) { S.curSlide--; showSlide(S.curSlide); } }
+function nextSlide() { if (S.curSlide<S.ideas.length-1) { S.curSlide++; showSlide(S.curSlide); } }
+
+// ════════════════════════════════════════════════════
+// SEO
+// ════════════════════════════════════════════════════
+function renderSEO() {
+  if (!S.ideas.length) { el('seoEmp').style.display=''; el('seoCnt').style.display='none'; return; }
+  el('seoEmp').style.display='none'; el('seoCnt').style.display='';
+  el('seoMeta').textContent = S.seoMeta; el('seoKW').textContent = S.seoKW; el('seoSlug').textContent = S.seoSlug;
+  const fl = el('faqList'); fl.innerHTML = '';
+  S.paaQ.forEach(q => {
+    const d = document.createElement('div'); d.className = 'fi';
+    d.innerHTML = `<input type="checkbox" class="fck" ${S.faqSel.includes(q)?'checked':''} onchange="toggleFAQ(this,${JSON.stringify(q)})"><span style="font-size:11px;line-height:1.5">${q}</span>`;
+    fl.appendChild(d);
+  });
+}
+
+// ════════════════════════════════════════════════════
+// PUBLISH
+// ════════════════════════════════════════════════════
+function renderPublish() {
+  if (!S.ideas.length) { el('pubEmp').style.display=''; el('pubCnt').style.display='none'; return; }
+  el('pubEmp').style.display='none'; el('pubCnt').style.display='';
+  el('pubTitle').value = S.title; el('pubCatSel').value = STYLES[S.style]?.cat || 39;
+}
+
+async function publishWP() {
+  el('pubLog').innerHTML=''; el('pubProg').style.display=''; el('btnPub').disabled=true;
+
+  const uploaded = [];
+  for (let i=0; i<S.ideas.length; i++) {
+    const pct = Math.round((i/S.ideas.length)*60);
+    el('pubBar').style.width = pct+'%'; el('pubLbl').textContent = `Uploading ${i+1}/${S.ideas.length}...`;
+    if (!S.ideas[i].imageUrl) { uploaded.push(null); continue; }
+    try {
+      const filename = `pcc-${S.style}-${i+1}-${Date.now()}.png`;
+      const media = await uploadImageViaProxy(S.ideas[i].imageUrl, filename, S.ideas[i].title);
+      uploaded.push(media); log(`Image ${i+1} ✓`, 'ok', 'pubLog');
+    } catch(e) { uploaded.push(null); log(`Image ${i+1}: ${e.message}`, 'err', 'pubLog'); }
+  }
+
+  el('pubBar').style.width='75%'; el('pubLbl').textContent='Building post...';
+
+  const insightsHTML = S.insights.length ? `<div style="background:#FFF8F9;border-left:4px solid #E8436A;padding:14px 18px;border-radius:8px;margin-bottom:18px"><h3 style="color:#E8436A;margin-bottom:8px">✨ Key Insights</h3><ul>${S.insights.map(i=>`<li style="margin-bottom:5px">${esc(i)}</li>`).join('')}</ul></div>` : '';
+  const introHTML = S.intro.split('\n').filter(p=>p.trim()).map(p=>`<p>${p}</p>`).join('\n');
+  const selFAQ = S.paaQ.filter(q => S.faqSel.includes(q));
+  const faqHTML = selFAQ.length ? `\n<h2>Frequently Asked Questions</h2>\n`+selFAQ.map(q=>`<h3>${esc(q)}</h3><p></p>`).join('\n') : '';
+
+  const content = insightsHTML + '\n' + introHTML + '\n\n' + buildSlider(S.ideas, uploaded) + faqHTML;
+
+  // Resolve tags to WP IDs
+  log('Resolving tags...', 'inf', 'pubLog');
+  const tagIds = await resolveWPTags(S.tags);
+
+  const postPayload = {
+    title: v('pubTitle'), content, status: v('pubStatus'),
+    categories: [parseInt(v('pubCatSel'))],
+    tags: tagIds,
+    featured_media: uploaded[0]?.id || 0,
+    meta: { _yoast_wpseo_metadesc: el('seoMeta').textContent, _yoast_wpseo_focuskw: el('seoKW').textContent },
+    slug: el('seoSlug').textContent
+  };
+
+  el('pubBar').style.width='90%'; el('pubLbl').textContent='Creating post...';
+  try {
+    const r = await fetch(`${getWpUrl()}/wp-json/wp/v2/posts`, {
+      method:'POST', headers:{'Content-Type':'application/json','Authorization':'Basic '+getAuth()},
+      body: JSON.stringify(postPayload)
+    });
+    if (!r.ok) throw new Error(await r.text());
+    const pd = await r.json();
+    el('pubBar').style.width='100%'; el('pubLbl').textContent='Published!';
+    el('pubRes').style.display=''; el('pubLink').href=pd.link; el('pubLink').textContent='View post: '+pd.link+' →';
+    log('Published: '+pd.link,'ok','pubLog'); toast('Published!','ok');
+  } catch(e) { log('Failed: '+e.message,'err','pubLog'); toast('Publish failed','err'); }
+  el('btnPub').disabled=false;
+}
+
+// ════════════════════════════════════════════════════
+// BUILD SLIDER HTML (Mediavine-optimized, NO <script> tag)
+// WordPress strips <script> from post content — we use
+// data attributes + inline onclick so no external JS needed
+// ════════════════════════════════════════════════════
+function buildSlider(ideas, uploaded) {
+  const total = ideas.length;
+
+  // Build all slides HTML — ALL in DOM for Mediavine ad slots between each
+  let slides = '';
+  ideas.forEach((idea, i) => {
+    const img = uploaded?.[i];
+    const imgUrl = img?.url || '';
+    const imgTag = imgUrl
+      ? `<img src="${imgUrl}" alt="${esc(idea.title)}" loading="lazy" style="width:100%;max-width:600px;height:auto;border-radius:14px;display:block;margin:0 auto 10px;">`
+      : `<div style="width:100%;max-width:600px;height:400px;background:#f0e8ea;border-radius:14px;margin:0 auto 10px;display:flex;align-items:center;justify-content:center;color:#bbb;font-size:14px;">No image</div>`;
+
+    // Download button — opens image in new tab (user prints via browser)
+    const dlBtn = imgUrl
+      ? `<div style="text-align:center;margin-top:10px;margin-bottom:6px;">
+           <a href="${imgUrl}" download target="_blank" style="display:inline-block;background:#E8436A;color:#fff;padding:10px 28px;border-radius:30px;font-family:Georgia,serif;font-size:14px;text-decoration:none;letter-spacing:.3px;">⬇ Download Image</a>
+         </div>`
+      : '';
+
+    slides += `
+<div class="pcc-slide" id="pcc-s-${i}" style="${i === 0 ? '' : 'display:none'}">
+  <p style="text-align:center;font-size:12px;color:#E8436A;font-family:Georgia,serif;margin-bottom:10px;letter-spacing:.5px;">${i + 1} of ${total}</p>
+  ${imgTag}
+  <h3 style="text-align:center;font-size:20px;margin:14px 0 8px;font-family:Georgia,serif;color:#2A1A20;">${esc(idea.title)}</h3>
+  <p style="text-align:center;font-size:14px;color:#666;line-height:1.75;max-width:600px;margin:0 auto 8px;">${idea.description}</p>
+  ${dlBtn}
+</div>`;
+  });
+
+  // Navigation uses inline onclick with a self-contained function stored on window.
+  // The function is defined via a data-init attribute trick read by a tiny inline script
+  // embedded in a noscript-safe way. Actually: WP allows onclick="" on buttons.
+  // The JS function is defined once inline in the wrapper div's onmouseenter (fires once),
+  // or better: use a hidden textarea trick. Simplest WP-safe approach:
+  // define function in onclick of a hidden init element that auto-clicks on DOMContentLoaded
+  // via CSS animation trick. SIMPLEST: just embed JS in onclick of first button, guard with window check.
+
+  const navJS = `if(!window.pccC){window.pccC=0;window.pccT=${total};}var slides=document.querySelectorAll('[id^=pcc-s-]');slides[window.pccC].style.display='none';window.pccC=Math.max(0,Math.min(window.pccT-1,window.pccC+(this.dataset.dir==='next'?1:-1)));slides[window.pccC].style.display='';var ctr=document.getElementById('pcc-ctr-${Date.now().toString(36)}');if(ctr)ctr.textContent=(window.pccC+1)+' of '+window.pccT;`;
+
+  // Use unique ID for counter to avoid conflicts if multiple sliders on page
+  const ctrId = 'pcc-ctr-' + Math.random().toString(36).slice(2,8);
+
+  const navJSFinal = `if(!window.pccC){window.pccC=0;window.pccT=${total};}var _slides=document.querySelectorAll('[id^=pcc-s-]');_slides[window.pccC].style.display='none';window.pccC=Math.max(0,Math.min(window.pccT-1,window.pccC+(this.dataset.dir==='next'?1:-1)));_slides[window.pccC].style.display='';var _ctr=document.getElementById('${ctrId}');if(_ctr)_ctr.textContent=(window.pccC+1)+' of '+window.pccT;`;
+
+  return `<!-- PCC Slider v3.1 — WordPress-safe, no script tags, Mediavine-optimized -->
+<div id="pcc-slider" style="font-family:Georgia,serif;max-width:660px;margin:0 auto;">
+
+  <!-- Navigation bar — big buttons for mobile -->
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;padding:0 4px;">
+    <button data-dir="prev" onclick="${navJSFinal}"
+      style="background:#E8436A;border:none;color:#fff;border-radius:50%;width:56px;height:56px;font-size:28px;cursor:pointer;line-height:1;box-shadow:0 4px 12px rgba(232,67,106,.3);flex-shrink:0;">‹</button>
+    <span id="${ctrId}" style="font-size:14px;color:#8A7880;font-style:italic;font-family:Georgia,serif;">1 of ${total}</span>
+    <button data-dir="next" onclick="${navJSFinal}"
+      style="background:#E8436A;border:none;color:#fff;border-radius:50%;width:56px;height:56px;font-size:28px;cursor:pointer;line-height:1;box-shadow:0 4px 12px rgba(232,67,106,.3);flex-shrink:0;">›</button>
+  </div>
+
+  ${slides}
+
+</div>`;
+}
+
+const esc = s => (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+
+updateRatios();
+</script>
+</body>
+</html>
