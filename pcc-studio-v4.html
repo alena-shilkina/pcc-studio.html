@@ -1,0 +1,1849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pink Creative Crab — Content Studio v4</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦀</text></svg>">
+<style>
+:root{
+  --ink:#1a1a1a;--ink-soft:#444;--gray:#777;--gray-light:#999;
+  --line:#e2e2e2;--line-soft:#eee;--bg:#f7f7f7;--card:#fff;
+  --green:#2e9e5b;--green-dark:#247a47;--green-light:#e8f5ed;
+  --blue:#2563eb;--amber:#d97706;--red:#dc2626;
+  --font:'Georgia',serif;--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;--mono:'Courier New',monospace;
+  --radius:8px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);background:var(--bg);color:var(--ink);min-height:100vh;line-height:1.5}
+
+/* ── HEADER ── */
+header{background:var(--ink);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200}
+.logo{color:#fff;font-size:14px;display:flex;align-items:center;gap:8px;font-family:var(--sans);font-weight:500}
+.logo-em{font-size:20px}
+.hbtns{display:flex;gap:8px}
+.hbtn{background:none;border:1px solid rgba(255,255,255,.25);color:#ddd;padding:6px 14px;border-radius:6px;cursor:pointer;font-size:12px;font-family:var(--sans);transition:.15s}
+.hbtn:hover{border-color:#fff;color:#fff;background:rgba(255,255,255,.08)}
+
+/* ── TABS ── */
+.tabs{background:var(--card);border-bottom:1px solid var(--line);display:flex;justify-content:center;gap:4px;padding:0 24px}
+.tab{padding:13px 20px;cursor:pointer;font-size:13px;color:var(--gray);border-bottom:2px solid transparent;margin-bottom:-1px;transition:.15s;white-space:nowrap;font-family:var(--sans)}
+.tab:hover{color:var(--ink)}.tab.active{color:var(--ink);border-bottom-color:var(--ink);font-weight:600}
+
+/* ── CENTERED CONTAINER ── */
+.container{max-width:780px;margin:0 auto;padding:28px 24px 60px}
+
+/* ── FORM ── */
+.fg{margin-bottom:16px}
+label{display:block;font-size:11px;color:var(--gray);margin-bottom:5px;text-transform:uppercase;letter-spacing:.6px;font-family:var(--sans);font-weight:500}
+input,textarea,select{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:var(--radius);font-size:14px;font-family:var(--font);color:var(--ink);background:var(--card);outline:none;transition:.15s}
+input:focus,textarea:focus,select:focus{border-color:var(--ink);box-shadow:0 0 0 1px var(--ink)}
+textarea{resize:vertical}
+select{font-family:var(--sans);font-size:13px;cursor:pointer}
+hr{border:none;border-top:1px solid var(--line);margin:20px 0}
+
+.row{display:flex;gap:12px}
+.row .fg{flex:1}
+
+/* ── SETTINGS GRID (first screen) ── */
+.settings-card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:24px;margin-bottom:20px}
+.settings-title{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--gray);margin-bottom:18px;font-family:var(--sans);font-weight:600;padding-bottom:10px;border-bottom:1px solid var(--line-soft)}
+
+/* style cards */
+.sgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:4px}
+.sc{border:1.5px solid var(--line);border-radius:8px;padding:9px 5px;cursor:pointer;text-align:center;transition:.15s;background:var(--card)}
+.sc:hover{border-color:var(--gray)}.sc.active{border-color:var(--ink);background:var(--ink);color:#fff}
+.sc .si{font-size:17px;display:block;margin-bottom:2px}.sc .sn{font-size:9.5px;font-family:var(--sans);color:var(--gray)}
+.sc.active .sn{color:#fff}
+
+/* skill buttons */
+.fbtn-grp{display:flex;gap:7px}
+.fbtn{flex:1;padding:9px;border:1.5px solid var(--line);border-radius:7px;background:var(--card);cursor:pointer;font-size:12px;font-family:var(--sans);color:var(--gray);transition:.15s}
+.fbtn:hover{border-color:var(--gray)}.fbtn.active{border-color:var(--ink);background:var(--ink);color:#fff}
+
+/* ratio buttons */
+.rgrid{display:flex;flex-wrap:wrap;gap:5px}
+.rbtn{padding:5px 11px;border:1px solid var(--line);border-radius:5px;background:var(--card);font-size:11px;cursor:pointer;color:var(--gray);font-family:var(--mono);transition:.15s}
+.rbtn:hover{border-color:var(--gray)}.rbtn.active{border-color:var(--ink);background:var(--ink);color:#fff}
+
+/* tags */
+.tag-chip{display:inline-flex;align-items:center;gap:4px;background:var(--ink);color:#fff;border-radius:14px;padding:3px 10px;font-size:11px;font-family:var(--sans);cursor:pointer}
+.tag-chip.suggest{background:var(--card);color:var(--ink-soft);border:1px solid var(--line)}
+.tag-chip.suggest:hover{border-color:var(--ink)}
+
+/* ── BUTTONS ── */
+.btn-go{width:100%;padding:14px;background:var(--green);color:#fff;border:none;border-radius:var(--radius);font-size:15px;font-family:var(--sans);font-weight:600;cursor:pointer;transition:.15s;letter-spacing:.3px}
+.btn-go:hover{background:var(--green-dark)}
+.btn-go:disabled{background:var(--gray-light);cursor:not-allowed}
+.btn-secondary{padding:9px 16px;background:var(--card);color:var(--ink);border:1.5px solid var(--line);border-radius:6px;font-size:12px;font-family:var(--sans);cursor:pointer;transition:.15s}
+.btn-secondary:hover{border-color:var(--ink)}
+.btn-sm{padding:5px 12px;background:var(--card);color:var(--ink-soft);border:1px solid var(--line);border-radius:5px;font-size:11px;cursor:pointer;font-family:var(--sans);transition:.15s}
+.btn-sm:hover{border-color:var(--ink);color:var(--ink)}
+.btn-research{padding:8px 16px;background:var(--blue);color:#fff;border:none;border-radius:6px;font-size:12px;cursor:pointer;font-family:var(--sans);font-weight:500;transition:.15s}
+.btn-research:hover{filter:brightness(.92)}
+.btn-research:disabled{background:var(--gray-light);cursor:not-allowed}
+
+/* ── PROGRESS ── */
+.progress-wrap{margin:18px 0}
+.progress-bg{background:var(--line);border-radius:8px;height:8px;overflow:hidden}
+.progress-bar{height:100%;background:var(--green);border-radius:8px;transition:width .4s}
+.progress-label{font-size:12px;color:var(--gray);margin-top:7px;font-family:var(--sans)}
+
+/* ── CARDS ── */
+.card{background:var(--card);border-radius:12px;border:1px solid var(--line);padding:20px;margin-bottom:18px}
+.card-title{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--gray);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--line-soft);font-family:var(--sans);font-weight:600}
+
+/* ── INSIGHTS ── */
+.insight-item{display:flex;gap:9px;align-items:flex-start;padding:10px 12px;background:var(--bg);border-radius:7px;margin-bottom:7px;border-left:3px solid var(--ink)}
+.insight-ic{color:var(--ink);font-size:13px;flex-shrink:0;margin-top:1px}
+.insight-tx{font-size:13px;line-height:1.6;color:var(--ink-soft)}
+
+/* ── IDEA CARDS ── */
+.idea-card{background:var(--card);border:1px solid var(--line);border-radius:12px;margin-bottom:22px;overflow:hidden}
+.idea-img-wrap{position:relative;width:100%;background:#f0f0f0}
+.idea-img-wrap img{width:100%;height:auto;display:block}
+.idea-img-placeholder{width:100%;aspect-ratio:2/3;max-height:480px;display:flex;align-items:center;justify-content:center;background:var(--bg);color:var(--gray-light);font-size:13px;flex-direction:column;gap:8px;font-family:var(--sans)}
+.regen-overlay{position:absolute;bottom:12px;right:12px}
+.regen-btn{background:rgba(26,26,26,.85);border:none;color:#fff;padding:7px 14px;border-radius:20px;font-size:12px;cursor:pointer;font-family:var(--sans);backdrop-filter:blur(4px);transition:.15s}
+.regen-btn:hover{background:var(--ink)}
+.idea-body{padding:18px 22px}
+.idea-num{font-size:11px;color:var(--gray);font-family:var(--sans);margin-bottom:5px;text-transform:uppercase;letter-spacing:1px;font-weight:500}
+.idea-title{font-size:19px;font-weight:normal;margin-bottom:12px;color:var(--ink);line-height:1.4}
+.idea-text{font-size:14px;color:var(--ink-soft);line-height:1.85}
+.idea-text p{margin-bottom:12px}.idea-text p:last-child{margin-bottom:0}
+.idea-text a{color:var(--ink);font-style:italic;text-decoration:underline}
+[contenteditable]:focus{outline:2px solid var(--ink);border-radius:4px;outline-offset:3px}
+
+/* ── SEO FIELDS ── */
+.seo-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.seo-field{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:12px}
+.seo-field label{font-size:10px;color:var(--gray);text-transform:uppercase;letter-spacing:.6px;display:block;margin-bottom:5px;font-family:var(--sans);font-weight:500}
+.seo-field .seo-val{font-size:13px;color:var(--ink);line-height:1.5;min-height:20px}
+.seo-field .seo-val.mono{font-family:var(--mono);font-size:11px}
+.seo-field.full{grid-column:1/-1}
+
+/* ── FAQ ── */
+.faq-item{border:1px solid var(--line);border-radius:8px;padding:14px;margin-bottom:9px;background:var(--card)}
+.faq-q{font-size:13px;font-weight:bold;margin-bottom:7px;color:var(--ink)}
+.faq-a{font-size:13px;color:var(--ink-soft);line-height:1.7;min-height:40px}
+.faq-a a{color:var(--ink);font-style:italic}
+
+/* ── INTRO + CONCLUSION ── */
+.intro-block,.conclusion-text{font-size:14px;color:var(--ink-soft);line-height:1.85}
+.intro-block p,.conclusion-text p{margin-bottom:12px}
+.intro-block a,.conclusion-text a{color:var(--ink);font-style:italic}
+
+/* ── PUBLISH BAR ── */
+.publish-bar{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 20px;display:flex;align-items:center;gap:14px;position:sticky;bottom:16px;box-shadow:0 4px 20px rgba(0,0,0,.08);margin-top:10px}
+.pub-status-sel{padding:9px 14px;border:1.5px solid var(--line);border-radius:7px;font-size:13px;font-family:var(--sans);background:var(--card);cursor:pointer;min-width:150px}
+.pub-status-sel:focus{border-color:var(--ink);outline:none}
+.btn-publish{padding:11px 30px;background:var(--green);color:#fff;border:none;border-radius:8px;font-size:14px;font-family:var(--sans);font-weight:600;cursor:pointer;transition:.15s;flex-shrink:0}
+.btn-publish:hover{background:var(--green-dark)}
+.btn-publish:disabled{background:var(--gray-light);cursor:not-allowed}
+.pub-lbl{font-size:12px;color:var(--gray);font-family:var(--sans)}
+.pub-prog{flex:1}.pub-prog .progress-bg{height:5px}
+
+/* ── MODAL ── */
+.modal-ov{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:1000;display:none;align-items:center;justify-content:center}
+.modal-ov.open{display:flex}
+.modal-box{background:var(--card);border-radius:12px;padding:24px;width:480px;max-width:94vw;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.modal-box h2{font-size:16px;margin-bottom:16px;font-family:var(--sans);font-weight:600}
+.modal-foot{display:flex;gap:8px;justify-content:flex-end;margin-top:16px}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--ink);color:#fff;padding:11px 18px;border-radius:8px;font-size:12px;z-index:3000;transform:translateY(80px);opacity:0;transition:.3s;font-family:var(--sans);border-left:3px solid var(--gray)}
+.toast.show{transform:translateY(0);opacity:1}.toast.ok{border-left-color:var(--green)}.toast.err{border-left-color:var(--red)}
+
+/* ── PAA ── */
+.paa-item{display:flex;align-items:flex-start;gap:9px;padding:9px;border-radius:6px;margin-bottom:5px;cursor:pointer;transition:.15s}
+.paa-item:hover{background:var(--bg)}
+.paa-item input[type=checkbox]{accent-color:var(--ink);margin-top:2px;flex-shrink:0;width:auto}
+.paa-item label{font-size:13px;color:var(--ink-soft);cursor:pointer;line-height:1.5;margin:0;text-transform:none;letter-spacing:0;font-family:var(--font)}
+
+/* ── LOGBOX ── */
+.logbox{background:var(--ink);border-radius:7px;padding:11px;font-family:var(--mono);font-size:11px;color:#aaa;max-height:130px;overflow-y:auto;margin-top:12px}
+.logbox .ok{color:#4ade80}.logbox .err{color:#f87171}.logbox .inf{color:#93c5fd}
+
+/* ── BATCH ── */
+.batch-row{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:11px 14px;margin-bottom:8px;display:flex;align-items:center;gap:10px}
+.batch-num{background:var(--ink);color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0;font-family:var(--sans)}
+.batch-status{font-size:10px;padding:3px 9px;border-radius:8px;margin-left:auto;flex-shrink:0;font-family:var(--sans)}
+.bs-wait{background:var(--line-soft);color:var(--gray)}.bs-run{background:#fef3c7;color:var(--amber)}
+.bs-done{background:var(--green-light);color:var(--green-dark)}.bs-err{background:#fee2e2;color:var(--red)}
+
+/* ── EMPTY ── */
+.empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;text-align:center;color:var(--gray)}
+.empty-icon{font-size:44px;margin-bottom:14px;opacity:.4}
+.empty-state p{font-size:14px;line-height:1.7;max-width:340px;font-family:var(--sans)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo"><span class="logo-em">🦀</span> Pink Creative Crab — Content Studio</div>
+  <div class="hbtns">
+    <button class="hbtn" onclick="newArticle()">✦ New Article</button>
+    <button class="hbtn" onclick="openModal('mSettings')">⚙ Settings</button>
+  </div>
+</header>
+
+<div class="tabs">
+  <div class="tab active" id="tab-btn-generate" onclick="goTab('generate')">Generate</div>
+  <div class="tab" id="tab-btn-batch" onclick="goTab('batch')">Batch</div>
+  <div class="tab" id="tab-btn-article" onclick="goTab('article')" style="display:none">Article</div>
+</div>
+
+<div class="container">
+
+<!-- ══════════ TAB: GENERATE ══════════ -->
+<div id="tab-generate">
+
+  <!-- Topic + PAA -->
+  <div class="settings-card">
+    <div class="fg" style="margin-bottom:14px">
+      <label>Article Topic / Main Keyword</label>
+      <input type="text" id="artTopic" placeholder="e.g. easy doodle animals for beginners" style="font-size:15px;padding:12px 14px">
+    </div>
+    <div style="display:flex;gap:10px;align-items:center">
+      <button class="btn-research" onclick="runPAA()" id="btnPAA">🔍 Research PAA</button>
+      <span id="paaSt" style="font-size:12px;color:var(--gray);font-family:var(--sans)"></span>
+    </div>
+    <div id="paaPanel" style="display:none;margin-top:14px;padding-top:14px;border-top:1px solid var(--line-soft)">
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:var(--gray);margin-bottom:10px;font-family:var(--sans);font-weight:500">Select questions for FAQ</div>
+      <div id="paaList"></div>
+    </div>
+  </div>
+
+  <!-- Reference Images (optional) -->
+  <div class="settings-card">
+    <div class="settings-title">Reference Images <span style="text-transform:none;letter-spacing:0;font-weight:400;color:var(--gray-light)">— optional, for Pinterest-trend visuals</span></div>
+    <div class="fg" style="margin-bottom:10px">
+      <input type="file" id="refFiles" accept="image/*" multiple onchange="loadRefImages(this)" style="font-size:12px;padding:7px;font-family:var(--sans)">
+      <div style="font-size:11px;color:var(--gray);margin-top:4px;font-family:var(--sans)">Attach 1-5 trending sketches/paintings. Claude extracts subjects + palette + mood.</div>
+    </div>
+    <div id="refThumbs" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px"></div>
+    <div style="display:flex;gap:10px;align-items:center">
+      <button class="btn-research" onclick="analyzeReferences()" id="btnAnalyze" style="display:none">🔍 Analyze References</button>
+      <span id="refSt" style="font-size:12px;color:var(--gray);font-family:var(--sans)"></span>
+    </div>
+    <!-- Visual Direction -->
+    <div id="vdPanel" style="display:none;margin-top:14px;padding-top:14px;border-top:1px solid var(--line-soft)">
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px;font-family:var(--sans);font-weight:600;color:var(--green)">✦ Visual Direction</div>
+      <div class="fg">
+        <label>Subjects <span style="text-transform:none;letter-spacing:0;color:var(--gray-light)">(comma-separated motifs)</span></label>
+        <textarea id="vdSubjects" rows="2" placeholder="blueberries, hydrangea, gingham bow, fish..." oninput="syncVD()"></textarea>
+      </div>
+      <div class="row">
+        <div class="fg" style="flex:2"><label>Palette</label>
+          <input type="text" id="vdPalette" placeholder="dusty blue + cream" oninput="syncVD()">
+        </div>
+        <div class="fg" style="flex:1"><label>Type</label>
+          <input type="text" id="vdPaletteType" placeholder="monochrome" readonly style="background:var(--bg);cursor:default">
+        </div>
+      </div>
+      <div class="fg"><label>Mood</label>
+        <input type="text" id="vdMood" placeholder="cozy nautical summer" oninput="syncVD()">
+      </div>
+      <div class="fg"><label>Style <span style="text-transform:none;letter-spacing:0;color:var(--gray-light)">(extracted from references — replaces Art Style prompt)</span></label>
+        <textarea id="vdStyle" rows="2" placeholder="loose ink linework with vibrant watercolor fills..." oninput="syncVD()"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- Art Style -->
+  <div class="settings-card">
+    <div class="settings-title">Art Style</div>
+    <div class="sgrid" id="styleGrid">
+      <div class="sc active" data-style="watercolor" onclick="selStyle(this)"><span class="si">🎨</span><span class="sn">Watercolor</span></div>
+      <div class="sc" data-style="acrylic" onclick="selStyle(this)"><span class="si">🖌️</span><span class="sn">Acrylic</span></div>
+      <div class="sc" data-style="gouache" onclick="selStyle(this)"><span class="si">🎭</span><span class="sn">Gouache</span></div>
+      <div class="sc" data-style="oilpainting" onclick="selStyle(this)"><span class="si">🛢️</span><span class="sn">Oil Paint</span></div>
+      <div class="sc" data-style="pencil" onclick="selStyle(this)"><span class="si">✏️</span><span class="sn">Pencil</span></div>
+      <div class="sc" data-style="sketching" onclick="selStyle(this)"><span class="si">📐</span><span class="sn">Sketching</span></div>
+      <div class="sc" data-style="doodles" onclick="selStyle(this)"><span class="si">🌀</span><span class="sn">Doodles</span></div>
+      <div class="sc" data-style="oilpastel" onclick="selStyle(this)"><span class="si">🖍️</span><span class="sn">Oil Pastel</span></div>
+      <div class="sc" data-style="kawaii" onclick="selStyle(this)"><span class="si">🌸</span><span class="sn">Kawaii Sticker</span></div>
+      <div class="sc" data-style="coloring" onclick="selStyle(this)"><span class="si">🖼️</span><span class="sn">Coloring</span></div>
+      <div class="sc" data-style="junkjournal" onclick="selStyle(this)"><span class="si">📖</span><span class="sn">Junk Journal</span></div>
+      <div class="sc" data-style="scrapstickers" onclick="selStyle(this)"><span class="si">✂️</span><span class="sn">Scrap Stickers</span></div>
+    </div>
+  </div>
+
+  <!-- Article + Image settings -->
+  <div class="settings-card">
+    <div class="settings-title">Article & Image Settings</div>
+
+    <div class="fg">
+      <label>Skill Level</label>
+      <div class="fbtn-grp">
+        <button class="fbtn active" onclick="selLvl(this,'beginner')">🌱 Beginner</button>
+        <button class="fbtn" onclick="selLvl(this,'advanced')">⭐ Advanced</button>
+      </div>
+    </div>
+
+    <div class="fg">
+      <label>Image Prompt <button class="btn-sm" style="float:right;margin-top:-3px" onclick="savePrompt()">Save</button></label>
+      <textarea id="imgPrompt" rows="2" placeholder="Auto-set by style..."></textarea>
+    </div>
+
+    <div class="row">
+      <div class="fg"><label>Image Model</label>
+        <select id="imgModel" onchange="updateRatios()">
+          <option value="runware:400@1">Flux Pro</option>
+          <option value="bytedance:seedream@4.5">Seedream 4.5</option>
+          <option value="runware:z-image@turbo">Z-Image Turbo</option>
+          <option value="prunaai:1@1">P-Image 1.0</option>
+        </select>
+      </div>
+      <div class="fg"><label>Number of Ideas</label>
+        <input type="number" id="ideaCount" value="21" min="3" max="50">
+      </div>
+    </div>
+
+    <div class="fg"><label>Aspect Ratio</label><div class="rgrid" id="ratioGrid"></div></div>
+
+    <div class="row">
+      <div class="fg"><label>WordPress Category</label>
+        <select id="wpCat">
+          <optgroup label="Painting">
+            <option value="39">Watercolor</option><option value="40">Acrylic</option>
+            <option value="41">Oil Painting</option><option value="42">Gouache</option>
+          </optgroup>
+          <optgroup label="Drawing">
+            <option value="43">Drawing</option><option value="44">Sketching</option>
+            <option value="45">Doodles</option><option value="46">Pencil Drawing</option>
+            <option value="47">Oil Pastel</option>
+          </optgroup>
+          <optgroup label="Other">
+            <option value="58">Coloring Pages</option><option value="49">Scrapbook Paper</option>
+            <option value="50">Junk Journal</option>
+          </optgroup>
+        </select>
+      </div>
+      <div class="fg"><label>Amazon Tag</label>
+        <input type="text" id="amazonTag" value="pinkcreativecrab-20">
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Tags -->
+  <div class="settings-card">
+    <div class="settings-title">WordPress Tags</div>
+    <div id="tagCloud" style="display:flex;flex-wrap:wrap;gap:5px;min-height:20px;margin-bottom:8px"></div>
+    <input type="text" id="tagInput" placeholder="Type tag and press Enter..." onkeydown="handleTagInput(event)" oninput="filterTagSugg(this.value)" style="margin-bottom:8px">
+    <div style="font-size:11px;color:var(--gray);margin-bottom:6px;font-family:var(--sans)">Existing tags — click to add:</div>
+    <div id="tagSuggestions" style="display:flex;flex-wrap:wrap;gap:5px;max-height:80px;overflow-y:auto">
+      <button class="btn-sm" onclick="loadWPTags()">Load tags</button>
+    </div>
+  </div>
+
+  <!-- GENERATE BUTTON -->
+  <button class="btn-go" id="btnGen" onclick="startGen()">✦ Generate Article + Images</button>
+
+  <div id="progSec" style="display:none">
+    <div class="progress-wrap">
+      <div class="progress-bg"><div class="progress-bar" id="progBar" style="width:0%"></div></div>
+      <div class="progress-label" id="progLbl">Starting...</div>
+    </div>
+    <div class="logbox" id="logBox" style="display:none"></div>
+  </div>
+
+</div>
+
+<!-- ══════════ TAB: BATCH ══════════ -->
+<div id="tab-batch" style="display:none">
+  <div class="settings-card">
+    <div class="settings-title">Batch Settings</div>
+    <div class="row">
+      <div class="fg"><label>Publish Status</label>
+        <select id="batchStatus"><option value="draft">Draft</option><option value="publish">Publish Now</option></select>
+      </div>
+      <div class="fg"><label>Delay (sec)</label>
+        <input type="number" id="batchDelay" value="5" min="0" max="60">
+      </div>
+    </div>
+    <div class="fg"><label>Art Style</label>
+      <select id="batchStyle">
+        <option value="watercolor">🎨 Watercolor</option><option value="acrylic">🖌️ Acrylic</option>
+        <option value="gouache">🎭 Gouache</option><option value="oilpainting">🛢️ Oil Painting</option>
+        <option value="pencil">✏️ Pencil Drawing</option><option value="sketching">📐 Sketching</option>
+        <option value="doodles">🌀 Doodles</option><option value="oilpastel">🖍️ Oil Pastel</option>
+        <option value="kawaii">🌸 Kawaii Sticker</option><option value="coloring">🖼️ Coloring Pages</option>
+        <option value="junkjournal">📖 Junk Journal</option><option value="scrapstickers">✂️ Scrapbook Stickers</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="settings-card">
+    <div class="settings-title">Topics</div>
+    <div style="font-size:11px;color:var(--gray);margin-bottom:10px;font-family:var(--sans);line-height:1.5">Click <strong>📎</strong> on any topic to attach 1-3 reference images and extract its Visual Direction. Topics without references use the Art Style above.</div>
+    <div id="batchItems"></div>
+    <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+      <button class="btn-sm" onclick="addBatchRow()">+ Add Topic</button>
+      <button class="btn-sm" onclick="clearBatch()">Clear All</button>
+      <button class="btn-research" id="btnAnalyzeAll" onclick="analyzeAllRefs()" style="margin-left:auto">🔍 Analyze All Refs</button>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:10px;margin-bottom:16px">
+    <button class="btn-go" id="btnBatch" onclick="startBatch()" style="flex:2">⊞ Run Batch</button>
+    <button class="btn-secondary" onclick="stopBatch()" id="btnStopBatch" disabled>■ Stop</button>
+  </div>
+
+  <div id="batchLog" style="display:none">
+    <div class="settings-title">Batch Progress</div>
+    <div id="batchResults"></div>
+    <div class="logbox" id="batchLogBox" style="display:none;margin-top:10px"></div>
+  </div>
+</div>
+
+<!-- ══════════ TAB: ARTICLE ══════════ -->
+<div id="tab-article" style="display:none">
+
+  <div class="card">
+    <div class="card-title">SEO Metadata</div>
+    <div class="seo-grid">
+      <div class="seo-field full">
+        <label>Title</label>
+        <div class="seo-val" id="seoTitle" contenteditable="true"></div>
+      </div>
+      <div class="seo-field">
+        <label>URL Slug</label>
+        <div class="seo-val mono" id="seoSlug" contenteditable="true"></div>
+      </div>
+      <div class="seo-field">
+        <label>Focus Keyword</label>
+        <div class="seo-val" id="seoKW" contenteditable="true"></div>
+      </div>
+      <div class="seo-field full">
+        <label>Meta Description <span id="metaCharCount" style="float:right;font-size:10px"></span></label>
+        <div class="seo-val" id="seoMeta" contenteditable="true" oninput="updateMetaCount()"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" id="insightsCard" style="display:none">
+    <div class="card-title">✨ Key Insights</div>
+    <div id="insightsList"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Introduction</div>
+    <div id="introBlock" class="intro-block" contenteditable="true"></div>
+  </div>
+
+  <div id="ideasSection"></div>
+
+  <div class="card" id="conclusionCard" style="display:none">
+    <div class="card-title">Conclusion</div>
+    <div id="conclusionBlock" class="conclusion-text" contenteditable="true"></div>
+  </div>
+
+  <div class="card" id="faqCard" style="display:none">
+    <div class="card-title">Frequently Asked Questions</div>
+    <div id="faqList"></div>
+  </div>
+
+  <div class="publish-bar">
+    <select class="pub-status-sel" id="pubStatus">
+      <option value="draft">Save as Draft</option>
+      <option value="publish">Publish Now</option>
+    </select>
+    <div class="pub-prog" id="pubProgWrap" style="display:none">
+      <div class="progress-bg"><div class="progress-bar" id="pubBar" style="width:0%"></div></div>
+    </div>
+    <span class="pub-lbl" id="pubLbl"></span>
+    <button class="btn-publish" id="btnPublish" onclick="publishWP()">↑ Publish to WordPress</button>
+  </div>
+
+</div>
+
+</div><!-- container -->
+
+<!-- ══════════ MODALS ══════════ -->
+<div class="modal-ov" id="mSettings">
+  <div class="modal-box">
+    <h2>⚙ Settings</h2>
+    <div class="fg"><label>Anthropic API Key</label><input type="password" id="cfAnt" placeholder="sk-ant-..."></div>
+    <div class="fg"><label>Runware API Key</label><input type="password" id="cfRun" placeholder="..."></div>
+    <div class="fg"><label>WordPress Site URL</label><input type="text" id="cfWP" placeholder="https://pinkcreativecrab.com"></div>
+    <div class="fg"><label>WP Login</label><input type="text" id="cfLogin" placeholder="alena.shilkina@gmail.com"></div>
+    <div class="fg"><label>WP App Password</label><input type="password" id="cfPass" placeholder="xxxx xxxx xxxx xxxx xxxx xxxx"></div>
+    <hr>
+    <div class="fg"><label>Tone of Voice</label>
+      <textarea id="toneVoice" rows="4"></textarea>
+    </div>
+    <div class="fg"><label>Internal Links CSV</label>
+      <input type="file" id="csvFile" accept=".csv" onchange="loadCSV(this)" style="font-size:12px;padding:7px;font-family:var(--sans)">
+      <div id="csvSt" style="font-size:11px;color:var(--gray);margin-top:4px;font-family:var(--sans)"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-secondary" onclick="closeModal('mSettings')">Cancel</button>
+      <button class="btn-go" style="width:auto;padding:9px 22px" onclick="saveSettings()">Save Settings</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-ov" id="mRegen">
+  <div class="modal-box">
+    <h2>🔄 Regenerate Image</h2>
+    <div class="fg"><label>Idea</label>
+      <div id="regenName" style="font-size:13px;padding:9px;background:var(--bg);border-radius:6px;border:1px solid var(--line);font-family:var(--sans)"></div>
+    </div>
+    <div class="fg"><label>Model</label>
+      <select id="regenModel">
+        <option value="runware:400@1">Flux Pro</option>
+        <option value="bytedance:seedream@4.5">Seedream 4.5</option>
+        <option value="runware:z-image@turbo">Z-Image Turbo</option>
+        <option value="prunaai:1@1">P-Image 1.0</option>
+      </select>
+    </div>
+    <div class="fg"><label>Prompt</label><textarea id="regenPr" rows="4"></textarea></div>
+    <div class="modal-foot">
+      <button class="btn-secondary" onclick="closeModal('mRegen')">Cancel</button>
+      <button class="btn-go" style="width:auto;padding:9px 22px" id="btnRG" onclick="doRegen()">Regenerate</button>
+    </div>
+  </div>
+</div>
+
+<!-- Batch Visual Direction modal (per-topic) -->
+<div class="modal-ov" id="mBatchVD">
+  <div class="modal-box" style="width:560px">
+    <h2>📎 References & Visual Direction</h2>
+    <div style="font-size:12px;color:var(--gray);margin-bottom:14px;font-family:var(--sans)">Topic: <strong id="bvdTopic" style="color:var(--ink)"></strong></div>
+
+    <!-- Per-topic article settings -->
+    <div style="background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:14px;margin-bottom:14px">
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px;font-family:var(--sans);font-weight:600;color:var(--ink-soft)">Article Settings <span style="text-transform:none;letter-spacing:0;color:var(--gray-light);font-weight:400">— leave empty to use defaults</span></div>
+      <div class="fg" style="margin-bottom:10px">
+        <label>Number of Ideas <span style="text-transform:none;letter-spacing:0;color:var(--gray-light)">(default: <span id="bvdIdeasDefault">21</span>)</span></label>
+        <input type="number" id="bvdIdeas" min="3" max="50" placeholder="default" style="max-width:140px">
+      </div>
+      <div class="fg" style="margin-bottom:0">
+        <label>Tags</label>
+        <div id="bvdTagCloud" style="display:flex;flex-wrap:wrap;gap:5px;min-height:18px;margin-bottom:6px"></div>
+        <input type="text" id="bvdTagInput" placeholder="Type tag and press Enter..." onkeydown="handleBvdTagInput(event)" oninput="filterBvdTagSugg(this.value)" style="margin-bottom:6px">
+        <div style="font-size:10px;color:var(--gray);margin-bottom:5px;font-family:var(--sans)">Existing WP tags — click to add:</div>
+        <div id="bvdTagSuggestions" style="display:flex;flex-wrap:wrap;gap:5px;max-height:70px;overflow-y:auto">
+          <button class="btn-sm" onclick="loadBvdWPTags()">Load tags</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="fg">
+      <label>Reference Images (1-3)</label>
+      <input type="file" id="bvdFiles" accept="image/*" multiple onchange="loadBatchVDImages(this)" style="font-size:12px;padding:7px;font-family:var(--sans)">
+      <div id="bvdThumbs" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px"></div>
+    </div>
+
+    <button class="btn-research" id="btnBvdAnalyze" onclick="analyzeBatchVDOne()" style="margin-bottom:6px">🔍 Analyze This Topic</button>
+
+    <div id="bvdPanel" style="display:none;margin-top:12px;padding-top:12px;border-top:1px solid var(--line-soft)">
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px;font-family:var(--sans);font-weight:600;color:var(--green)">✦ Visual Direction</div>
+      <div class="fg">
+        <label>Subjects <span style="text-transform:none;letter-spacing:0;color:var(--gray-light)">(comma-separated)</span></label>
+        <textarea id="bvdSubjects" rows="2" placeholder="blueberries, hydrangea, gingham bow..."></textarea>
+      </div>
+      <div class="row">
+        <div class="fg" style="flex:2"><label>Palette</label>
+          <input type="text" id="bvdPalette" placeholder="dusty blue + cream">
+        </div>
+        <div class="fg" style="flex:1"><label>Type</label>
+          <input type="text" id="bvdPaletteType" placeholder="monochrome" readonly style="background:var(--bg);cursor:default">
+        </div>
+      </div>
+      <div class="fg"><label>Mood</label>
+        <input type="text" id="bvdMood" placeholder="cozy nautical summer">
+      </div>
+      <div class="fg"><label>Style <span style="text-transform:none;letter-spacing:0;color:var(--gray-light)">(replaces Art Style for this topic)</span></label>
+        <textarea id="bvdStyle" rows="2" placeholder="loose ink linework with vibrant watercolor fills..."></textarea>
+      </div>
+    </div>
+
+    <div class="modal-foot">
+      <button class="btn-secondary" onclick="closeModal('mBatchVD')">Cancel</button>
+      <button class="btn-go" style="width:auto;padding:9px 22px" onclick="saveBatchVD()">Save</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ════════════ STATE ════════════
+const S = {
+  style:'watercolor', level:'beginner', count:21,
+  ideas:[], intro:'', title:'', seoSlug:'', seoMeta:'', seoKW:'',
+  insights:[], conclusion:'', faq:[], paaQ:[], csvLinks:[],
+  regenIdx:0, generating:false, uploaded:[],
+  batchRunning:false, batchStop:false, tags:[],
+  refImages:[], visualDirection:{subjects:[], palette:'', paletteType:'', mood:'', style:''}
+};
+
+const DEFAULT_TONE = "Warm, encouraging art teacher who makes beginners feel capable. Friendly and conversational, never condescending. Use simple language, short sentences, and gentle motivation. Celebrate small wins and make art feel approachable and fun.";
+
+const STYLES = {
+  acrylic:{label:'Acrylic',cat:40,
+    beginner:'acrylic painting on canvas, beginner-friendly style, single clear subject, simple composition, limited color palette of 3-5 colors, bold confident brushstrokes, flat areas of color, minimal blending, uncluttered white or light background, bright cheerful colors, clean edges, no fine detail',
+    advanced:'acrylic painting on canvas, expressive brushwork, complex layered composition, rich textured surface, impasto technique, dynamic color mixing, wet-on-wet blending, nuanced light and shadow, atmospheric depth, painterly detail, bold palette knife marks, gestural marks, visible canvas texture, professional fine art style, gallery-quality artwork, dramatic lighting, mood and emotion'},
+  watercolor:{label:'Watercolor',cat:39,
+    beginner:'watercolor painting, single simple subject, loose wet-on-wet technique, limited palette, white paper showing through, soft edges, beginner style',
+    advanced:'watercolor painting, layered glazing technique, complex composition, granulation effects, hard and soft edges, luminous transparency, professional fine art style'},
+  gouache:{label:'Gouache',cat:42,
+    prompt:'gouache illustration filling the entire frame, flat opaque colors, matte finish, full-bleed edge to edge, no border, no canvas, no frame'},
+  oilpainting:{label:'Oil Painting',cat:41,
+    prompt:'oil painting style illustration filling the entire frame, rich blended colors, full-bleed edge to edge, no border, no canvas, no frame, no easel'},
+  pencil:{label:'Pencil Drawing',cat:46,
+    prompt:'pencil drawing illustration filling the entire frame, graphite shading, full-bleed edge to edge, no border, no paper edge, no frame'},
+  sketching:{label:'Sketching',cat:44,
+    prompt:'ink pen linework with watercolor, sketchbook paper texture, hand-drawn illustrations, loose sketchy style'},
+  doodles:{label:'Doodles',cat:45,
+    prompt:'black line doodle art, simple cute outline drawing, no fill, white background, hand-drawn style, cozy whimsical elements, sparkle accents, single ink pen line, clean minimalist doodle'},
+  oilpastel:{label:'Oil Pastel',cat:47,
+    prompt:'oil pastel illustration filling the entire frame, rich saturated textured strokes, full-bleed edge to edge, no border, no paper edge, no frame'},
+  kawaii:{label:'Kawaii Sticker',cat:45,
+    prompt:'kawaii sticker illustration, cute single object with smiley face, bold black outline, soft pastel colors, sparkle accents, white background, sticker pack style, cheerful and playful, clean digital art'},
+  coloring:{label:'Coloring Pages',cat:58,
+    prompt:'coloring page line art filling the entire frame, clean black outlines on white, full-bleed edge to edge, no border, no frame'},
+  junkjournal:{label:'Junk Journal',cat:50,
+    prompt:'vintage botanical painting style, soft muted background with aged texture, romantic painterly brushstrokes, full composition filling entire canvas, no empty space, french country aesthetic'},
+  scrapstickers:{label:'Scrapbook Stickers',cat:49,
+    prompt:'vintage junk journal ephemera sheet, 4 isolated elements on white background, each element completely different type and design, varied shapes and orientations, no duplicates, scrapbooking printable'}
+};
+
+// Get the active prompt for a style + level (handles per-level styles)
+function getStylePrompt(styleKey, level){
+  const s = STYLES[styleKey];
+  if(!s) return '';
+  if(s[level]) return s[level];      // per-level (acrylic, watercolor)
+  return s.prompt || '';             // single prompt
+}
+
+
+
+
+// Hardcoded valid dimensions per model (from v3 — Runware rejects out-of-range sizes)
+const MODEL_RATIOS = {
+  'runware:400@1':        [{l:'2:3',w:864,h:1152},{l:'3:4',w:768,h:1024},{l:'1:1',w:1024,h:1024},{l:'4:3',w:1024,h:768},{l:'9:16',w:720,h:1280},{l:'16:9',w:1280,h:720}],
+  'bytedance:seedream@4.5':[{l:'3:4',w:1728,h:2304},{l:'9:16',w:1440,h:2560},{l:'4:3',w:2304,h:1728},{l:'1:1',w:2048,h:2048}],
+  'runware:z-image@turbo':[{l:'4:3',w:1152,h:896},{l:'1:1',w:1024,h:1024},{l:'2:3',w:832,h:1280},{l:'9:16',w:768,h:1344},{l:'16:9',w:1280,h:720}],
+  'prunaai:1@1':          [{l:'1:1',w:1024,h:1024},{l:'4:3',w:1152,h:896},{l:'16:9',w:1280,h:720},{l:'3:4',w:896,h:1152},{l:'9:16',w:720,h:1280},{l:'2:3',w:832,h:1280}]
+};
+let currentRatio = '2:3';
+
+// ════════════ HELPERS ════════════
+const el = id => document.getElementById(id);
+const v = id => el(id)?.value || '';
+
+function toast(msg, type='') {
+  const t = el('toast');
+  t.textContent = msg; t.className = 'toast show ' + type;
+  setTimeout(() => t.className = 'toast', 3000);
+}
+function goTab(name) {
+  ['generate','batch','article'].forEach(t => {
+    const tab = el('tab-'+t), btn = el('tab-btn-'+t);
+    if (tab) tab.style.display = t === name ? '' : 'none';
+    if (btn) btn.classList.toggle('active', t === name);
+  });
+  window.scrollTo(0,0);
+}
+function openModal(id){ el(id).classList.add('open'); }
+function closeModal(id){ el(id).classList.remove('open'); }
+function log(msg, type=''){
+  const lb = el('logBox'); if(!lb) return;
+  lb.style.display=''; lb.innerHTML += `<div class="${type}">${msg}</div>`;
+  lb.scrollTop = lb.scrollHeight;
+}
+function setProgress(pct, label){
+  el('progSec').style.display='';
+  el('progBar').style.width = pct+'%';
+  el('progLbl').textContent = label;
+}
+function getAntKey(){ return localStorage.getItem('pcc_ant')||''; }
+function getRunKey(){ return localStorage.getItem('pcc_run')||''; }
+function getWPCreds(){
+  return {url:localStorage.getItem('pcc_wp')||'https://pinkcreativecrab.com',login:localStorage.getItem('pcc_login')||'',pass:localStorage.getItem('pcc_pass')||''};
+}
+function getProxy(){ return getWPCreds().url + '/pcc-upload-proxy.php'; }
+function getAmazonTag(){ return v('amazonTag')||'pinkcreativecrab-20'; }
+function getRatioWH(){
+  const model=v('imgModel');
+  const list=MODEL_RATIOS[model]||MODEL_RATIOS['runware:400@1'];
+  // Find the entry matching currentRatio label, fallback to first (or 2:3)
+  let entry=list.find(r=>r.l===currentRatio);
+  if(!entry) entry=list.find(r=>r.l==='2:3')||list[0];
+  return {w:entry.w, h:entry.h};
+}
+
+function linkify(text){
+  if(!text) return '';
+  const tokens=[];
+  let out=String(text).replace(/<a\b[^>]*?>[\s\S]*?<\/a>/gi,m=>{
+    const hm=m.match(/href\s*=\s*["']([^"']+)["']/i),url=hm?hm[1]:'#';
+    const it=m.replace(/<[^>]+>/g,'').trim();
+    tokens.push(`<a href="${url}" target="_blank" rel="nofollow sponsored" style="color:var(--ink);font-style:italic;">${it}</a>`);
+    return '\x01TK'+(tokens.length-1)+'\x01';
+  });
+  out=out.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  out=out.replace(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g,(_,t,u)=>{
+    tokens.push(`<a href="${u}" target="_blank" rel="nofollow sponsored" style="color:var(--ink);font-style:italic;">${t}</a>`);
+    return '\x01TK'+(tokens.length-1)+'\x01';
+  });
+  out=out.replace(/\x01TK(\d+)\x01/g,(_,i)=>tokens[parseInt(i)]);
+  return out;
+}
+
+
+function buildImageFilename(keyword, ideaTitle, idx){
+  const stop=['for','beginners','beginner','intermediate','advanced','easy','simple','step','by','step','the','a','an','and','to','with','your','how','ideas','idea'];
+  const clean=s=>(s||'').toLowerCase().replace(/[^a-z0-9\s]/g,'').split(/\s+/).filter(w=>w&&!stop.includes(w)).slice(0,4).join('-');
+  const kw=clean(keyword);
+  const sub=clean(ideaTitle);
+  let name=kw;
+  if(sub && sub!==kw) name=kw+'-'+sub;
+  name=name.replace(/-+/g,'-').replace(/^-|-$/g,'').slice(0,60);
+  if(!name) name='pcc-art';
+  return name+'-'+String(idx+1).padStart(2,'0')+'.png';
+}
+
+function toTitleCase(str){
+  const small=['a','an','and','as','at','but','by','for','in','of','on','or','the','to','with','vs'];
+  return str.split(' ').map((word,i)=>{
+    const lw=word.toLowerCase();
+    if(i>0 && small.includes(lw)) return lw;
+    return word.charAt(0).toUpperCase()+word.slice(1);
+  }).join(' ');
+}
+const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+
+// ════════════ SETTINGS ════════════
+function saveSettings(){
+  localStorage.setItem('pcc_ant',v('cfAnt'));
+  localStorage.setItem('pcc_run',v('cfRun'));
+  localStorage.setItem('pcc_wp',v('cfWP'));
+  localStorage.setItem('pcc_login',v('cfLogin'));
+  localStorage.setItem('pcc_pass',v('cfPass'));
+  localStorage.setItem('pcc_tone',v('toneVoice'));
+  closeModal('mSettings'); toast('Settings saved','ok');
+}
+function loadSettings(){
+  el('cfAnt').value=localStorage.getItem('pcc_ant')||'';
+  el('cfRun').value=localStorage.getItem('pcc_run')||'';
+  el('cfWP').value=localStorage.getItem('pcc_wp')||'https://pinkcreativecrab.com';
+  el('cfLogin').value=localStorage.getItem('pcc_login')||'';
+  el('cfPass').value=localStorage.getItem('pcc_pass')||'';
+  el('toneVoice').value=localStorage.getItem('pcc_tone')||DEFAULT_TONE;
+}
+function saveTone(){ localStorage.setItem('pcc_tone',v('toneVoice')); toast('Tone saved','ok'); }
+function savePrompt(){ localStorage.setItem('pcc_prompt_'+S.style+'_'+S.level,v('imgPrompt')); toast('Prompt saved','ok'); }
+
+// ════════════ STYLE/LEVEL/RATIO ════════════
+function selStyle(e){
+  document.querySelectorAll('.sc').forEach(c=>c.classList.remove('active'));
+  e.classList.add('active'); S.style=e.dataset.style;
+  el('imgPrompt').value=localStorage.getItem('pcc_prompt_'+S.style+'_'+S.level)||getStylePrompt(S.style,S.level);
+  const cat=STYLES[S.style]?.cat; if(cat) el('wpCat').value=cat;
+  updateRatios();
+}
+function selLvl(b,l){
+  document.querySelectorAll('.fbtn').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active'); S.level=l;
+  el('imgPrompt').value=localStorage.getItem('pcc_prompt_'+S.style+'_'+S.level)||getStylePrompt(S.style,S.level);
+}
+function updateRatios(){
+  const model=v('imgModel');
+  const list=MODEL_RATIOS[model]||MODEL_RATIOS['runware:400@1'];
+  const ratios=list.map(r=>r.l);
+  const grid=el('ratioGrid');
+  grid.innerHTML='';
+  if(!ratios.includes(currentRatio)) currentRatio=ratios.includes('2:3')?'2:3':ratios[0];
+  ratios.forEach(r=>{
+    const b=document.createElement('button');
+    b.className='rbtn'+(r===currentRatio?' active':''); b.textContent=r;
+    b.onclick=()=>{document.querySelectorAll('.rbtn').forEach(x=>x.classList.remove('active'));b.classList.add('active');currentRatio=r;};
+    grid.appendChild(b);
+  });
+}
+
+// ════════════ REFERENCE IMAGES → VISUAL DIRECTION ════════════
+// Reusable: read a File into a ref-image object {mediaType, data, preview}
+function fileToRefImage(file){
+  return new Promise((resolve,reject)=>{
+    const reader=new FileReader();
+    reader.onload=e=>{
+      const dataUrl=e.target.result;
+      const m=dataUrl.match(/^data:(image\/[a-zA-Z+]+);base64,(.+)$/);
+      if(m){ resolve({mediaType:m[1], data:m[2], preview:dataUrl}); }
+      else reject(new Error('Bad image'));
+    };
+    reader.onerror=()=>reject(new Error('Read failed'));
+    reader.readAsDataURL(file);
+  });
+}
+
+function buildRefAnalyzePrompt(topic){
+  const themeLine=topic
+    ? `The article topic is: "${topic}". Interpret the references THROUGH this theme.`
+    : 'No specific article topic given — extract the general theme yourself.';
+  return [
+    'Analyze these reference image(s) from a trending Pinterest artist. Extract the visual recipe to guide a series of similar illustrations.',
+    themeLine,
+    '',
+    '1. SUBJECTS — list the MAIN drawable subjects, interpreted in the context of the article topic.',
+    '   - Identify the PRIMARY subject of each reference (the hero of the illustration), NOT every small detail.',
+    '   - Example: if the topic is "animal sketching" and an image shows a mouse holding coffee next to a croissant, the subject is "mouse" — NOT "coffee cup, croissant, saucer, whiskers, cup handle".',
+    '   - Example: if the topic is "flower painting" and an image shows a vase of peonies on a windowsill, the subject is "peonies" — NOT "vase, windowsill, curtain".',
+    '   - Give 1-3 clean subjects per reference, each matching the article theme. Ignore accessories, props, backgrounds, and tiny details entirely.',
+    '   - Each subject should be 1-3 words, the kind of thing that fits the topic (e.g. for "animal sketching": "mouse, teddy bear, fox, rabbit").',
+    '2. PALETTE — decide:',
+    '   - MONOCHROME = one dominant color family + neutrals (name it, e.g. "dusty blue + cream")',
+    '   - MULTICOLOR = several strong colors (list them, e.g. "red, navy, cream, sage green")',
+    '3. MOOD — 2-3 words capturing the aesthetic (e.g. "cozy storybook", "cottagecore romance", "preppy americana").',
+    '4. STYLE — describe the exact art medium and technique you SEE, as a detailed image-generation style string (12-25 words). Capture medium (watercolor, gouache, ink, etc.), line quality, color saturation, texture, background. Be vivid so an AI image model reproduces THIS look. Example: "loose ink linework with vibrant saturated watercolor fills, bold black outlines, rich pigment, white paper background, charming hand-painted journal style".',
+    '',
+    'Return ONLY this JSON, no markdown:',
+    '{"subjects":["...","..."],"palette_type":"monochrome","palette":"color description","mood":"mood words","style":"detailed style string"}'
+  ].join('\n');
+}
+
+// Reusable: analyze a set of ref-images -> visual direction object
+async function analyzeRefSet(refImages, topic){
+  const content=[];
+  refImages.forEach(img=>{
+    content.push({type:'image',source:{type:'base64',media_type:img.mediaType,data:img.data}});
+  });
+  content.push({type:'text',text:buildRefAnalyzePrompt(topic||'')});
+  const result=await callClaude(content, 'You are an art director who analyzes trending illustration references. You extract only the MAIN subjects that fit the article theme, never small background details. Return ONLY valid JSON, no markdown fences.', 1500);
+  return {
+    subjects: Array.isArray(result.subjects)?result.subjects:[],
+    palette: result.palette||'',
+    paletteType: result.palette_type||result.paletteType||'',
+    mood: result.mood||'',
+    style: result.style||''
+  };
+}
+
+function loadRefImages(input){
+  const files=Array.from(input.files||[]).slice(0,5);
+  if(!files.length){ S.refImages=[]; renderRefThumbs(); return; }
+  S.refImages=[];
+  let loaded=0;
+  files.forEach(file=>{
+    const reader=new FileReader();
+    reader.onload=e=>{
+      const dataUrl=e.target.result;
+      const m=dataUrl.match(/^data:(image\/[a-zA-Z+]+);base64,(.+)$/);
+      if(m){ S.refImages.push({mediaType:m[1], data:m[2], preview:dataUrl}); }
+      loaded++;
+      if(loaded===files.length){ renderRefThumbs(); el('btnAnalyze').style.display=S.refImages.length?'':'none'; }
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+function renderRefThumbs(){
+  const c=el('refThumbs'); c.innerHTML='';
+  S.refImages.forEach((img,i)=>{
+    const d=document.createElement('div');
+    d.style.cssText='position:relative;width:64px;height:64px;border-radius:6px;overflow:hidden;border:1px solid var(--line)';
+    d.innerHTML=`<img src="${img.preview}" style="width:100%;height:100%;object-fit:cover;display:block;">
+      <button onclick="removeRefImage(${i})" style="position:absolute;top:1px;right:1px;background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:50%;width:16px;height:16px;font-size:10px;cursor:pointer;line-height:1;padding:0">✕</button>`;
+    c.appendChild(d);
+  });
+}
+
+function removeRefImage(i){
+  S.refImages.splice(i,1);
+  renderRefThumbs();
+  el('btnAnalyze').style.display=S.refImages.length?'':'none';
+  if(!S.refImages.length){ el('vdPanel').style.display='none'; el('refSt').textContent=''; }
+}
+
+async function analyzeReferences(){
+  if(!S.refImages.length){ toast('Attach reference images first','err'); return; }
+  if(!getAntKey()){ toast('Set Anthropic API key in Settings','err'); return; }
+  el('btnAnalyze').disabled=true; el('refSt').textContent='Analyzing references...';
+  try{
+    S.visualDirection=await analyzeRefSet(S.refImages, v('artTopic'));
+    // Fill UI
+    el('vdSubjects').value=S.visualDirection.subjects.join(', ');
+    el('vdPalette').value=S.visualDirection.palette;
+    el('vdPaletteType').value=S.visualDirection.paletteType;
+    el('vdMood').value=S.visualDirection.mood;
+    el('vdStyle').value=S.visualDirection.style||'';
+    el('vdPanel').style.display='';
+    el('refSt').textContent=`✓ ${S.visualDirection.subjects.length} subjects extracted`;
+    toast('Visual Direction ready — edit if needed','ok');
+  }catch(e){
+    el('refSt').textContent='Analysis failed';
+    toast('Analysis failed: '+e.message,'err');
+  }
+  el('btnAnalyze').disabled=false;
+}
+
+// Sync edited Visual Direction fields back to state
+function syncVD(){
+  S.visualDirection.subjects=v('vdSubjects').split(',').map(s=>s.trim()).filter(Boolean);
+  S.visualDirection.palette=v('vdPalette');
+  S.visualDirection.mood=v('vdMood');
+  S.visualDirection.style=v('vdStyle');
+}
+
+function hasVisualDirection(){
+  return S.visualDirection && (S.visualDirection.subjects.length>0 || S.visualDirection.palette);
+}
+
+// Helper: does a given VD object carry content?
+function vdHasContent(vd){
+  return vd && ((vd.subjects&&vd.subjects.length>0) || vd.palette || vd.style);
+}
+
+// ════════════ CSV + TAGS ════════════
+function loadCSV(input){
+  const file=input.files[0]; if(!file) return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    const lines=e.target.result.split('\n').filter(l=>l.trim());
+    S.csvLinks=lines.map(l=>{const p=l.split(',');return {title:(p[0]||'').trim(),url:(p[1]||'').trim()};}).filter(x=>x.title&&x.url);
+    el('csvSt').textContent=`✓ ${S.csvLinks.length} links loaded`;
+    toast(`${S.csvLinks.length} internal links loaded`,'ok');
+  };
+  reader.readAsText(file);
+}
+function handleTagInput(e){
+  if(e.key==='Enter'||e.key===','){
+    e.preventDefault();
+    const val=el('tagInput').value.trim().replace(/,$/,'');
+    if(val){addTag(val);el('tagInput').value='';}
+  }
+}
+function addTag(name){ if(!S.tags.includes(name)){S.tags.push(name);renderTags();} }
+function renderTags(){
+  const cloud=el('tagCloud'); cloud.innerHTML='';
+  S.tags.forEach(t=>{
+    const chip=document.createElement('span');
+    chip.className='tag-chip'; chip.innerHTML=t+' ✕';
+    chip.onclick=()=>{S.tags=S.tags.filter(x=>x!==t);renderTags();};
+    cloud.appendChild(chip);
+  });
+}
+function filterTagSugg(q){
+  el('tagSuggestions').querySelectorAll('.tag-chip').forEach(c=>{
+    c.style.display=q?(c.textContent.toLowerCase().includes(q.toLowerCase())?'':'none'):'';
+  });
+}
+let _wpTagsCache=null;
+async function loadWPTags(){
+  const creds=getWPCreds();
+  try{
+    const res=await fetch(`${creds.url}/wp-json/wp/v2/tags?per_page=100`);
+    const data=await res.json();
+    _wpTagsCache=data||[];
+    const sugg=el('tagSuggestions'); sugg.innerHTML='';
+    _wpTagsCache.forEach(tag=>{
+      const chip=document.createElement('span');
+      chip.className='tag-chip suggest'; chip.textContent=tag.name;
+      chip.onclick=()=>addTag(tag.name);
+      sugg.appendChild(chip);
+    });
+    return _wpTagsCache;
+  }catch(e){ toast('Could not load tags','err'); return []; }
+}
+async function resolveWPTags(tagNames){
+  if(!tagNames.length) return [];
+  const tags=_wpTagsCache||await loadWPTags();
+  const ids=[];
+  tagNames.forEach(name=>{
+    const match=tags.find(t=>t.name.toLowerCase()===name.toLowerCase());
+    if(match) ids.push(match.id);
+  });
+  return ids;
+}
+
+// ════════════ PAA ════════════
+async function runPAA(){
+  const topic=v('artTopic');
+  if(!topic){ toast('Enter a topic first','err'); return; }
+  el('btnPAA').disabled=true; el('paaSt').textContent='Searching...';
+  try{
+    const response=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',headers:{'Content-Type':'application/json','x-api-key':getAntKey(),'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1000,
+        messages:[{role:'user',content:`Generate 10 "People Also Ask" questions for: "${topic}". Real questions people search. Return ONLY a JSON array of strings, no markdown. Example: ["q1?","q2?"]`}]})
+    });
+    const data=await response.json();
+    const text=(data.content?.[0]?.text||'[]').replace(/```json|```/g,'').trim();
+    S.paaQ=JSON.parse(text);
+    renderPAA(); el('paaPanel').style.display=''; el('paaSt').textContent=S.paaQ.length+' questions';
+  }catch(e){ el('paaSt').textContent='Error'; toast('PAA search failed','err'); }
+  el('btnPAA').disabled=false;
+}
+function renderPAA(){
+  const list=el('paaList'); list.innerHTML='';
+  S.paaQ.forEach((q,i)=>{
+    list.innerHTML+=`<div class="paa-item"><input type="checkbox" class="paa-chk" id="paa${i}" checked><label for="paa${i}">${esc(q)}</label></div>`;
+  });
+}
+function getSelectedPAA(){
+  return S.paaQ.filter((_,i)=>{const c=el('paa'+i);return c&&c.checked;});
+}
+
+// ════════════ GENERATE TEXT ════════════
+async function callClaude(userContent, systemPrompt, maxTokens){
+  let response, attempt=0, maxRetries=5;
+  while(true){
+    response=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',headers:{'Content-Type':'application/json','x-api-key':getAntKey(),'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:maxTokens||8000,temperature:1,system:systemPrompt,messages:[{role:'user',content:userContent}]})
+    });
+    // Retry on overload (529) or rate limit (429) with exponential backoff
+    if((response.status===529||response.status===429)&&attempt<maxRetries){
+      attempt++;
+      const wait=Math.min(2000*Math.pow(2,attempt-1),30000); // 2s,4s,8s,16s,30s
+      if(typeof setProgress==='function') try{setProgress(5,`API busy, retrying in ${wait/1000}s (attempt ${attempt}/${maxRetries})...`);}catch(e){}
+      await new Promise(r=>setTimeout(r,wait));
+      continue;
+    }
+    break;
+  }
+  if(!response.ok) throw new Error('API error: '+response.status+(response.status===529?' (servers overloaded, try again in a moment)':''));
+  const data=await response.json();
+  let text=(data.content?.[0]?.text||'').replace(/```json|```/g,'').trim();
+  return parseClaudeJSON(text);
+}
+
+// Robust JSON parser for LLM output — handles truncation + unescaped chars
+function parseClaudeJSON(text){
+  // 1. Direct parse
+  try{ return JSON.parse(text); }catch(e){}
+
+  // 2. Extract the JSON body (strip any preamble/postamble)
+  let t=text;
+  const firstBrace=t.search(/[\{\[]/);
+  if(firstBrace>0) t=t.slice(firstBrace);
+  // also strip trailing junk after last closing brace/bracket
+  const lastClose=Math.max(t.lastIndexOf('}'),t.lastIndexOf(']'));
+  if(lastClose>0 && lastClose<t.length-1){
+    const tail=t.slice(lastClose+1).trim();
+    if(tail && !tail.startsWith(',')) t=t.slice(0,lastClose+1);
+  }
+
+  // 3. Fix literal control chars inside strings — escape them
+  let fixed='', inStr=false, prev='';
+  for(let i=0;i<t.length;i++){
+    let ch=t[i];
+    if(ch==='"' && prev!=='\\') inStr=!inStr;
+    if(inStr){
+      if(ch==='\n'){ fixed+='\\n'; prev=ch; continue; }
+      if(ch==='\r'){ fixed+='\\r'; prev=ch; continue; }
+      if(ch==='\t'){ fixed+='\\t'; prev=ch; continue; }
+    }
+    fixed+=ch; prev=ch;
+  }
+  try{ return JSON.parse(fixed); }catch(e){}
+
+  // 3b. Escape stray quotes inside string VALUES.
+  // Heuristic: a " is a string delimiter only if followed by : , } ] or preceded by : [ , {
+  // Any other " inside a value gets escaped.
+  try{
+    let out='', inString=false, p='';
+    for(let i=0;i<fixed.length;i++){
+      const ch=fixed[i];
+      if(ch==='"' && p!=='\\'){
+        if(!inString){ inString=true; out+=ch; p=ch; continue; }
+        // we're inside a string and hit a quote — is it the real closing quote?
+        // look ahead past whitespace
+        let j=i+1; while(j<fixed.length && /\s/.test(fixed[j])) j++;
+        const next=fixed[j];
+        if(next===':'||next===','||next==='}'||next===']'||next===undefined){
+          inString=false; out+=ch; p=ch; continue; // real closing quote
+        } else {
+          out+='\\"'; p='"'; continue; // stray quote inside value -> escape
+        }
+      }
+      out+=ch; p=ch;
+    }
+    return JSON.parse(out);
+  }catch(e){}
+
+  // 4. Truncation recovery — close unclosed braces/brackets
+  try{
+    let cut=fixed;
+    const lastBrace=Math.max(cut.lastIndexOf('}'),cut.lastIndexOf(']'));
+    if(lastBrace>0) cut=cut.slice(0,lastBrace+1);
+    const openB=(cut.match(/{/g)||[]).length-(cut.match(/}/g)||[]).length;
+    const openA=(cut.match(/\[/g)||[]).length-(cut.match(/\]/g)||[]).length;
+    cut+=']'.repeat(Math.max(0,openA))+'}'.repeat(Math.max(0,openB));
+    return JSON.parse(cut);
+  }catch(e){}
+
+  // 5. Last resort: trim to last complete object in an array and close
+  try{
+    let cut=fixed;
+    const lastComplete=cut.lastIndexOf('},');
+    if(lastComplete>0){
+      cut=cut.slice(0,lastComplete+1);
+      const openA=(cut.match(/\[/g)||[]).length-(cut.match(/\]/g)||[]).length;
+      const openB=(cut.match(/{/g)||[]).length-(cut.match(/}/g)||[]).length;
+      cut+='}'.repeat(Math.max(0,openB))+']'.repeat(Math.max(0,openA));
+      return JSON.parse(cut);
+    }
+  }catch(e){}
+
+  // Log the raw response so the failure can be diagnosed
+  console.error('parseClaudeJSON failed. Raw response below:');
+  console.error(text);
+  throw new Error('Could not parse JSON from response (see console for raw text)');
+}
+
+const SEO_SYS='You are an expert art blog writer optimizing for Yoast SEO. Idea titles clearly name a distinct drawing subject in 3-7 words with light charm — never long clickbait sentences, never repeating subjects. Write body text naturally with varied sentence openings and frequent transition words (however, therefore, additionally, for example, meanwhile, as a result). Never start consecutive sentences with the same word. CRITICAL: Return ONLY valid JSON. Inside string values, never use raw double-quotes (use single quotes or none); escape any special characters; no line breaks inside strings except \\n. No markdown fences.';
+
+async function generateText(){
+  const topic=v('artTopic'),style=STYLES[S.style]?.label||S.style,count=parseInt(v('ideaCount'))||21,level=S.level;
+  const tone=v('toneVoice')||'warm, encouraging art teacher',amazonTag=getAmazonTag();
+  const selectedPAA=getSelectedPAA();
+  const paaContext=selectedPAA.length?'PAA questions to answer in FAQ:\n'+selectedPAA.map((q,i)=>`${i+1}. ${q}`).join('\n'):'';
+  const csvHint=S.csvLinks.length?'Internal links (use 2-3 naturally):\n'+S.csvLinks.slice(0,10).map(l=>`- ${l.title}: ${l.url}`).join('\n'):'';
+
+  // ── Visual Direction context (if reference images were analyzed) ──
+  const vd=S.visualDirection;
+  const hasVD=hasVisualDirection();
+  const vdSkeleton=hasVD?[
+    '',
+    '🎨 VISUAL DIRECTION — the reference images define the exact subjects and aesthetic:',
+    `Reference subjects (USE THESE FIRST, one idea each, keep them): ${vd.subjects.join(', ')}`,
+    vd.mood?`Overall mood: ${vd.mood}`:'',
+    'RULES FOR IDEAS WITH VISUAL DIRECTION:',
+    `- Start with the ${vd.subjects.length} reference subjects above — make one idea for EACH of them, keeping them as-is.`,
+    `- You need ${count} ideas total. After using all reference subjects, ADD the remaining ideas yourself — new DISTINCT subjects in the exact same theme, style, and mood.`,
+    `- Example: if references give 5 subjects and ${count} are needed, keep those 5 and invent ${Math.max(0,count-vd.subjects.length)} more that fit seamlessly alongside them.`,
+    '- The added subjects must feel like they belong to the same set — same family, same vibe, same aesthetic. Never drift to unrelated subjects.',
+    '- Every idea (reference or added) must be a DIFFERENT subject — no duplicates.',
+    ''
+  ].filter(Boolean):[];
+
+  // For non-VD: enforce diversity
+  const diversityRule=hasVD?'':'IMPORTANT: every idea must be a completely DIFFERENT subject. Maximum variety — never repeat or barely-vary the same subject. Give a rich, diverse range of distinct ideas.';
+
+  // ── PASS 1: skeleton — SEO, intro, insights, conclusion, FAQ + idea titles only ──
+  const skelPrompt=[
+    `Write the SKELETON of a blog article about: ${topic}`,
+    `Art style: ${style} | Skill: ${level} | Number of ideas: ${count}`,
+    `Tone: ${tone}`, `EXACT FOCUS KEYWORD: ${topic}`,
+    paaContext,
+    ...vdSkeleton,
+    diversityRule,
+    '',
+    'YOAST SEO RULES:',
+    `1. TITLE in Title Case starting with keyword: "${topic}"`,
+    `2. META DESC contains "${topic}", 140-155 chars`,
+    `3. INTRO first sentence contains "${topic}"`,
+    '4. Vary sentence openings, use transition words (however, therefore, additionally, for example)',
+    '5. Never start 2+ consecutive sentences with same word',
+    '',
+    'Return ONLY this JSON (no markdown):',
+    '{',
+    `  "title": "${topic}: [subtitle, 55-60 chars]",`,
+    '  "meta_description": "[contains keyword, 140-155 chars]",',
+    `  "focus_keyword": "${topic}",`,
+    '  "slug": "url-slug-lowercase-hyphens",',
+    '  "insights": ["takeaway 1", "takeaway 2", "takeaway 3"],',
+    '  "intro": "para 1\\n\\npara 2\\n\\n<em style=\\"color:#999;font-size:13px;font-style:italic;\\">This post may contain affiliate links. As an Amazon Associate I earn from qualifying purchases.</em>",',
+    `  "idea_titles": ["${count} VARIED idea titles - see format rules below"],`,
+    '',
+    '',
+    '🎯 IDEA TITLE STYLE (very important):',
+    'Each idea is one drawing/art subject the reader can make. The title must CLEARLY name that subject first, with a short light touch of appeal. Keep titles SHORT and SCANNABLE — this is a list of 20-40 ideas someone browses for inspiration.',
+    '',
+    'GOOD examples (clear subject + light charm, 3-7 words):',
+    '• "Cheerful Yellow Sunflower"',
+    '• "Tiny Lavender Sprig"',
+    '• "Cozy Cottage Window Box"',
+    '• "Single Blushing Peony"',
+    '• "Wild Daisy Bunch"',
+    '• "Delicate Cherry Blossom Branch"',
+    '• "Cluster of Forget-Me-Nots"',
+    '',
+    'BAD examples (too long, subject buried, over-the-top — NEVER do this):',
+    '• "This Lavender Sprig Is Almost Too Pretty to Be This Easy"',
+    '• "Meet the Black-Eyed Susan of Your Cottagecore Dreams"',
+    '• "Everyone Will Think You Traced This Single Sunflower"',
+    '',
+    'HARD RULES:',
+    '- Title = the SUBJECT, clearly named, 3-7 words max',
+    '- A light descriptive adjective is fine (cheerful, tiny, cozy, delicate) but NO clickbait sentences',
+    '- Each idea must be a DIFFERENT subject — never repeat the same flower/object across ideas',
+    '- Vary the subjects widely for an interesting, diverse list',
+    '- NO numbers in titles, NO "This X" / "Meet the X" / "Everyone Will" clickbait openings',
+    '- At least 3 titles naturally contain the keyword or a close synonym',
+    '  "conclusion": "para 1\\n\\npara 2\\n\\npara 3",',
+    '  "faq": [{"q": "question?", "a": "50-70 word answer with transition words. Links as [text](url)."}]',
+    '}',
+    `Generate exactly ${count} idea_titles, each a DISTINCT subject — no repeats, maximum variety.`
+  ].join('\n');
+
+  const skel=await callClaude(skelPrompt, SEO_SYS, 4000);
+  const titles=skel.idea_titles||[];
+
+  // ── PASS 2: descriptions in chunks of 7 ──
+  const ideas=[];
+  const CHUNK=7;
+  for(let start=0; start<titles.length; start+=CHUNK){
+    const chunk=titles.slice(start,start+CHUNK);
+    const descPrompt=[
+      `Topic: ${topic} | Style: ${style} | Skill: ${level} | Tone: ${tone}`,
+      csvHint,
+      hasVD&&vd.palette?`\n🎨 VISUAL DIRECTION — every image_prompt must use this palette: ${vd.palette} (${vd.paletteType}). ${vd.mood?'Mood: '+vd.mood+'.':''}`:'',
+      '',
+      'For each idea title below, write a description following these rules:',
+      '- 2-3 SHORT paragraphs (150-200 words total)',
+      '- Separate paragraphs with \\n\\n',
+      `- Last paragraph includes a natural Amazon link: [product name](https://www.amazon.com/s?k=QUERY&tag=${amazonTag})`,
+      '- Use transition words, vary sentence openings',
+      hasVD&&vd.palette
+        ? `- Also write an image_prompt: 15-20 words describing the SUBJECT filling the entire frame edge-to-edge. End with the palette "${vd.palette}". Describe the subject itself, NOT a painting on canvas or easel. NO text, words, or labels in the image.`
+        : '- Also write an image_prompt: 15-20 words describing the SUBJECT that fills the entire frame edge-to-edge (close-up or full composition), NOT a painting on a canvas or easel. Describe the scene/subject itself, mention the art medium as a style. NO text, words, or labels in the image.',
+      '',
+      'Idea titles:',
+      ...chunk.map((t,i)=>`${start+i+1}. ${t}`),
+      '',
+      'Return ONLY a JSON array (no markdown):',
+      '[{"title":"exact title","description":"para1\\n\\npara2\\n\\npara3 with [link](url)","image_prompt":"visual description 15-20 words"}]'
+    ].join('\n');
+
+    const descData=await callClaude(descPrompt, SEO_SYS, 6000);
+    const arr=Array.isArray(descData)?descData:(descData.ideas||[]);
+    arr.forEach(d=>ideas.push(d));
+    setProgress(5+Math.round((start/titles.length)*9), `Writing descriptions ${Math.min(start+CHUNK,titles.length)}/${titles.length}...`);
+  }
+
+  return {
+    title:skel.title, meta_description:skel.meta_description,
+    focus_keyword:skel.focus_keyword, slug:skel.slug,
+    insights:skel.insights, intro:skel.intro,
+    conclusion:skel.conclusion, faq:skel.faq,
+    ideas:ideas
+  };
+}
+
+// ════════════ GENERATE IMAGE ════════════
+const NO_TEXT_SUFFIX=', no text, no words, no letters, no writing, no captions, no labels, no signature';
+async function runwareRequest(prompt, model, w, h){
+  const key=getRunKey();
+  // Ensure the no-text instruction is present
+  const posPrompt=prompt.includes('no text')?prompt:prompt+NO_TEXT_SUFFIX;
+  const reqBody={taskType:'imageInference',taskUUID:crypto.randomUUID(),positivePrompt:posPrompt,model,width:w,height:h,numberResults:1,outputFormat:'PNG',outputType:['URL']};
+  // negativePrompt only supported by some models. Seedream 4.5 and Z-Image reject it.
+  const NEG_PROMPT_MODELS=['runware:400@1','prunaai:1@1'];
+  if(NEG_PROMPT_MODELS.includes(model)){
+    reqBody.negativePrompt='text, words, letters, writing, captions, labels, watermark, signature, typography';
+  }
+  let response, data, attempt=0;
+  while(true){
+    response=await fetch('https://api.runware.ai/v1',{
+      method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},
+      body:JSON.stringify([reqBody])
+    });
+    data=await response.json().catch(()=>null);
+    // Retry on server overload / rate limit
+    if((response.status===529||response.status===429||response.status===503)&&attempt<4){
+      attempt++;
+      await new Promise(r=>setTimeout(r,2000*Math.pow(2,attempt-1)));
+      continue;
+    }
+    break;
+  }
+  if(!response.ok){
+    const errMsg=data?.errors?.[0]?.message||data?.error||('HTTP '+response.status);
+    throw new Error(errMsg);
+  }
+  const url=data?.data?.[0]?.imageURL||data?.[0]?.imageURL;
+  if(!url) throw new Error('No image URL in response');
+  return url;
+}
+
+async function generateImage(prompt){
+  const ratio=getRatioWH(),model=v('imgModel');
+  try{
+    return await runwareRequest(prompt, model, ratio.w, ratio.h);
+  }catch(e){
+    // Retry once with safe portrait dimensions if size was rejected
+    if(String(e.message).match(/dimension|size|width|height|400|invalid/i)){
+      const safe=getSafeDimensions(model);
+      return await runwareRequest(prompt, model, safe.w, safe.h);
+    }
+    throw e;
+  }
+}
+
+// Known-good portrait dimensions per model (fallback)
+function getSafeDimensions(model){
+  // Known-good portrait dims per model (from MODEL_RATIOS 2:3/3:4)
+  if(model==='bytedance:seedream@4.5') return {w:1728,h:2304}; // Seedream needs large sizes
+  if(model==='runware:z-image@turbo') return {w:832,h:1280};
+  if(model==='prunaai:1@1') return {w:832,h:1280};
+  return {w:864,h:1152}; // Flux Pro 2:3
+}
+
+async function uploadImageViaProxy(runwareUrl, filename, altText){
+  const fd=new FormData();
+  fd.append('action','upload_image');
+  fd.append('source_url',runwareUrl);
+  fd.append('filename',filename);
+  fd.append('alt_text',altText||'');
+  const r=await fetch(getProxy(),{method:'POST',body:fd});
+  const data=await r.json();
+  if(!r.ok||!data.id) throw new Error('Upload failed: '+(data.error||data.message||JSON.stringify(data)));
+  return {id:data.id,url:data.source_url};
+}
+
+// ════════════ MAIN GEN FLOW ════════════
+async function startGen(){
+  const topic=v('artTopic').trim();
+  if(!topic){ toast('Enter a topic first','err'); return; }
+  if(!getAntKey()){ toast('Set Anthropic key in Settings','err'); return; }
+  if(!getRunKey()){ toast('Set Runware key in Settings','err'); return; }
+
+  S.generating=true; el('btnGen').disabled=true;
+  el('logBox').style.display='none'; el('logBox').innerHTML='';
+
+  try{
+    setProgress(5,'Writing article with Claude...');
+    log('Writing article text...','inf');
+    const res=await generateText();
+
+    S.title=res.title||topic; S.seoSlug=res.slug||''; S.seoMeta=res.meta_description||'';
+    S.seoKW=res.focus_keyword||topic; S.insights=res.insights||[]; S.intro=res.intro||'';
+    S.ideas=res.ideas||[]; S.conclusion=res.conclusion||''; S.faq=res.faq||[];
+    S.count=S.ideas.length; S.uploaded=new Array(S.count).fill(null);
+
+    log(`✓ Text done: ${S.ideas.length} ideas`,'ok');
+    setProgress(15,'Generating images...');
+
+    for(let i=0;i<S.ideas.length;i++){
+      const idea=S.ideas[i], pct=15+Math.round((i/S.ideas.length)*80);
+      setProgress(pct,`Generating image ${i+1} / ${S.ideas.length}...`);
+      try{
+        const vdStyle=hasVisualDirection()&&S.visualDirection.style?S.visualDirection.style:'';
+        const basePrompt=vdStyle||v('imgPrompt')||getStylePrompt(S.style,S.level);
+        const paletteSuffix=hasVisualDirection()&&S.visualDirection.palette?', '+S.visualDirection.palette+' color palette':'';
+        const fullPrompt=(idea.image_prompt?idea.image_prompt+', ':'')+basePrompt+paletteSuffix;
+        idea.imageUrl=await generateImage(fullPrompt);
+        log(`✓ Image ${i+1}`,'ok');
+      }catch(e){ log(`✗ Image ${i+1}: ${e.message}`,'err'); idea.imageUrl=''; }
+    }
+
+    setProgress(100,'Done! Opening article...');
+    log('✓ All done!','ok');
+    setTimeout(()=>{ buildArticleTab(); el('tab-btn-article').style.display=''; goTab('article'); },600);
+
+  }catch(e){
+    log('✗ Error: '+e.message,'err'); toast('Generation failed: '+e.message,'err'); setProgress(0,'Error');
+  }
+  S.generating=false; el('btnGen').disabled=false;
+}
+
+// ════════════ BUILD ARTICLE TAB ════════════
+function buildArticleTab(){
+  el('seoTitle').textContent=toTitleCase(S.title);
+  el('seoSlug').textContent=S.seoSlug;
+  el('seoKW').textContent=S.seoKW;
+  el('seoMeta').textContent=S.seoMeta;
+  updateMetaCount();
+
+  if(S.insights&&S.insights.length){
+    const list=el('insightsList'); list.innerHTML='';
+    S.insights.forEach(ins=>{ list.innerHTML+=`<div class="insight-item"><span class="insight-ic">✦</span><span class="insight-tx">${esc(ins)}</span></div>`; });
+    el('insightsCard').style.display='';
+  }
+
+  const introBlock=el('introBlock'); introBlock.innerHTML='';
+  S.intro.split('\n').filter(p=>p.trim()).forEach(p=>{
+    const div=document.createElement('p');
+    if(p.trim().startsWith('<em')){
+      div.style.cssText='color:#999;font-size:12px;font-style:italic;margin-top:14px;margin-bottom:10px';
+      div.innerHTML=p.replace(/<\/?em[^>]*>/g,'');
+    }else{ div.innerHTML=linkify(p.trim()); div.style.marginBottom='12px'; }
+    introBlock.appendChild(div);
+  });
+
+  const sec=el('ideasSection'); sec.innerHTML='';
+  S.ideas.forEach((idea,i)=>sec.appendChild(buildIdeaCard(idea,i)));
+
+  if(S.conclusion){
+    const block=el('conclusionBlock'); block.innerHTML='';
+    S.conclusion.split('\n').filter(p=>p.trim()).forEach(p=>{ block.innerHTML+=`<p style="margin-bottom:12px">${linkify(p.trim())}</p>`; });
+    el('conclusionCard').style.display='';
+  }
+
+  if(S.faq&&S.faq.length){
+    const list=el('faqList'); list.innerHTML='';
+    S.faq.forEach((item,i)=>{ list.innerHTML+=`<div class="faq-item"><div class="faq-q">${esc(item.q||'')}</div><div class="faq-a" id="faqA${i}" contenteditable="true">${linkify(item.a||'')}</div></div>`; });
+    el('faqCard').style.display='';
+  }
+}
+
+function buildIdeaCard(idea,i){
+  const card=document.createElement('div'); card.className='idea-card'; card.id='idea-card-'+i;
+  const imgWrap=document.createElement('div'); imgWrap.className='idea-img-wrap'; imgWrap.id='img-wrap-'+i;
+  if(idea.imageUrl){
+    imgWrap.innerHTML=`<img src="${esc(idea.imageUrl)}" alt="${esc(idea.title||'')}" loading="${i===0?'eager':'lazy'}" style="width:100%;height:auto;display:block;margin:0;">`;
+  }else{
+    imgWrap.innerHTML=`<div class="idea-img-placeholder"><span style="font-size:32px">🎨</span><span>No image</span></div>`;
+  }
+  const ov=document.createElement('div'); ov.className='regen-overlay';
+  ov.innerHTML=`<button class="regen-btn" onclick="openRegen(${i})">🔄 Regenerate</button>`;
+  imgWrap.appendChild(ov); card.appendChild(imgWrap);
+
+  const body=document.createElement('div'); body.className='idea-body';
+  body.innerHTML=`<div class="idea-num">Idea ${i+1} of ${S.ideas.length}</div><h2 class="idea-title" id="idea-title-${i}" contenteditable="true">${esc(idea.title||'')}</h2>`;
+
+  const textDiv=document.createElement('div'); textDiv.className='idea-text'; textDiv.id='idea-text-'+i; textDiv.setAttribute('contenteditable','true');
+  (idea.description||'').split('\n').filter(p=>p.trim()).forEach(p=>{ textDiv.innerHTML+=`<p>${linkify(p.trim())}</p>`; });
+  body.appendChild(textDiv); card.appendChild(body);
+  return card;
+}
+
+function updateMetaCount(){
+  const len=(el('seoMeta').textContent||'').length, c=el('metaCharCount');
+  c.textContent=len+' / 155';
+  c.style.color=len>155?'#dc2626':len<140?'#d97706':'#2e9e5b';
+}
+
+// ════════════ REGEN ════════════
+function openRegen(i){
+  S.regenIdx=i;
+  el('regenName').textContent=S.ideas[i].title;
+  el('regenModel').value=v('imgModel');
+  const pr=el('regenPr'); pr.value='';
+  const base=S.ideas[i].image_prompt||S.ideas[i].title||'';
+  const stylePr=getStylePrompt(S.style,S.level);
+  const pv=base.includes(stylePr)?base:base+', '+stylePr;
+  setTimeout(()=>{ pr.value=pv; },10);
+  openModal('mRegen');
+}
+async function doRegen(){
+  const i=S.regenIdx,model=v('regenModel'),prompt=v('regenPr');
+  el('btnRG').disabled=true;
+  try{
+    const ratio=getRatioWH();
+    let url;
+    try{
+      url=await runwareRequest(prompt, model, ratio.w, ratio.h);
+    }catch(e1){
+      // retry with safe dimensions
+      const safe=getSafeDimensions(model);
+      url=await runwareRequest(prompt, model, safe.w, safe.h);
+    }
+    S.ideas[i].imageUrl=url; S.ideas[i].image_prompt=prompt;
+    const wrap=el('img-wrap-'+i);
+    if(wrap){
+      const old=wrap.querySelector('img, .idea-img-placeholder'); if(old) old.remove();
+      const img=document.createElement('img'); img.src=url; img.alt=S.ideas[i].title||'';
+      img.style.cssText='width:100%;height:auto;display:block;';
+      wrap.insertBefore(img,wrap.firstChild);
+    }
+    toast('Image regenerated!','ok'); closeModal('mRegen');
+  }catch(e){ toast('Regen failed: '+e.message,'err'); }
+  el('btnRG').disabled=false;
+}
+
+// ════════════ PUBLISH ════════════
+async function publishWP(){
+  const creds=getWPCreds();
+  if(!creds.login||!creds.pass){ toast('Set WP credentials in Settings','err'); return; }
+  el('btnPublish').disabled=true; el('pubProgWrap').style.display=''; el('pubLbl').textContent='Uploading images...';
+
+  const proxy=getProxy();
+  const slug=(el('seoSlug').textContent||S.seoSlug||'').trim();
+  const title=el('seoTitle').textContent||S.title;
+  const metaDesc=el('seoMeta').textContent||S.seoMeta;
+  const focusKW=el('seoKW').textContent||S.seoKW;
+  const status=v('pubStatus')||'draft';
+
+  try{
+    const uploaded=[];
+    for(let i=0;i<S.ideas.length;i++){
+      const pct=Math.round((i/S.ideas.length)*60);
+      el('pubBar').style.width=pct+'%'; el('pubLbl').textContent=`Uploading image ${i+1}/${S.ideas.length}...`;
+      if(!S.ideas[i].imageUrl){ uploaded.push(null); continue; }
+      try{
+        const fn=buildImageFilename(focusKW||S.title, S.ideas[i].title, i);
+        const altTxt=S.ideas[i].title||focusKW||'';
+        uploaded.push(await uploadImageViaProxy(S.ideas[i].imageUrl,fn,altTxt));
+      }catch(e){ uploaded.push(null); }
+    }
+
+    el('pubBar').style.width='65%'; el('pubLbl').textContent='Building post...';
+
+    const insightsHTML=S.insights&&S.insights.length
+      ? `<div style="border:2px solid #1a1a1a;border-radius:10px;padding:20px 24px;margin:0 0 28px;background:#fafafa;">`
+        + `<p style="font-weight:bold;font-size:17px;margin:0 0 12px;">⭐ Key Takeaways</p>`
+        + S.insights.map(ins=>`<p style="margin:0 0 8px;padding-left:20px;position:relative;"><span style="position:absolute;left:0;">✦</span> ${linkify(ins)}</p>`).join('')
+        + `</div>`
+      : '';
+    const introHTML=el('introBlock')?el('introBlock').innerHTML:S.intro.split('\n').filter(p=>p.trim()).map(p=>`<p>${linkify(p)}</p>`).join('\n');
+
+    let ideasHTML='';
+    let tocItems=[];
+    for(let i=0;i<S.ideas.length;i++){
+      const idea=S.ideas[i],med=uploaded[i];
+      const editedTitle=el('idea-title-'+i)?.textContent||idea.title||'';
+      const editedText=el('idea-text-'+i)?.innerHTML||'';
+      const anchor='idea-'+(i+1);
+      tocItems.push({anchor,title:editedTitle});
+      // download button under image
+      const dlBtn=med?`<p style="text-align:center;margin:10px 0 18px;"><a href="${med.url}" download="${esc(buildImageFilename(focusKW||S.title,el('idea-title-'+i)?.textContent||idea.title,i))}" onclick="pccDownload(event,'${med.url}','${esc(buildImageFilename(focusKW||S.title,el('idea-title-'+i)?.textContent||idea.title,i))}')" style="display:inline-flex;align-items:center;gap:7px;border:1.5px solid #1a1a1a;color:#1a1a1a;padding:9px 22px;border-radius:24px;text-decoration:none;font-size:13px;letter-spacing:.5px;font-family:Arial,sans-serif;transition:all .2s;background:#fff;" onmouseover="this.style.background='#1a1a1a';this.style.color='#fff';" onmouseout="this.style.background='#fff';this.style.color='#1a1a1a';"><span style="font-size:15px;">↓</span> Download Image</a></p>`:'';
+      const imgTag=med?`<figure class="wp-block-image alignleft size-full" style="margin:0 0 16px 0;text-align:left;width:100%;"><img src="${med.url}" alt="${esc(editedTitle)}" class="wp-image-${med.id} pcc-pin-image" style="width:100%;max-width:100%;height:auto;display:block;margin:0;"></figure>`:'';
+      ideasHTML+=`\n${imgTag}\n${dlBtn}\n<h2 id="${anchor}">${esc(editedTitle)}</h2>\n${editedText}\n`;
+    }
+    // Build TOC
+    const tocHTML = tocItems.length
+      ? `<div style="background:#f7f7f7;border:1px solid #e2e2e2;border-radius:8px;padding:16px 20px;margin:20px 0;"><p style="font-weight:bold;margin-bottom:10px;font-size:15px;">Table of Contents</p><ul style="margin:0;padding-left:20px;line-height:1.9;">${tocItems.map(t=>`<li><a href="#${t.anchor}" style="color:#1a1a1a;">${esc(t.title)}</a></li>`).join('')}</ul></div>`
+      : '';
+
+    const conclusionHTML=el('conclusionBlock')?`<h2>Final Thoughts</h2>\n${el('conclusionBlock').innerHTML}`:'';
+
+    let faqHTML='';
+    if(S.faq&&S.faq.length){
+      faqHTML='<h2>Frequently Asked Questions</h2>\n';
+      S.faq.forEach((item,i)=>{
+        const editedA=el('faqA'+i)?.innerHTML||linkify(item.a||'');
+        faqHTML+=`<h3>${esc(item.q||'')}</h3>\n<p>${editedA}</p>\n`;
+      });
+    }
+
+    const dlScript=`<script>
+function pccDownload(e,url,filename){
+  e.preventDefault();
+  var proxy='https://pinkcreativecrab.com/pcc-upload-proxy.php?action=download_image&url='+encodeURIComponent(url)+'&name='+encodeURIComponent(filename||'image.png');
+  var a=document.createElement('a');
+  a.href=proxy; a.download=filename||'image.png';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+}
+<\/script>`;
+    const fullContent=dlScript+'\n'+insightsHTML+'\n'+introHTML+'\n'+tocHTML+'\n'+ideasHTML+'\n'+conclusionHTML+'\n'+faqHTML;
+
+    el('pubBar').style.width='80%'; el('pubLbl').textContent='Publishing...';
+
+    const tagIds=await resolveWPTags(S.tags);
+
+    const catId=parseInt(v('wpCat'))||39, featuredId=uploaded[0]?.id||0;
+    const postPayload={action:'create_post',title,content:fullContent,status,slug,excerpt:metaDesc,categories:[catId],tags:tagIds,featured_media:featuredId,meta:{_yoast_wpseo_metadesc:metaDesc,_yoast_wpseo_focuskw:focusKW}};
+    const postRes=await fetch(proxy,{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(postPayload)
+    });
+    if(!postRes.ok) throw new Error(await postRes.text());
+    const postData=await postRes.json();
+    if(!postData.id) throw new Error(postData.message||'Post creation failed');
+
+    el('pubBar').style.width='100%';
+    el('pubLbl').textContent=status==='publish'?'Published!':'Saved as draft!';
+    toast(status==='publish'?'✓ Published!':'✓ Saved as draft!','ok');
+    if(postData.link) setTimeout(()=>window.open(postData.link,'_blank'),800);
+  }catch(e){
+    toast('Publish failed: '+e.message,'err'); el('pubLbl').textContent='Error: '+e.message;
+  }
+  el('btnPublish').disabled=false;
+}
+
+// ════════════ BATCH ════════════
+let batchRows=[];
+function addBatchRow(topic=''){
+  batchRows.push({id:Date.now()+Math.random(), topic, refImages:[], vd:{subjects:[],palette:'',paletteType:'',mood:'',style:''}, analyzed:false, ideaCount:null, tags:[]});
+  renderBatchRows();
+}
+function renderBatchRows(){
+  const c=el('batchItems'); c.innerHTML='';
+  batchRows.forEach((row,i)=>{
+    const refCount=row.refImages.length;
+    let refLabel, refColor;
+    if(row.analyzed){ refLabel=`✓ ${row.vd.subjects.length} subjects`; refColor='var(--green)'; }
+    else if(refCount){ refLabel=`${refCount} ref${refCount>1?'s':''}`; refColor='var(--amber)'; }
+    else { refLabel='no refs'; refColor='var(--gray-light)'; }
+    // extra indicators for custom idea count / tags
+    const extras=[];
+    if(row.ideaCount) extras.push(`${row.ideaCount} ideas`);
+    if(row.tags&&row.tags.length) extras.push(`${row.tags.length} tag${row.tags.length>1?'s':''}`);
+    const extraLabel=extras.length?` · <span style="color:var(--ink-soft)">${extras.join(' · ')}</span>`:'';
+    c.innerHTML+=`<div class="batch-row" id="brow-${row.id}">
+      <div class="batch-num">${i+1}</div>
+      <input type="text" value="${esc(row.topic)}" placeholder="Article topic..." oninput="batchRows[${i}].topic=this.value" style="flex:1;font-size:13px">
+      <button onclick="openBatchVD(${i})" title="References, ideas count & tags" style="background:var(--bg);border:1px solid var(--line);border-radius:6px;color:var(--ink-soft);cursor:pointer;font-size:11px;padding:5px 10px;font-family:var(--sans);white-space:nowrap">📎 <span style="color:${refColor}">${refLabel}</span>${extraLabel}</button>
+      <button onclick="removeBatchRow(${row.id})" style="background:none;border:none;color:var(--gray);cursor:pointer;font-size:14px;padding:0 4px">✕</button>
+      <span class="batch-status bs-wait" id="bst-${row.id}">waiting</span>
+    </div>`;
+  });
+}
+function removeBatchRow(id){ batchRows=batchRows.filter(r=>r.id!==id); renderBatchRows(); }
+function clearBatch(){ batchRows=[]; renderBatchRows(); }
+function bLogBox(msg,type=''){ const lb=el('batchLogBox'); lb.style.display=''; lb.innerHTML+=`<div class="${type}">${msg}</div>`; lb.scrollTop=lb.scrollHeight; }
+
+// ── Batch Visual Direction modal (per-topic) ──
+let batchVDIndex=-1;
+function openBatchVD(i){
+  batchVDIndex=i;
+  const row=batchRows[i];
+  el('bvdTopic').textContent=row.topic||`Topic ${i+1}`;
+  // per-topic article settings
+  el('bvdIdeasDefault').textContent=v('ideaCount')||'21';
+  el('bvdIdeas').value=row.ideaCount||'';
+  renderBvdTags();
+  // render thumbs
+  renderBatchVDThumbs();
+  // fill VD fields
+  el('bvdSubjects').value=(row.vd.subjects||[]).join(', ');
+  el('bvdPalette').value=row.vd.palette||'';
+  el('bvdPaletteType').value=row.vd.paletteType||'';
+  el('bvdMood').value=row.vd.mood||'';
+  el('bvdStyle').value=row.vd.style||'';
+  el('bvdPanel').style.display=row.analyzed||vdHasContent(row.vd)?'':'none';
+  openModal('mBatchVD');
+}
+
+// ── Per-topic tags (batch modal) ──
+function renderBvdTags(){
+  const row=batchRows[batchVDIndex];
+  const cloud=el('bvdTagCloud'); cloud.innerHTML='';
+  (row.tags||[]).forEach(t=>{
+    const chip=document.createElement('span');
+    chip.className='tag-chip'; chip.innerHTML=t+' ✕';
+    chip.onclick=()=>{ row.tags=row.tags.filter(x=>x!==t); renderBvdTags(); };
+    cloud.appendChild(chip);
+  });
+}
+function handleBvdTagInput(e){
+  if(e.key==='Enter'||e.key===','){
+    e.preventDefault();
+    const val=el('bvdTagInput').value.trim().replace(/,$/,'');
+    if(val){ const row=batchRows[batchVDIndex]; if(!row.tags.includes(val)) row.tags.push(val); el('bvdTagInput').value=''; renderBvdTags(); }
+  }
+}
+function filterBvdTagSugg(q){
+  el('bvdTagSuggestions').querySelectorAll('.tag-chip').forEach(c=>{
+    c.style.display=q?(c.textContent.toLowerCase().includes(q.toLowerCase())?'':'none'):'';
+  });
+}
+async function loadBvdWPTags(){
+  const tags=_wpTagsCache||await loadWPTags();
+  const sugg=el('bvdTagSuggestions'); sugg.innerHTML='';
+  (tags||[]).forEach(tag=>{
+    const chip=document.createElement('span');
+    chip.className='tag-chip suggest'; chip.textContent=tag.name;
+    chip.onclick=()=>{ const row=batchRows[batchVDIndex]; if(!row.tags.includes(tag.name)){ row.tags.push(tag.name); renderBvdTags(); } };
+    sugg.appendChild(chip);
+  });
+}
+function renderBatchVDThumbs(){
+  const row=batchRows[batchVDIndex];
+  const c=el('bvdThumbs'); c.innerHTML='';
+  (row.refImages||[]).forEach((img,idx)=>{
+    const d=document.createElement('div');
+    d.style.cssText='position:relative;width:60px;height:60px;border-radius:6px;overflow:hidden;border:1px solid var(--line)';
+    d.innerHTML=`<img src="${img.preview}" style="width:100%;height:100%;object-fit:cover;display:block;">
+      <button onclick="removeBatchVDImage(${idx})" style="position:absolute;top:1px;right:1px;background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:50%;width:16px;height:16px;font-size:10px;cursor:pointer;line-height:1;padding:0">✕</button>`;
+    c.appendChild(d);
+  });
+}
+async function loadBatchVDImages(input){
+  const files=Array.from(input.files||[]).slice(0,3);
+  if(!files.length) return;
+  const row=batchRows[batchVDIndex];
+  for(const file of files){
+    if(row.refImages.length>=3) break;
+    try{ row.refImages.push(await fileToRefImage(file)); }catch(e){}
+  }
+  input.value='';
+  renderBatchVDThumbs();
+  renderBatchRows();
+}
+function removeBatchVDImage(idx){
+  batchRows[batchVDIndex].refImages.splice(idx,1);
+  renderBatchVDThumbs(); renderBatchRows();
+}
+async function analyzeBatchVDOne(){
+  const row=batchRows[batchVDIndex];
+  if(!row.refImages.length){ toast('Attach images first','err'); return; }
+  if(!getAntKey()){ toast('Set Anthropic API key in Settings','err'); return; }
+  el('btnBvdAnalyze').disabled=true; el('btnBvdAnalyze').textContent='Analyzing...';
+  try{
+    row.vd=await analyzeRefSet(row.refImages, row.topic); row.analyzed=true;
+    el('bvdSubjects').value=row.vd.subjects.join(', ');
+    el('bvdPalette').value=row.vd.palette;
+    el('bvdPaletteType').value=row.vd.paletteType;
+    el('bvdMood').value=row.vd.mood;
+    el('bvdStyle').value=row.vd.style||'';
+    el('bvdPanel').style.display='';
+    renderBatchRows();
+    toast('Analyzed — edit if needed','ok');
+  }catch(e){ toast('Analysis failed: '+e.message,'err'); }
+  el('btnBvdAnalyze').disabled=false; el('btnBvdAnalyze').textContent='🔍 Analyze This Topic';
+}
+function saveBatchVD(){
+  const row=batchRows[batchVDIndex];
+  row.vd.subjects=v('bvdSubjects').split(',').map(s=>s.trim()).filter(Boolean);
+  row.vd.palette=v('bvdPalette');
+  row.vd.mood=v('bvdMood');
+  row.vd.style=v('bvdStyle');
+  // per-topic article settings
+  const ic=parseInt(v('bvdIdeas'));
+  row.ideaCount=(ic&&ic>=3)?ic:null;
+  // tags already maintained live in row.tags via renderBvdTags handlers
+  if(vdHasContent(row.vd)) row.analyzed=true;
+  renderBatchRows();
+  closeModal('mBatchVD');
+  toast('Saved','ok');
+}
+
+// Analyze all topics that have ref images attached
+async function analyzeAllRefs(){
+  if(!getAntKey()){ toast('Set Anthropic API key in Settings','err'); return; }
+  const pending=batchRows.filter(r=>r.refImages.length>0 && !r.analyzed);
+  if(!pending.length){ toast('No topics with un-analyzed references','err'); return; }
+  el('btnAnalyzeAll').disabled=true;
+  let done=0;
+  for(const row of pending){
+    el('btnAnalyzeAll').textContent=`Analyzing ${done+1}/${pending.length}...`;
+    try{ row.vd=await analyzeRefSet(row.refImages, row.topic); row.analyzed=true; renderBatchRows(); }
+    catch(e){ /* skip failed */ }
+    done++;
+  }
+  el('btnAnalyzeAll').disabled=false; el('btnAnalyzeAll').textContent='🔍 Analyze All Refs';
+  toast(`Analyzed ${done} topic${done>1?'s':''}`,'ok');
+}
+
+async function startBatch(){
+  const topics=batchRows.filter(r=>r.topic.trim());
+  if(!topics.length){ toast('Add at least one topic','err'); return; }
+  S.batchRunning=true; S.batchStop=false;
+  el('btnBatch').disabled=true; el('btnStopBatch').disabled=false; el('batchLog').style.display='';
+  const origStyle=S.style, bStyle=v('batchStyle'); S.style=bStyle;
+  const savedVD=S.visualDirection;
+
+  for(const row of topics){
+    if(S.batchStop) break;
+    el('bst-'+row.id).textContent='running'; el('bst-'+row.id).className='batch-status bs-run';
+    // Per-topic Visual Direction: swap in this row's vd (or empty if none)
+    const rowVD=(row.analyzed&&vdHasContent(row.vd))?row.vd:{subjects:[],palette:'',paletteType:'',mood:'',style:''};
+    S.visualDirection=rowVD;
+    const useVD=vdHasContent(rowVD);
+    const _defaultIdeaCount=el('ideaCount').value;
+    try{
+      el('artTopic').value=row.topic; S.ideas=[]; S.intro=''; S.uploaded=[];
+      // Per-topic idea count: temporarily override the ideaCount field
+      if(row.ideaCount&&row.ideaCount>=3) el('ideaCount').value=row.ideaCount;
+      bLogBox(`Starting: ${row.topic}${useVD?' (with references)':''}${row.ideaCount?' · '+row.ideaCount+' ideas':''}`,'inf');
+      const res=await generateText();
+      el('ideaCount').value=_defaultIdeaCount; // restore default
+      S.title=toTitleCase(res.title||row.topic); S.seoSlug=res.slug||''; S.ideas=res.ideas||[];
+      S.insights=res.insights||[]; S.intro=res.intro||''; S.conclusion=res.conclusion||'';
+      S.faq=res.faq||[]; S.seoMeta=res.meta_description||''; S.seoKW=res.focus_keyword||row.topic;
+      bLogBox(`✓ Text: ${S.ideas.length} ideas`,'ok');
+
+      const uploaded=[], slug2=res.slug||row.topic.toLowerCase().replace(/[^a-z0-9]+/g,'-');
+      for(let i=0;i<S.ideas.length;i++){
+        if(S.batchStop) break;
+        try{
+          // Image style: reference style overrides base Art Style when VD present
+          const vdStyle=useVD&&rowVD.style?rowVD.style:'';
+          const bp=vdStyle||localStorage.getItem('pcc_prompt_'+bStyle+'_'+S.level)||getStylePrompt(bStyle,S.level);
+          const paletteSuffix=useVD&&rowVD.palette?', '+rowVD.palette+' color palette':'';
+          const fp=(S.ideas[i].image_prompt||S.ideas[i].title)+', '+bp+paletteSuffix;
+          const iu=await generateImage(fp); S.ideas[i].imageUrl=iu;
+          const med=await uploadImageViaProxy(iu,buildImageFilename(S.seoKW||row.topic,S.ideas[i].title,i),S.ideas[i].title||'');
+          uploaded.push(med); bLogBox(`✓ Image ${i+1}/${S.ideas.length}`,'ok');
+        }catch(e){ uploaded.push(null); bLogBox(`✗ Image ${i+1}: ${e.message}`,'err'); }
+      }
+
+      const insH=S.insights.length?`<div style="border:2px solid #1a1a1a;border-radius:10px;padding:20px 24px;margin:0 0 28px;background:#fafafa;"><p style="font-weight:bold;font-size:17px;margin:0 0 12px;">⭐ Key Takeaways</p>${S.insights.map(ins=>`<p style="margin:0 0 8px;padding-left:20px;position:relative;"><span style="position:absolute;left:0;">✦</span> ${linkify(ins)}</p>`).join('')}</div>`:'';
+      const introH=S.intro.split('\n').filter(p=>p.trim()).map(p=>p.startsWith('<em')?`<p style="color:#999;font-size:12px;font-style:italic;">${p.replace(/<\/?em[^>]*>/g,'')}</p>`:`<p>${linkify(p)}</p>`).join('\n');
+      let ideasH='';
+      let tocB=[];
+      for(let i=0;i<S.ideas.length;i++){
+        const idea=S.ideas[i],med=uploaded[i];
+        const anchor='idea-'+(i+1);
+        tocB.push({anchor,title:idea.title||''});
+        const dlFn=buildImageFilename(S.seoKW||row.topic,idea.title,i);
+        const dlBtn=med?`<p style="text-align:center;margin:10px 0 18px;"><a href="${med.url}" download="${esc(dlFn)}" onclick="pccDownload(event,'${med.url}','${esc(dlFn)}')" style="display:inline-flex;align-items:center;gap:7px;border:1.5px solid #1a1a1a;color:#1a1a1a;padding:9px 22px;border-radius:24px;text-decoration:none;font-size:13px;letter-spacing:.5px;font-family:Arial,sans-serif;transition:all .2s;background:#fff;" onmouseover="this.style.background='#1a1a1a';this.style.color='#fff';" onmouseout="this.style.background='#fff';this.style.color='#1a1a1a';"><span style="font-size:15px;">↓</span> Download Image</a></p>`:'';
+        const img=med?`<figure class="wp-block-image alignleft size-full" style="margin:0 0 16px 0;text-align:left;width:100%;"><img src="${med.url}" alt="${esc(idea.title||'')}" class="pcc-pin-image" style="width:100%;max-width:100%;height:auto;display:block;margin:0;"></figure>`:'';
+        const paras=(idea.description||'').split('\n').filter(p=>p.trim()).map(p=>`<p>${linkify(p)}</p>`).join('\n');
+        ideasH+=`\n${img}\n${dlBtn}\n<h2 id="${anchor}">${esc(idea.title||'')}</h2>\n${paras}\n`;
+      }
+      const tocBH=tocB.length?`<div style="background:#f7f7f7;border:1px solid #e2e2e2;border-radius:8px;padding:16px 20px;margin:20px 0;"><p style="font-weight:bold;margin-bottom:10px;font-size:15px;">Table of Contents</p><ul style="margin:0;padding-left:20px;line-height:1.9;">${tocB.map(t=>`<li><a href="#${t.anchor}" style="color:#1a1a1a;">${esc(t.title)}</a></li>`).join('')}</ul></div>`:'';
+      const concH=S.conclusion?`<h2>Final Thoughts</h2>\n${S.conclusion.split('\n').filter(p=>p.trim()).map(p=>`<p>${linkify(p)}</p>`).join('\n')}`:'';
+      let faqH='';
+      if(S.faq.length){
+        faqH='<h2>Frequently Asked Questions</h2>\n';
+        S.faq.forEach(item=>{ faqH+=`<h3>${esc(item.q)}</h3>\n<p>${linkify(item.a)}</p>\n`; });
+      }
+      const dlScriptB=`<script>
+function pccDownload(e,url,filename){
+  e.preventDefault();
+  var proxy='https://pinkcreativecrab.com/pcc-upload-proxy.php?action=download_image&url='+encodeURIComponent(url)+'&name='+encodeURIComponent(filename||'image.png');
+  var a=document.createElement('a');
+  a.href=proxy; a.download=filename||'image.png';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+}
+<\/script>`;
+      const content=dlScriptB+'\n'+insH+'\n'+introH+'\n'+tocBH+'\n'+ideasH+'\n'+concH+'\n'+faqH;
+
+      const proxy=getProxy(),catId=parseInt(v('wpCat'))||39,featuredId=uploaded[0]?.id||0,postStatus=v('batchStatus')||'draft';
+      const topicTags=(row.tags&&row.tags.length)?row.tags:S.tags;
+      const bTagIds=await resolveWPTags(topicTags);
+      const postRes=await fetch(proxy,{
+        method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({action:'create_post',title:S.title,content,status:postStatus,slug:slug2,excerpt:S.seoMeta,categories:[catId],tags:bTagIds,featured_media:featuredId,meta:{_yoast_wpseo_metadesc:S.seoMeta,_yoast_wpseo_focuskw:S.seoKW}})
+      });
+      if(!postRes.ok) throw new Error(await postRes.text());
+      const pd=await postRes.json();
+      if(!pd.id) throw new Error(pd.message||'Post failed');
+      bLogBox(`✓ Published: ${S.title} (ID ${pd.id})`,'ok');
+      el('bst-'+row.id).textContent='done'; el('bst-'+row.id).className='batch-status bs-done';
+    }catch(e){
+      el('ideaCount').value=_defaultIdeaCount; // restore default after failure
+      bLogBox(`✗ Failed: ${e.message}`,'err');
+      el('bst-'+row.id).textContent='error'; el('bst-'+row.id).className='batch-status bs-err';
+    }
+    const delay=parseInt(v('batchDelay'))||5;
+    if(delay>0&&!S.batchStop) await new Promise(r=>setTimeout(r,delay*1000));
+  }
+
+  S.style=origStyle; S.visualDirection=savedVD; S.batchRunning=false;
+  el('btnBatch').disabled=false; el('btnStopBatch').disabled=true;
+  toast('Batch complete!','ok');
+}
+function stopBatch(){ S.batchStop=true; toast('Stopping after current article...',''); }
+
+// ════════════ NEW ARTICLE ════════════
+function newArticle(){
+  if(S.ideas.length>0&&!confirm('Start new article? Current progress will be lost.')) return;
+  S.ideas=[]; S.intro=''; S.title=''; S.seoSlug=''; S.seoMeta=''; S.seoKW='';
+  S.insights=[]; S.conclusion=''; S.faq=[]; S.uploaded=[];
+  S.refImages=[]; S.visualDirection={subjects:[], palette:'', paletteType:'', mood:'', style:''};
+  const t=el('artTopic'); if(t) t.value='';
+  const pl=el('paaList'); if(pl) pl.innerHTML='';
+  const pp=el('paaPanel'); if(pp) pp.style.display='none';
+  const ps=el('paaSt'); if(ps) ps.textContent='';
+  const rt=el('refThumbs'); if(rt) rt.innerHTML='';
+  const rf=el('refFiles'); if(rf) rf.value='';
+  const ba=el('btnAnalyze'); if(ba) ba.style.display='none';
+  const vp=el('vdPanel'); if(vp) vp.style.display='none';
+  const rs=el('refSt'); if(rs) rs.textContent='';
+  const prog=el('progSec'); if(prog) prog.style.display='none';
+  const lb=el('logBox'); if(lb){ lb.innerHTML=''; lb.style.display='none'; }
+  el('tab-btn-article').style.display='none';
+  goTab('generate'); toast('Ready for new article','ok');
+}
+
+// ════════════ INIT ════════════
+window.onload=function(){
+  loadSettings(); updateRatios();
+  el('imgPrompt').value=localStorage.getItem('pcc_prompt_watercolor_beginner')||getStylePrompt('watercolor','beginner');
+  addBatchRow(); addBatchRow(); addBatchRow();
+};
+</script>
+</body>
+</html>
